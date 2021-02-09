@@ -10,7 +10,7 @@ export default class CR_OL extends Component {
     render() {
       return (
         <View style={styles.container}>
-          <ImageBackground source={require('./backgroundImg.png')}
+          <ImageBackground source={require('./img/backgroundImg.png')}
             style={styles.backgroundImage}>
             <Text style={styles.text}>Report</Text>
             <View style={styles.nav}>
@@ -72,6 +72,7 @@ export default class CR_OL extends Component {
       fontSize: 24,
       fontWeight: "bold",
       textAlign: "center",
+      marginTop: '3%',
     },
     roundButton: {
       width: 11,

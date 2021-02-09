@@ -44,10 +44,6 @@ export default class CR_WL extends Component {
                   <Text style={styles.verticalLine2}>|</Text>
                   <Text numberOfLines={1} style={styles.custPrice}>RM1200</Text>
                 </View>
-                <View style={styles.info2}>
-                  <Text style={styles.textSLinCharge}>Person In Charge: </Text>
-                  <Text style={styles.SLinCharge}>Siti Nur Aliah</Text>
-                </View>
               </ScrollView>
             </TouchableOpacity>
   
@@ -134,11 +130,6 @@ export default class CR_WL extends Component {
     info: {
       flexDirection: 'row',
     },
-    info2: {
-      flexDirection: 'row',
-      alignSelf: 'center',
-      margin: "1%"
-    },
     custInfo: {
       margin: 5,
       width: "34.5%"
@@ -166,13 +157,6 @@ export default class CR_WL extends Component {
       width: "91%",
       maxHeight: "50%",
       justifyContent: 'space-evenly'
-    },
-    SLinCharge: {
-      fontSize: 12,
-      color: "#B56118",
-    },
-    textSLinCharge: {
-      fontSize: 12
     },
     roundButton3: {
       width: 41,

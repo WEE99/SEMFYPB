@@ -9,13 +9,16 @@ export default class CR_L extends Component {
     render() {
       return (
         <View style={styles.container}>
-          <ImageBackground source={require('./backgroundImg.png')}
+          <ImageBackground source={require('./img/backgroundImg.png')}
             style={styles.backgroundImage}>
             <Text style={styles.text}>Report</Text>
             <View style={styles.nav}>
-              <TouchableOpacity style={styles.roundButton2} />
-              <TouchableOpacity style={styles.roundButton2} />
-              <TouchableOpacity style={styles.roundButton} />
+            <TouchableOpacity style={styles.roundButton2} 
+              onPress={() => this.props.navigation.navigate('Report')}/>
+              <TouchableOpacity style={styles.roundButton} 
+              onPress={() => this.props.navigation.navigate('Company List')}/>
+              <TouchableOpacity style={styles.roundButton2} 
+              onPress={() => this.props.navigation.navigate('Salesperson List')}/>
             </View>
   
             <TouchableOpacity style={styles.bckground}>
@@ -59,6 +62,7 @@ export default class CR_L extends Component {
       fontSize: 24,
       fontWeight: "bold",
       textAlign: "center",
+      marginTop: '3%',
     },
     roundButton: {
       width: 11,
@@ -96,10 +100,9 @@ export default class CR_L extends Component {
       height: 41,
       borderRadius: 41,
       marginTop: "15%",
-      marginRight: '2%',
       backgroundColor: '#F8C018',
       alignSelf: 'flex-end',
-      marginRight: '8%'
+      marginRight: '5%'
     },
     icon: {
       alignSelf: 'center',

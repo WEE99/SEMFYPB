@@ -12,16 +12,11 @@ export default class OR extends Component {
             style={styles.backgroundImage}>
             <Text style={styles.text}>Report</Text>
             <View style={styles.nav}>
-              <TouchableOpacity style={styles.roundButton} 
-              onPress={() => this.props.navigation.navigate('Report')}/>
-              <TouchableOpacity style={styles.roundButton2} 
-              onPress={() => this.props.navigation.navigate('Company List')}/>
-              <TouchableOpacity style={styles.roundButton2} 
-              onPress={() => this.props.navigation.navigate('Salesperson List')}/>
+              <TouchableOpacity style={styles.roundButton2} />
+              <TouchableOpacity style={styles.roundButton} />
             </View>
   
             <TouchableOpacity style={styles.bckground}>
-              <Text style={styles.subTitle}>Overall Performance</Text>
               <View style={styles.row}>
                 <View style={styles.openLead}>
                   <Text></Text>
@@ -29,7 +24,7 @@ export default class OR extends Component {
                 <View style={styles.openLead}>
                   <Text style={styles.no}>40</Text>
                   <Text numberOfLines={2} style={styles.typeTitle}>Open Leads</Text>
-                </View>
+                </View>""
               </View>
   
               <View style={styles.row2}>
@@ -69,7 +64,6 @@ export default class OR extends Component {
       justifyContent: "center",
       maxHeight: 11,
       marginTop: '5%',
-      marginBottom: '5%'
     },
     text: {
       color: "white",
@@ -97,24 +91,21 @@ export default class OR extends Component {
     bckground: {
       backgroundColor: 'rgba(255, 255, 255, 0.3)',
       width: "80%",
-      height: 350,
+      // height: 350,
       alignSelf: 'center',
-      borderRadius: 10
-    },
-    subTitle: {
-      fontSize: 18,
-      color: '#F8C018',
-      textAlign: 'center',
-      marginTop: '3%'
+      marginTop: '5%',
+      borderRadius: 10,
+      paddingBottom: '5%'
     },
     roundButton3: {
       width: 41,
       height: 41,
       borderRadius: 41,
-      marginTop: "45%",
+      marginTop: "60%",
+      marginRight: '2%',
       backgroundColor: '#F8C018',
       alignSelf: 'flex-end',
-      marginRight: '5%'
+      marginRight: '8%'
     },
     icon: {
       alignSelf: 'center',
