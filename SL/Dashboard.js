@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
-import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView} from 'react-native';
 import {TableRowDashboard} from "./TablesandTimeFormat";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 // import {
 //   LineChart,
 //   BarChart,
@@ -10,7 +11,7 @@ import {TableRowDashboard} from "./TablesandTimeFormat";
 //   ContributionGraph
 // } from 'react-native-chart-kit';
 //import Pie from 'react-native-pie';
-//AppTable
+//Dashboard
 
 // const myheight=90;
 
@@ -18,7 +19,11 @@ const arry =[
       {id:1, name: "Walsom",company: "Google. Co", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
       {id:2, name: "ERic",company: "TAKA", contacted:" NOt Contacted", Quote:"RM 3000", Status:"Won"},
       {id:3, name: "MARCC LEE HG",company: "UNIMAS", contacted:" NOT Contacted", Quote:"RM 3000", Status:"Won"},
-      {id:4, name: "Kelly",company: "Modelling University of Malaysia", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
+      {id:4, name: "Kelly",company: "Taylor", contacted:"Contacted", Quote:"RM 3000000", Status:"Won"},
+      {id:5, name: "Kelly",company: "Modelling University of Malaysia", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
+      {id:6, name: "Pau",company: "SUITS", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
+      {id:7, name: "Meow",company: "UCSI", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
+      {id:8, name: "Liew",company: "UITS", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
 ];
 
 // const TableRow =({data, handlePressLead, handlePressQuote, handlePressLost})=>{
@@ -72,6 +77,10 @@ export default function App() {
     alert("nav LeadsDetails .js")
   }
 
+  const pressNotification=()=>{
+    alert("nav to Notification .js ")
+  }
+
 
 
   // const data = [
@@ -85,10 +94,13 @@ export default function App() {
   return (    
   <View style={styles.container}> 
 
-      <View style={{alignItems: 'center'}}>
-      <Text style={styles.title}>Dashboard</Text>
+      <View style={styles.DashboardtitleContainer}>
+      <Text style={styles.titleDashboard}>Dashboard</Text>
+      <TouchableOpacity style={{marginLeft:10, padding:1}} onPress={pressLead}>
+      <Icon name='notifications' size={25}  color="orange"/> 
+      </TouchableOpacity>
       </View>
-
+<ScrollView>
     <View style={{paddingBottom:40, paddingTop:10}}>
         <View style={{borderRadius:10, backgroundColor:"#fff", paddingVertical:10, marginHorizontal:15, borderWidth:1, borderColor:"lightgrey", elevation: 2}}>
 
@@ -144,6 +156,7 @@ export default function App() {
             </View>
       {/* <StatusBar style="auto" /> */}
     </View>
+  </ScrollView>
   </View>
     );
 }
@@ -156,7 +169,13 @@ const styles = StyleSheet.create({
     //padding:"20%"
   },
 
-  title:{
+  DashboardtitleContainer:{
+    marginTop:10,
+    flexDirection:"row",
+    justifyContent:"center"
+  },
+
+  titleDashboard:{
     fontWeight:"bold",
     fontSize:20,
     color:"black",

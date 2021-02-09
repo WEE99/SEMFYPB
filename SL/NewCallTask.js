@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput, ScrollView, Platform } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import DatePicker from "react-datepicker";
+//import DatePicker from "react-datepicker";
 import {MaterialCommunityIcons} from 'react-native-vector-icons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {formatAMPM} from './TablesandTimeFormat';
@@ -82,6 +82,7 @@ export default function App() {
           <Text style={styles.TextDateTime}>Date :</Text>
           <input
           type="date"
+          style={{width:"100%"}}
           value={mydate}
           onChange={event => setMyDate(event.target.value)}/>
         </View>
@@ -102,6 +103,7 @@ export default function App() {
           <Text style={styles.TextDateTime}>Time :</Text>
           <input
           type="time"
+          style={{width:"100%"}}
           value={mytime}
           onChange={event => setMyTime(event.target.value)}/>
         </View>

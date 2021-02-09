@@ -1,14 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
-import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
-import {TableRowLost} from "./TablesandTimeFormat";
+import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView} from 'react-native';
+import {TableRowOpen} from "./TablesandTimeFormat";
 
 
-const arryLost =[
-  {id:1, Lname: "Bob",company: "Google. Co", Remarks:"Not Interessed"},
-  {id:2, Lname: "John Doe",company: "Nuclear reacher", Remarks:"Very Not Interested really not into it worst person to work with ban this client"},
-  {id:3, Lname: "William ",company: "SPACE X", Remarks:"He wanna deal in RM 2"},
-  {id:4, Lname: "Saruna",company: "Karuna", Remarks:"Cannot la this"},
+const arryOpen =[
+  {id:1, Lname: "MAX",company: "Google. Co", Status:"New Leads"},
+  {id:2, Lname: "MINIS",company: "Nuclear", Status:"Contacted"},
+  {id:3, Lname: "Willui ",company: "X", Status:"New Leads"},
+  {id:4, Lname: "Xaruna",company: "Karun", Status:"Contacted"},
 ];
 
 export default function App() {
@@ -29,7 +29,7 @@ export default function App() {
     <View style={styles.container}>
 
       <View style={{alignItems:"center"}}>
-      <Text style={styles.title}>Lost Leads</Text>
+      <Text style={styles.title}>Open Leads</Text>
       </View>
 
       <View style={styles.flexrowfortable}>
@@ -44,6 +44,7 @@ export default function App() {
         </View>
       </View>
 
+<ScrollView>
       <View style={{paddingBottom:40, paddingTop:10}}>
         <View style={{borderRadius:10, backgroundColor:"#fff", paddingVertical:10, marginHorizontal:15, borderWidth:1, borderColor:"lightgrey", elevation: 2}}>
 
@@ -52,12 +53,12 @@ export default function App() {
                     Name
                 </Text>
                 <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"center"}}>
-                    Remarks
+                    Status
                 </Text>
             </View>
 
-            {arryLost.map((info) =>
-                <TableRowLost key={info.id} data={info} />
+            {arryOpen.map((info) =>
+                <TableRowOpen key={info.id} data={info} />
             )}
 
 
@@ -65,6 +66,7 @@ export default function App() {
             </View>
       <StatusBar style="auto" />
     </View>
+  </ScrollView>
   </View>
     );
 }
@@ -106,18 +108,18 @@ const styles = StyleSheet.create({
 
   lostbutton:{
     marginRight:25,
-    backgroundColor: "orange",
+    backgroundColor: "lightgrey",
     borderRadius: 100,
-    borderWidth:1,
+    //borderWidth:1,
     borderColor:"grey",
     width:10,
     height:10,
   },
 
   openbutton:{
-    backgroundColor: "lightgrey",
+    backgroundColor: "orange",
     borderRadius: 100,
-    //borderWidth:1,
+    borderWidth:1,
     borderColor:"grey",
     width:10,
     height:10,

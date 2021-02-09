@@ -1,17 +1,17 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
-import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Entypo} from 'react-native-vector-icons';
 
 export default function App() {
 
-  const pressDetailsPage= ()=>{
-    alert("nav to Details .js"); 
+  const pressLeadsDetailsPage= ()=>{
+    alert("nav to LeadsDetails .js"); 
   };
 
-  const pressTasks= ()=>{
-    alert("nav to DetailsTask .js"); 
+  const pressLeadsDetailsTasks= ()=>{
+    alert("nav to LeadsDetailsTask .js"); 
   };
 
   const pressEdit= ()=>{
@@ -33,15 +33,15 @@ export default function App() {
       <Text style={styles.title}>Details</Text>
       </View>
 
+  
       <View style={styles.flexrow}>
         <View >
-          <TouchableOpacity style={styles.Detailsbutton} onPress={pressDetailsPage}><Text> </Text></TouchableOpacity>
+          <TouchableOpacity style={styles.LeadsDetailsbutton} onPress={pressLeadsDetailsPage}><Text> </Text></TouchableOpacity>
         </View>
         <View >
-          <TouchableOpacity style={styles.Tasksbutton} onPress={pressTasks}><Text> </Text></TouchableOpacity>
+          <TouchableOpacity style={styles.LeadsTasksbutton} onPress={pressLeadsDetailsTasks}><Text> </Text></TouchableOpacity>
         </View>
       </View>
-
 
 
       <View  style={styles.LeadsContainer}>
@@ -52,7 +52,6 @@ export default function App() {
   
       
         {/* <Text style={styles.LeadsInfo}>J ohn David sasdad ad as dsdadadadsdaadsdadohn David sasdad ad as dsdadadadsdaadsdad</Text> */}
-        
         <View style={styles.LeadsInfo}>
           <View style={styles.flexrow}>
           <View style={styles.iconcontainer}>
@@ -87,7 +86,7 @@ export default function App() {
 
         <View style={{marginTop:130}}></View>
 
-        
+      
         <View style={styles.LeadsInterest}>
 
           <View style={styles.flexrow}>
@@ -146,8 +145,8 @@ export default function App() {
           </View>
           </View>
         </View>
-
       </View>
+      
 
       <View style={styles.flexrow2}>
         <View>
@@ -166,6 +165,7 @@ export default function App() {
             </TouchableOpacity>
         </View>
       </View>
+      
  
       <StatusBar style="auto" />
     </View>
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     // justifyContent:"space-around"
   },
 
-  Detailsbutton:{
+  LeadsDetailsbutton:{
     marginRight:25,
     backgroundColor: "orange",
     borderRadius: 100,
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     height:10,
   },
 
-  Tasksbutton:{
+  LeadsTasksbutton:{
     backgroundColor: "lightgrey",
     borderRadius: 100,
     //borderWidth:1,
@@ -252,7 +252,7 @@ iconcontainer:{alignContent:"center"},
 
 LeadsInfo:{
   //alignSelf:"flex-start",
- // alignItems:"flex-start",
+  //alignItems:"flex-start",
   borderWidth:2,
   marginTop:30,
   marginLeft:5,
