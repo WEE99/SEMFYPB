@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-export default class CR_LL extends Component {
+export default class CR_OL extends Component {
     render() {
         return (
             <View style={styles.container}>
@@ -13,16 +13,16 @@ export default class CR_LL extends Component {
                     style={styles.backgroundImage}>
                     <Text style={styles.text}>Report</Text>
                     <View style={styles.nav}>
-                        <TouchableOpacity style={styles.roundButton2} />
-                        <TouchableOpacity style={styles.roundButton2} />
                         <TouchableOpacity style={styles.roundButton} />
+                        <TouchableOpacity style={styles.roundButton2} />
+                        <TouchableOpacity style={styles.roundButton2} />
                     </View>
 
                     <TouchableOpacity style={styles.bckground}>
                         <View style={styles.header}>
                             <Text style={styles.ttleheader}>Name</Text>
                             <Text style={styles.verticalLine}>|</Text>
-                            <Text style={styles.ttleheader}>Remarks</Text>
+                            <Text style={styles.ttleheader}>Status</Text>
                         </View>
 
                         <ScrollView contentContainerStyle={styles.box}>
@@ -32,11 +32,7 @@ export default class CR_LL extends Component {
                                     <Text numberOfLines={1} style={styles.custCompany}>Google Inc</Text>
                                 </View>
                                 <Text style={styles.verticalLine2}>|</Text>
-                                <Text numberOfLines={1} style={styles.custStatus}>Not interested</Text>
-                            </View>
-                            <View style={styles.info2}>
-                                <Text style={styles.textSLinCharge}>Person In Charge: </Text>
-                                <Text style={styles.SLinCharge}>Siti Nur Aliah</Text>
+                                <Text numberOfLines={1} style={styles.custStatus}>New lead</Text>
                             </View>
                         </ScrollView>
                     </TouchableOpacity>
@@ -119,14 +115,9 @@ let styles = StyleSheet.create({
     info: {
         flexDirection: 'row',
     },
-    info2: {
-        flexDirection: 'row',
-        alignSelf: 'center',
-        margin: "1%"
-    },
     custInfo: {
         margin: 5,
-        width: "42%"
+        width: "45%"
     },
     custCompany: {
         color: "#B56118",
@@ -152,13 +143,6 @@ let styles = StyleSheet.create({
         maxHeight: "50%",
         justifyContent: 'space-evenly'
     },
-    SLinCharge: {
-        fontSize: 12,
-        color: "#B56118",
-    },
-    textSLinCharge: {
-        fontSize: 12
-    },
     roundButton3: {
         width: 41,
         height: 41,
@@ -166,7 +150,7 @@ let styles = StyleSheet.create({
         marginTop: "3%",
         marginRight: '8%',
         backgroundColor: '#F8C018',
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
     },
     icon: {
         alignSelf: 'center',

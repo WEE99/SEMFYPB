@@ -13,6 +13,11 @@ export default class OR extends Component {
           style={styles.backgroundImage}>
           <Text style={styles.text}>Profile</Text>
 
+          <View style={styles.nav}>
+            <TouchableOpacity style={styles.roundButton} />
+            <TouchableOpacity style={styles.roundButton2} />
+          </View>
+
           <TouchableOpacity style={styles.bckground}>
             <View style={styles.picture}>
               <Image
@@ -32,9 +37,27 @@ export default class OR extends Component {
                 <Icon name="email" size={30} color="#F8C018" />
                 <Text numberOfLines={3} style={styles.information}>nrozunan@gmail.com</Text>
               </View>
+              <View style={styles.row}>
+                <Icon name="work" size={30} color="#F8C018" />
+                <Text numberOfLines={2} style={styles.information}>Salesperson</Text>
+              </View>
+              <View style={styles.row}>
+                <Icon name="business" size={30} color="#F8C018" />
+                <Text numberOfLines={2} style={styles.information}>Google</Text>
+              </View>
             </View>
 
           </TouchableOpacity>
+
+          <View style={{ flexDirection: 'row', alignSelf: 'flex-end', marginRight: '8%' }}>
+            <TouchableOpacity style={styles.roundButton3} >
+              <Icon2 name="trash" size={30} color="black" style={styles.icon} />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.roundButton3} >
+              <Icon2 name="edit" size={30} color="black" style={styles.icon} />
+            </TouchableOpacity>
+          </View>
 
         </ImageBackground>
       </View>
@@ -55,14 +78,15 @@ let styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: '10%',
-    marginTop: '3%'
+    marginBottom: '5%',
+    marginTop: '3%',
   },
   bckground: {
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     width: "80%",
     height: "70%",
     alignSelf: 'center',
+    marginTop:"5%",
     borderRadius: 10
   },
   icon: {
@@ -121,5 +145,29 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     marginLeft: '10%',
     marginBottom: '5%'
-  }
+  },
+  nav: {
+    flex: 1,
+    flexDirection: 'row',
+    alignSelf: 'center',
+    justifyContent: "center",
+    maxHeight: 11,
+  },
+  roundButton: {
+    width: 11,
+    height: 11,
+    borderRadius: 11,
+    margin: "4%",
+    backgroundColor: '#F8C018',
+    alignSelf: 'center',
+
+  },
+  roundButton2: {
+    width: 11,
+    height: 11,
+    borderRadius: 11,
+    margin: "4%",
+    backgroundColor: 'white',
+    alignSelf: 'center'
+  },
 })

@@ -9,7 +9,7 @@ export default class CR_O extends Component {
     render() {
       return (
         <View style={styles.container}>
-          <ImageBackground source={require('./backgroundImg.png')}
+          <ImageBackground source={require('./img/backgroundImg.png')}
             style={styles.backgroundImage}>
             <Text style={styles.text}>Report</Text>
   
@@ -112,7 +112,8 @@ export default class CR_O extends Component {
       fontSize: 24,
       fontWeight: "bold",
       textAlign: "center",
-      marginBottom: '5%'
+      marginBottom: '5%',
+      marginTop: '3%',
     },
     bckground: {
       backgroundColor: 'rgba(255, 255, 255, 0.3)',
