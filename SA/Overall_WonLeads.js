@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, ImageBackground,
-  ScrollView,
+  Platform, StyleSheet, Text, View, TouchableOpacity, ImageBackground,
+  TouchableNativeFeedback, ScrollView,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 
-import firebase from '@react-native-firebase/app';
-
-export default class CR_OL extends Component {
+export default class CR_WL extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -22,22 +20,32 @@ export default class CR_OL extends Component {
             </TouchableOpacity>
           </View>
 
-          <ScrollView style={styles.bckground} >
+          <ScrollView style={styles.bckground}>
             <View style={styles.header}>
               <Text style={styles.ttleheader}>Name</Text>
               <Text style={styles.verticalLine}>|</Text>
-              <Text style={styles.ttleheader}>Status</Text>
+              <View style={{ marginTop: "2%" }}>
+                <Text style={styles.ttleheader2}>Quote</Text>
+                <Text style={styles.ttleheader2}>Sent</Text>
+              </View>
+              <Text style={styles.verticalLine}>|</Text>
+              <View style={{ marginTop: "2%" }}>
+                <Text style={styles.ttleheader2}>Quote</Text>
+                <Text style={styles.ttleheader2}>Agreed</Text>
+              </View>
             </View>
 
             <TouchableOpacity style={styles.box}
-              onPress={() => this.props.navigation.navigate('Lead Profle')}>
+            onPress={() => this.props.navigation.navigate('Lead Profle')}>
               <View style={styles.info}>
                 <View style={styles.custInfo}>
                   <Text numberOfLines={1} style={styles.custName}>Siti Nur Aliah</Text>
                   <Text numberOfLines={1} style={styles.custCompany}>Google Inc</Text>
                 </View>
                 <Text style={styles.verticalLine2}>|</Text>
-                <Text numberOfLines={1} style={styles.custStatus}>New lead</Text>
+                <Text numberOfLines={1} style={styles.custPrice}>RM1200</Text>
+                <Text style={styles.verticalLine2}>|</Text>
+                <Text numberOfLines={1} style={styles.custPrice}>RM1200</Text>
               </View>
               <View style={styles.info2}>
                 <Text style={styles.textSLinCharge}>Person In Charge: </Text>
@@ -91,13 +99,17 @@ let styles = StyleSheet.create({
     backgroundColor: '#F8C018',
     borderRadius: 10,
     marginTop: 10,
-    marginBottom: 10,
     width: "91%",
     justifyContent: 'space-evenly'
   },
   ttleheader: {
     fontSize: 16,
     margin: "4%"
+  },
+  ttleheader2: {
+    fontSize: 16,
+    alignSelf: 'center',
+    margin: -3
   },
   verticalLine: {
     color: "white",
@@ -114,14 +126,14 @@ let styles = StyleSheet.create({
   },
   custInfo: {
     margin: 5,
-    width: "45%"
+    width: "34.5%"
   },
   custCompany: {
     color: "#B56118",
   },
-  custStatus: {
+  custPrice: {
     margin: 5,
-    width: "45%",
+    width: "24%",
     alignSelf: 'center',
     textAlign: 'center',
     color: "#B56118",
@@ -135,9 +147,10 @@ let styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: 'white',
     borderRadius: 10,
+    marginTop: 10,
     width: "91%",
-    justifyContent: 'space-evenly',
-    marginBottom: 10
+    maxHeight: "50%",
+    justifyContent: 'space-evenly'
   },
   SLinCharge: {
     fontSize: 12,

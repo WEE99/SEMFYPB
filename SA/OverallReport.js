@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, ImageBackground
+  StyleSheet, Text, View, TouchableOpacity, ImageBackground, ScrollView, TouchableOpacityBase
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
@@ -11,38 +11,33 @@ export default class OR extends Component {
           <ImageBackground source={require('./img/backgroundImg.png')}
             style={styles.backgroundImage}>
             <Text style={styles.text}>Report</Text>
-            <View style={styles.nav}>
-              <TouchableOpacity style={styles.roundButton} 
-              onPress={() => this.props.navigation.navigate('Report')}/>
-              <TouchableOpacity style={styles.roundButton2} 
-              onPress={() => this.props.navigation.navigate('Company List')}/>
-              <TouchableOpacity style={styles.roundButton2} 
-              onPress={() => this.props.navigation.navigate('Salesperson List')}/>
-            </View>
   
-            <TouchableOpacity style={styles.bckground}>
+            <View style={styles.bckground}>
               <Text style={styles.subTitle}>Overall Performance</Text>
               <View style={styles.row}>
                 <View style={styles.openLead}>
                   <Text></Text>
                 </View>
-                <View style={styles.openLead}>
+                <TouchableOpacity style={styles.openLead} 
+                onPress={() => this.props.navigation.navigate('TopNav5', {screen: 'Open'})}>
                   <Text style={styles.no}>40</Text>
                   <Text numberOfLines={2} style={styles.typeTitle}>Open Leads</Text>
-                </View>
+                </TouchableOpacity>
               </View>
   
               <View style={styles.row2}>
-                <View style={styles.wonLead}>
+                <TouchableOpacity style={styles.wonLead}
+                onPress={() => this.props.navigation.navigate('TopNav5', {screen: 'Won'})}>
                   <Text style={styles.no}>40</Text>
                   <Text numberOfLines={2} style={styles.typeTitle}>Won Leads</Text>
-                </View>
-                <View style={styles.lostLead}>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.lostLead}
+                onPress={() => this.props.navigation.navigate('TopNav5', {screen: 'Lost'})}>
                   <Text style={styles.no}>40</Text>
                   <Text numberOfLines={2} style={styles.typeTitle}>Lost Leads</Text>
-                </View>
+                </TouchableOpacity>
               </View>
-            </TouchableOpacity>
+            </View>
   
             <TouchableOpacity style={styles.roundButton3} >
               <Icon name="filter" size={30} color="black" style={styles.icon} />
@@ -62,15 +57,6 @@ export default class OR extends Component {
       flex: 1,
       resizeMode: "cover"
     },
-    nav: {
-      flex: 1,
-      flexDirection: 'row',
-      alignSelf: 'center',
-      justifyContent: "center",
-      maxHeight: 11,
-      marginTop: '5%',
-      marginBottom: '5%'
-    },
     text: {
       color: "white",
       fontSize: 24,
@@ -78,28 +64,13 @@ export default class OR extends Component {
       textAlign: "center",
       marginTop: '3%',
     },
-    roundButton: {
-      width: 11,
-      height: 11,
-      borderRadius: 11,
-      margin: "4%",
-      backgroundColor: '#F8C018',
-      alignSelf: 'center',
-    },
-    roundButton2: {
-      width: 11,
-      height: 11,
-      borderRadius: 11,
-      margin: "4%",
-      backgroundColor: 'white',
-      alignSelf: 'center'
-    },
     bckground: {
       backgroundColor: 'rgba(255, 255, 255, 0.3)',
       width: "80%",
-      height: 350,
       alignSelf: 'center',
-      borderRadius: 10
+      borderRadius: 10,
+      paddingBottom: '5%',
+      marginTop: '13%'
     },
     subTitle: {
       fontSize: 18,

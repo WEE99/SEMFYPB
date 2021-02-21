@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import {
     StyleSheet, Text, View, TouchableOpacity, ImageBackground,
-    ScrollView,
+    ScrollView
 } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/Ionicons';
+
+import firebase from '@react-native-firebase/app';
 
 export default class CR_OL extends Component {
     render() {
@@ -15,7 +17,7 @@ export default class CR_OL extends Component {
                     <View flexDirection='row'>
                         <Text style={styles.text}>Report</Text>
                         <TouchableOpacity style={styles.backicon}
-                            onPress={() => this.props.navigation.navigate('TopNav1', { screen: 'Company' })}>
+                            onPress={() => this.props.navigation.navigate('TopNav1')}>
                             <Icon2 name='arrow-back' size={30} color='white' />
                         </TouchableOpacity>
                     </View>
@@ -61,14 +63,6 @@ let styles = StyleSheet.create({
         flex: 1,
         resizeMode: "cover"
     },
-    nav: {
-        flex: 1,
-        flexDirection: 'row',
-        alignSelf: 'center',
-        justifyContent: "center",
-        maxHeight: 11,
-        marginTop: '5%',
-    },
     text: {
         color: "white",
         fontSize: 24,
@@ -76,7 +70,7 @@ let styles = StyleSheet.create({
         textAlign: "center",
         marginTop: '3%',
         flex: 1
-    },
+    }, 
     backicon: {
         marginTop: '3%',
         marginLeft: '3%',

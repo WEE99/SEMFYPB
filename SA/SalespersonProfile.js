@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/Feather';
+import Icon3 from 'react-native-vector-icons/Ionicons';
 
 export default class OR extends Component {
   render() {
@@ -11,11 +12,12 @@ export default class OR extends Component {
       <View style={styles.container}>
         <ImageBackground source={require('./img/backgroundImg.png')}
           style={styles.backgroundImage}>
-          <Text style={styles.text}>Profile</Text>
-
-          <View style={styles.nav}>
-            <TouchableOpacity style={styles.roundButton} />
-            <TouchableOpacity style={styles.roundButton2} />
+          <View flexDirection='row'>
+            <Text style={styles.text}>Report</Text>
+            <TouchableOpacity style={styles.backicon}
+              onPress={() => this.props.navigation.navigate('Overall Company Report')}>
+              <Icon3 name='arrow-back' size={30} color='white' />
+            </TouchableOpacity>
           </View>
 
           <TouchableOpacity style={styles.bckground}>
@@ -49,7 +51,7 @@ export default class OR extends Component {
 
           </TouchableOpacity>
 
-          <View style={{ flexDirection: 'row', alignSelf: 'flex-end', marginRight: '8%' }}>
+          <View style={{ flexDirection: 'row', alignSelf: 'flex-end', marginRight: '5%' }}>
             <TouchableOpacity style={styles.roundButton3} >
               <Icon2 name="trash" size={30} color="black" style={styles.icon} />
             </TouchableOpacity>
@@ -78,8 +80,13 @@ let styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: '5%',
     marginTop: '3%',
+    flex: 1
+  },
+  backicon: {
+    marginTop: '3%',
+    marginLeft: '3%',
+    position: 'absolute'
   },
   bckground: {
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
@@ -87,7 +94,8 @@ let styles = StyleSheet.create({
     height: "70%",
     alignSelf: 'center',
     marginTop:"5%",
-    borderRadius: 10
+    borderRadius: 10,
+    marginTop: '13%'
   },
   icon: {
     alignSelf: 'center',
@@ -97,7 +105,7 @@ let styles = StyleSheet.create({
     width: 41,
     height: 41,
     borderRadius: 41,
-    marginTop: "20%",
+    marginTop: "12%",
     backgroundColor: '#F8C018',
     alignSelf: 'flex-end',
     marginLeft: '2%'

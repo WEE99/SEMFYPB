@@ -4,6 +4,7 @@ import {
     ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icon2 from 'react-native-vector-icons/Ionicons';
 
 export default class CR_LL extends Component {
     render() {
@@ -11,21 +12,23 @@ export default class CR_LL extends Component {
             <View style={styles.container}>
                 <ImageBackground source={require('./img/backgroundImg.png')}
                     style={styles.backgroundImage}>
-                    <Text style={styles.text}>Report</Text>
-                    <View style={styles.nav}>
-                        <TouchableOpacity style={styles.roundButton2} />
-                        <TouchableOpacity style={styles.roundButton2} />
-                        <TouchableOpacity style={styles.roundButton} />
+                    <View flexDirection='row'>
+                        <Text style={styles.text}>Report</Text>
+                        <TouchableOpacity style={styles.backicon}
+                            onPress={() => this.props.navigation.navigate('TopNav1')}>
+                            <Icon2 name='arrow-back' size={30} color='white' />
+                        </TouchableOpacity>
                     </View>
 
-                    <TouchableOpacity style={styles.bckground}>
+                    <ScrollView style={styles.bckground}>
                         <View style={styles.header}>
                             <Text style={styles.ttleheader}>Name</Text>
                             <Text style={styles.verticalLine}>|</Text>
                             <Text style={styles.ttleheader}>Remarks</Text>
                         </View>
 
-                        <ScrollView contentContainerStyle={styles.box}>
+                        <TouchableOpacity style={styles.box}
+                            onPress={() => this.props.navigation.navigate('Lead Profle')}>
                             <View style={styles.info}>
                                 <View style={styles.custInfo}>
                                     <Text numberOfLines={1} style={styles.custName}>Siti Nur Aliah</Text>
@@ -34,12 +37,8 @@ export default class CR_LL extends Component {
                                 <Text style={styles.verticalLine2}>|</Text>
                                 <Text numberOfLines={1} style={styles.custStatus}>Not interested</Text>
                             </View>
-                            <View style={styles.info2}>
-                                <Text style={styles.textSLinCharge}>Person In Charge: </Text>
-                                <Text style={styles.SLinCharge}>Siti Nur Aliah</Text>
-                            </View>
-                        </ScrollView>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    </ScrollView>
 
                     <TouchableOpacity style={styles.roundButton3} >
                         <Icon name="filter" size={30} color="black" style={styles.icon} />
@@ -58,45 +57,27 @@ let styles = StyleSheet.create({
         flex: 1,
         resizeMode: "cover"
     },
-    nav: {
-        flex: 1,
-        flexDirection: 'row',
-        alignSelf: 'center',
-        justifyContent: "center",
-        maxHeight: 11,
-        marginTop: '5%',
-    },
     text: {
         color: "white",
         fontSize: 24,
         fontWeight: "bold",
         textAlign: "center",
         marginTop: '3%',
+        flex: 1
     },
-    roundButton: {
-        width: 11,
-        height: 11,
-        borderRadius: 11,
-        margin: "4%",
-        backgroundColor: '#F8C018',
-        alignSelf: 'center',
-
-    },
-    roundButton2: {
-        width: 11,
-        height: 11,
-        borderRadius: 11,
-        margin: "4%",
-        backgroundColor: 'white',
-        alignSelf: 'center'
+    backicon: {
+        marginTop: '3%',
+        marginLeft: '3%',
+        position: 'absolute'
     },
     bckground: {
         backgroundColor: 'rgba(255, 255, 255, 0.6)',
         width: "80%",
         height: "70%",
         alignSelf: 'center',
-        margin: '5%',
-        borderRadius: 10
+        marginTop: '13%',
+        borderRadius: 10,
+        marginBottom: '6%'
     },
     header: {
         flexDirection: 'row',
@@ -118,11 +99,6 @@ let styles = StyleSheet.create({
     },
     info: {
         flexDirection: 'row',
-    },
-    info2: {
-        flexDirection: 'row',
-        alignSelf: 'center',
-        margin: "1%"
     },
     custInfo: {
         margin: 5,
@@ -152,21 +128,15 @@ let styles = StyleSheet.create({
         maxHeight: "50%",
         justifyContent: 'space-evenly'
     },
-    SLinCharge: {
-        fontSize: 12,
-        color: "#B56118",
-    },
-    textSLinCharge: {
-        fontSize: 12
-    },
     roundButton3: {
         width: 41,
         height: 41,
         borderRadius: 41,
         marginTop: "3%",
-        marginRight: '8%',
+        marginRight: '5%',
+        marginBottom: '6%',
         backgroundColor: '#F8C018',
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
     },
     icon: {
         alignSelf: 'center',

@@ -3,12 +3,10 @@ import {
   StyleSheet, Text, View, TouchableOpacity, ImageBackground,
   ScrollView,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/AntDesign';
+import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 
-import firebase from '@react-native-firebase/app';
-
-export default class CR_OL extends Component {
+export default class CR_LL extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -22,26 +20,22 @@ export default class CR_OL extends Component {
             </TouchableOpacity>
           </View>
 
-          <ScrollView style={styles.bckground} >
+          <ScrollView style={styles.bckground}>
             <View style={styles.header}>
               <Text style={styles.ttleheader}>Name</Text>
               <Text style={styles.verticalLine}>|</Text>
-              <Text style={styles.ttleheader}>Status</Text>
+              <Text style={styles.ttleheader}>Remarks</Text>
             </View>
 
             <TouchableOpacity style={styles.box}
-              onPress={() => this.props.navigation.navigate('Lead Profle')}>
+            onPress={() => this.props.navigation.navigate('Lead Profle')}>
               <View style={styles.info}>
                 <View style={styles.custInfo}>
                   <Text numberOfLines={1} style={styles.custName}>Siti Nur Aliah</Text>
                   <Text numberOfLines={1} style={styles.custCompany}>Google Inc</Text>
                 </View>
                 <Text style={styles.verticalLine2}>|</Text>
-                <Text numberOfLines={1} style={styles.custStatus}>New lead</Text>
-              </View>
-              <View style={styles.info2}>
-                <Text style={styles.textSLinCharge}>Person In Charge: </Text>
-                <Text style={styles.SLinCharge}>Siti Nur Aliah</Text>
+                <Text numberOfLines={1} style={styles.custStatus}>Not interested</Text>
               </View>
             </TouchableOpacity>
           </ScrollView>
@@ -91,7 +85,6 @@ let styles = StyleSheet.create({
     backgroundColor: '#F8C018',
     borderRadius: 10,
     marginTop: 10,
-    marginBottom: 10,
     width: "91%",
     justifyContent: 'space-evenly'
   },
@@ -107,14 +100,9 @@ let styles = StyleSheet.create({
   info: {
     flexDirection: 'row',
   },
-  info2: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-    margin: "1%"
-  },
   custInfo: {
     margin: 5,
-    width: "45%"
+    width: "42%"
   },
   custCompany: {
     color: "#B56118",
@@ -135,16 +123,10 @@ let styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: 'white',
     borderRadius: 10,
+    marginTop: 10,
     width: "91%",
-    justifyContent: 'space-evenly',
-    marginBottom: 10
-  },
-  SLinCharge: {
-    fontSize: 12,
-    color: "#B56118",
-  },
-  textSLinCharge: {
-    fontSize: 12
+    maxHeight: "50%",
+    justifyContent: 'space-evenly'
   },
   roundButton3: {
     width: 41,
