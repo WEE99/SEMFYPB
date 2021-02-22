@@ -2,7 +2,9 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView} from 'react-native';
 import {TableRowDashboard} from "./TablesandTimeFormat";
+import {auth, db, storage} from "./firebase";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
 // import {
 //   LineChart,
 //   BarChart,
@@ -15,12 +17,16 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // const myheight=90;
 
+
+
+
+
 const arry =[
       {id:1, name: "Walsom",company: "Google. Co", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
       {id:2, name: "ERic",company: "TAKA", contacted:" NOt Contacted", Quote:"RM 3000", Status:"Won"},
-      {id:3, name: "MARCC LEE HG",company: "UNIMAS", contacted:" NOT Contacted", Quote:"RM 3000", Status:"Won"},
-      {id:4, name: "Kelly",company: "Taylor", contacted:"Contacted", Quote:"RM 3000000", Status:"Won"},
-      {id:5, name: "Kelly",company: "Modelling University of Malaysia", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
+      {id:3, name: "MARCC LEE HG",company: "UNIMas", contacted:" NOT Contacted", Quote:"RM 3000", Status:"Won"},
+      {id:4, name: "Jelly",company: "Talor", contacted:"Contacted", Quote:"RM 3000000", Status:"Won"},
+      {id:5, name: "Joy",company: "University of Malaysia", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
       {id:6, name: "Pau",company: "SUITS", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
       {id:7, name: "Meow",company: "UCSI", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
       {id:8, name: "Liew",company: "UITS", contacted:"Contacted", Quote:"RM 3000", Status:"Lost"},
@@ -59,7 +65,34 @@ const arry =[
 //       )
 // };
 
-export default function App() {
+//export default function App() {
+export default ({navigation, route}) => {
+
+
+var data = db.collection("users");
+
+const [username, setUsername]=useState("");
+
+
+useEffect(() => {
+    
+  var user=auth.currentUser
+  console.log(user.uid)
+  if(user){
+    db.collection("users").where("UID", "==",user.uid)
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            setUsername(doc.data().name)
+        });
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+}
+},[]);
 
   const pressWon=()=>{
     alert("Won nav Remarks. js")
@@ -78,7 +111,9 @@ export default function App() {
   }
 
   const pressNotification=()=>{
-    alert("nav to Notification .js ")
+    alert("nav to Notification .js ");
+    navigation.navigate('Notification');
+
   }
 
 
@@ -93,10 +128,10 @@ export default function App() {
 
   return (    
   <View style={styles.container}> 
-
+      {/* <Text>{username}</Text> */}
       <View style={styles.DashboardtitleContainer}>
       <Text style={styles.titleDashboard}>Dashboard</Text>
-      <TouchableOpacity style={{marginLeft:10, padding:1}} onPress={pressLead}>
+      <TouchableOpacity style={{marginLeft:10, padding:1}} onPress={pressNotification}>
       <Icon name='notifications' size={25}  color="orange"/> 
       </TouchableOpacity>
       </View>

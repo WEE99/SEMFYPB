@@ -3,14 +3,17 @@ import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function App() {
+//export default function App() {
+export default ({navigation, route}) => {
 
   const pressTaskMainPage=()=>{
     alert('nav to TaskMainPage .js')
+    navigation.navigate('Tasks');
   };
 
   const pressHistory=()=>{
     alert('nav to HistoryPage .js')
+    navigation.navigate('Tasks History');
   };
 
   const pressCall=()=>{

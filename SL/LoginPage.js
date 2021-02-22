@@ -1,18 +1,41 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
+import {auth} from './firebase';
 
-export default function App() {
+//export default function App() {
+export default ({navigation, route}) => {
 
   const pressLogin =()=>{
-    alert("Login Succesful nav to Dashboard .js")
-  };
+    var em = LoginEmail.charAt(LoginEmail.length-1);
+    if(em === " "){
+        setLoginEmail(LoginEmail.slice(0, -1));
+    }
+        auth.signInWithEmailAndPassword(LoginEmail, Loginpassword)
+            .then((user) => {
+                console.log(user.user.uid);
+                alert("Login Sucessful")
+            })
+            .catch((error) => {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.log(errorCode,errorMessage);
+                if(errorCode === "auth/user-not-found"){
+                    alert("No Account with that Email Address");
+                }else if(errorCode === "auth/wrong-password" || errorCode === "auth/invalid-email"){
+                    alert("Incorrect Email or Password");
+                }else{
+                    alert("An error occurred. Please Try Again");
+                }
+            });
+};
 
   const pressForgotpassword =()=>{
-    alert("nav to ForgotPassword .js")
+    alert("nav to ForgotPassword .js");
+    navigation.navigate("Forgot Password");
   };
 
-  const [Loginusername, setLoginusername]=useState("");
+  const [LoginEmail, setLoginEmail]=useState("");
   const [Loginpassword, setLoginpassword]=useState("");
 
   return (
@@ -32,7 +55,7 @@ export default function App() {
       <TextInput 
       style={styles.input}
       placeholder='Username'
-      onChangeText={(val) => setLoginusername(val)}
+      onChangeText={(val) => setLoginEmail(val)}
        />
     </View>
 
@@ -64,7 +87,7 @@ export default function App() {
      </TouchableOpacity>
      </View>
 
-     {/* <Text >{"username====>"+ Loginusername}</Text>
+     {/* <Text >{"username====>"+ LoginEmail}</Text>
      <Text >{"username====>"+ Loginpassword}</Text> */}
 
     {/* <Text >{"password====>"+Base64.encode(this.state.LOGIN_password) }</Text> */}

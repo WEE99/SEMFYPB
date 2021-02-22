@@ -3,6 +3,7 @@ import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Entypo} from 'react-native-vector-icons';
+//LeadsDetails
 
 export default function App() {
 

@@ -11,18 +11,22 @@ const arryOpen =[
   {id:4, Lname: "Xaruna",company: "Karun", Status:"Contacted"},
 ];
 
-export default function App() {
+//export default function App() {
+export default ({navigation, route}) => {
 
   const pressWonLeads=()=>{
     alert('nav to WonLeads .js')
+    navigation.navigate('Won Leads');
   };
 
   const pressLostLeads=()=>{
     alert('nav to LostLeads .js')
+    navigation.navigate('Lost Leads');
   };
 
   const pressOpenLeads=()=>{
     alert('nav to OpenLeads .js')
+    navigation.navigate('Open Leads');
   };
 
   return (

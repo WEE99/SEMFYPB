@@ -2,8 +2,15 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image,ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {Todotask1,Todotask2} from "./TablesandTimeFormat"
+// LeadsDetailsTask
 
 export default function App() {
+
+  const [todaysDate,setTodaysDate]=useState(new Date());
+  const [todaysDateString,setTodaysDateString]=useState(todaysDate.toLocaleDateString("en-GB"));
+
+  
 
   const pressLeadsDetailsPage= ()=>{
     alert("nav to LeadsDetails .js"); 
@@ -135,11 +142,6 @@ export default function App() {
             </TouchableOpacity>
         </View>
       </View>
-
-
-
-
-
 
 
       <StatusBar style="auto" />
