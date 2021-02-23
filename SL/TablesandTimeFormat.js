@@ -125,4 +125,40 @@ export const TableRowOpen =({data})=>{
   )
 };
 
+export const Todotask1=({data})=>{
+      return (
+            <View style={{paddingBottom:1, paddingTop:10}}>
+            <View style={{borderTopLeftRadius:10, borderTopRightRadius:10, backgroundColor:"orange", paddingVertical:1, marginHorizontal:15, elevation: 2}}>
+            <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
+                      <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"left"}}>
+                          {data.date}
+                      </Text>
+                      <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"right"}}>
+                          {data.day}
+                      </Text>
+                  </View>
+            </View>
+            </View>
+      )
+    };
+
+
+    export const Todotask2=({data})=>{
+      return (
+            <TouchableOpacity  onPress={pressSpecifictTask}>
+            <View style={{borderBottomLeftRadius:10, borderBottomRightRadius:10, backgroundColor:"orange", paddingVertical:1, marginHorizontal:15, elevation: 2}}>
+            <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
+                      <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
+                          {data.time}    {data.title}
+                      </Text>
+                      <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"right"}}>
+                          {data.name}
+                      </Text>
+                  </View>
+            </View>
+            </TouchableOpacity>
+      
+      )
+    };
+
 

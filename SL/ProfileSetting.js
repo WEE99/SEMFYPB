@@ -3,8 +3,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {Entypo} from 'react-native-vector-icons';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
+import {auth} from "./firebase";
 
-export default function App() {
+//export default function App() {
+export default ({navigation, route}) => {
 
   const pressEditProfile=()=>{
     alert('nav to EditProfile .js')
@@ -13,14 +15,25 @@ export default function App() {
 
   const pressEditNotify=()=>{
     alert('nav to EditNotification .js')
+    navigation.navigate('Notifications');
   };
 
   const pressEditPassword=()=>{
     alert('nav to EditPassword .js')
+    navigation.navigate('Password');
   };
 
   const pressLogout=()=>{
-    alert('Are you sure you want to Logout?')
+    var r = confirm("Are you sure you want to Logout?");
+    if (r == true) {
+      auth.signOut().then(() => {
+        console.log("Logout Successfully");
+        // Sign-out successful.
+      }).catch((error) => {
+        alert("An Error Occured. Try Again Later")
+        // An error happened.
+      });
+    } 
   };
 
  

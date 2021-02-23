@@ -3,12 +3,41 @@ import {MaterialCommunityIcons} from 'react-native-vector-icons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
+import {auth, db} from './firebase';
 
 
-export default function App() {
+
+//export default function App() {
+export default ({navigation, route}) => {
+
+
+  const [profileusername, setprofieusername]=useState("")
+
+  
+  useEffect(() => {
+    var user=auth.currentUser
+    console.log(user.uid)
+    if(user){
+      db.collection("users").where("UID", "==",user.uid)
+      .get()
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              console.log(doc.id, " => ", doc.data());
+              setprofieusername(doc.data().name)
+          });
+      })
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
+}
+   
+}, []);
+
 
   const pressOpenMenu=()=>{
     alert('nav to ProfileSetting .js');
+    navigation.navigate('Settings');
   }
 
   return (
@@ -31,7 +60,7 @@ export default function App() {
       </View>
 
       <View style={styles.UsernameContainer}>
-        <Text style={styles.titleUsername}>Username</Text>
+        <Text style={styles.titleUsername}>{profileusername}</Text>
         <Text style={styles.usersmallname}>KillCow</Text>
       </View>
       
@@ -70,7 +99,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    //backgroundColor: '#fff',
     alignItems:"center",
     justifyContent: 'flex-start',
     paddingTop:"20%",

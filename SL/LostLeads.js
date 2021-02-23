@@ -14,19 +14,24 @@ const arryLost =[
   {id:7, Lname: "Saruna",company: "Karuna", Remarks:"Cannot la this"},
 ];
 
-export default function App() {
+//export default function App() {
 
-  const pressWonLeads=()=>{
-    alert('nav to WonLeads .js')
-  };
+  export default ({navigation, route}) => {
 
-  const pressLostLeads=()=>{
-    alert('nav to LostLeads .js')
-  };
-
-  const pressOpenLeads=()=>{
-    alert('nav to OpenLeads .js')
-  };
+    const pressWonLeads=()=>{
+      alert('nav to WonLeads .js')
+      navigation.navigate('Won Leads');
+    };
+  
+    const pressLostLeads=()=>{
+      alert('nav to LostLeads .js')
+      navigation.navigate('Lost Leads');
+    };
+  
+    const pressOpenLeads=()=>{
+      alert('nav to OpenLeads .js')
+      navigation.navigate('Open Leads');
+    };
 
   return (
     <View style={styles.container}>

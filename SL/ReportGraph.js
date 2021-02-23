@@ -2,16 +2,29 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
 
-export default function App() {
+//export default function App() {
+  export default ({navigation, route}) => {
 
   const  pressReportOpen= ()=>
-  {alert( "nav to OpenLeads .js")};
+  {
+  alert( "nav to OpenLeads .js")
+  navigation.navigate('Open Leads');
+  };
 
   const  pressReportWon= ()=>
-  {alert( "nav to WonLeads .js")};
+  {
+    alert( "nav to WonLeads .js")
+    navigation.navigate('Won Leads');
+  };
+  
 
   const  pressReportLost= ()=>
-  {alert( "nav to LostLeads .js")};
+  {
+    alert( "nav to LostLeads .js")
+    navigation.navigate('Lost Leads');
+  };
+  
+
 
   return (
     <View style={styles.container}>

@@ -11,20 +11,25 @@ const arryWon =[
   {id:4, Lname: "Karuna",company: "Karuna", QuoteSent:"RM 5000", QuoteAgreed:"RM 3000"},
 ];
 
-export default function App() {
+//export default function App() {
 
-  const pressWonLeads=()=>{
-    alert('nav to WonLeads .js')
-  };
+  export default ({navigation, route}) => {
 
-  const pressLostLeads=()=>{
-    alert('nav to LostLeads .js')
-  };
-
-  const pressOpenLeads=()=>{
-    alert('nav to OpenLeads .js')
-  };
-
+    const pressWonLeads=()=>{
+      alert('nav to WonLeads .js')
+      navigation.navigate('Won Leads');
+    };
+  
+    const pressLostLeads=()=>{
+      alert('nav to LostLeads .js')
+      navigation.navigate('Lost Leads');
+    };
+  
+    const pressOpenLeads=()=>{
+      alert('nav to OpenLeads .js')
+      navigation.navigate('Open Leads');
+    };
+    
   return (
     <View style={styles.container}>
 
