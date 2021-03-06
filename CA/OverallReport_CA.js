@@ -30,7 +30,7 @@ export default function App({navigation}) {
               <TouchableOpacity style={styles.Button} onPress={pressReportOpen}>
                 <View style={styles.OpenButtonBorder}>
                   <Text style={styles.ReportText}>1</Text>
-                  <Text style={styles.ReportText}>Open</Text>
+                  <Text style={styles.ReportText}>Open Leads</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -42,7 +42,7 @@ export default function App({navigation}) {
               <TouchableOpacity style={styles.Button} onPress={pressReportWon}>
                 <View style={styles.WonButtonBorder}>
                   <Text style={styles.ReportText} >50</Text>
-                  <Text style={styles.ReportText}>Won</Text>
+                  <Text style={styles.ReportText}>Won Leads</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -51,7 +51,7 @@ export default function App({navigation}) {
               <TouchableOpacity style={styles.Button} onPress={pressReportLost}>
                 <View style={styles.LostButtonBorder}>
                   <Text style={styles.ReportText} >10</Text>
-                  <Text style={styles.ReportText}>Lost</Text>
+                  <Text style={styles.ReportText}>Lost Leads</Text>
                 </View>
               </TouchableOpacity>
             </View>
@@ -136,6 +136,7 @@ const styles = StyleSheet.create({
     color:"white",
     fontSize:20,
     fontWeight:"bold",
+    textAlign:'center'
   },
 
 });

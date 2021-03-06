@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
 
   iconButtonBorder:{
     borderWidth:2,
-    borderColor:"grey",
+    borderColor:"#F8C018",
     borderRadius:10,
     padding:"10%",
     textAlign:"center",
