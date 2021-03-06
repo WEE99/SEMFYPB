@@ -9,34 +9,9 @@ const SalespersonAccountSuperAdmin = () => {
                 flex: 1,
                 padding:'10%'
             }}>
-        <ImageBackground source={require('./img/backgroundImg.png')}
-          style={styles.backgroundImage}>
-                <View style={styles.Username}>
-                    <Text style={styles.Username}>
-                        John David
-                    </Text>
-                    <Text style={styles.designation}>
-                        Salesperson
-                    </Text>
-                </View>
-
-
-            <View>
-              <Card style={styles.card2}>
-                <View style={styles.Direction}>
-                    <Text style={[styles.Text, { marginEnd: 25 }]}>Email</Text>
-                    <Text style={styles.Info}>abc@gmail.com</Text>
-                </View>
-                <View style={styles.Direction}>
-                    <Text style={[styles.Text, { marginEnd: 8 }]}>Address</Text>
-                    <Text style={styles.Info}>+6 012 345 6789</Text>
-                </View>
-                <View style={styles.Direction}>
-                    <Text style={[styles.Text, { marginEnd: 8 }]}>Designation</Text>
-                    <Text style={styles.Info}>Salesperson</Text>
-                </View>
-              </Card>
-            </View>
+            <ImageBackground source={require('./img/backgroundImg.png')}
+                style={styles.backgroundImage}>
+            <Text style={{color:'white', fontSize:25}}>This is leads Task Page</Text>
             </ImageBackground>
         </View>
     )
@@ -57,10 +32,12 @@ const styles = StyleSheet.create({
         paddingStart: 15,
         paddingTop: 4
     },
+
     backgroundImage: {
         flex: 1,
         resizeMode: "cover"
       },
+
     Username: {
         marginTop: 10,
         fontSize: 20,

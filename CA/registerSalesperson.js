@@ -1,65 +1,116 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Image,ImageBackground, TouchableOpacity, ScrollView, TextInput, ActivityIndicator, Alert } from 'react-native';
 //import { ScrollView } from 'react-native-gesture-handler';
+import firebase from './firebase';
+
+
 
 export default class App extends Component {
-
-  _onPressCancel() {
-    alert('Cancel')
+  constructor(){
+    super();
+    this.state = {
+      Name: '',
+      password: '',
+      designation: '',
+      email: '',
+      contact: '',
+      isLoading: false
+    };
   }
 
-  _onPressSave() {
-    alert('Save')
+  // _onPressCancel() {
+  //   alert('Cancel')
+  // }
+
+  // _onPressSave() {
+  //   alert('Save')
+  // }
+
+  
+
+  updateInputVal = (val, prop)=> {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
   }
 
-  state = {
-    username: '',
-    Name: '',
-    designation: '',
-    email: '',
-    contact: '',
-  };
+  registerUser =()=>{
+    if(this.state.email === '' && this.state.password === ''){
+      Alert.alert('Enter details to register!')
+    }else{
+        this.setState({
+          isLoading:true,
+        })
+        firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .then((res) => {
+          res.user.updateProfile({
+            Name: this.state.Name
+          })
+          console.log("user registered successfully!")
+          this.setState({
+            isLoading: false,
+            Name: '',
+            email: '',
+            password: '',
+            contact: '',
+            designation: ''
+          })
+          // this.props.navigation.navigate('Login')
+        })
+        .catch(error => this.setState({errorMessage: error.message}))
+      }
+    }
+  
 
   render() {
+    if(this.state.isLoading){
+      return(
+        <View style={styles.preloader}>
+          <ActivityIndicator size="large" color="#9E9E9E"/>
+        </View>
+      )
+    }
     return (
       <ScrollView>
         <View style={styles.container}>
         <ImageBackground source={require('./img/backgroundImg.png')}
           style={styles.backgroundImage}>
-          <Text style={styles.instruction}>Username</Text>
+          <Text style={styles.instruction}>Name</Text>
           <TextInput
             //secureTextEntry={true} 
             style={styles.input}
-            onChangeText={text => this.setState({ username: text })}
+            onChangeText={(val) => this.updateInputVal(val, 'Name')}
           />
 
-          <Text style={styles.instruction}> Name</Text>
+          <Text style={styles.instruction}> Password</Text>
           <TextInput
             //secureTextEntry={true} 
             style={styles.input}
-            onChangeText={text => this.setState({ Name: text })}
+            onChangeText={(val) => this.updateInputVal(val, 'password')}
           />
 
           <Text style={styles.instruction}>Email</Text>
           <TextInput
             //secureTextEntry={true} 
             style={styles.input}
-            onChangeText={text => this.setState({ email: text })}
+            onChangeText={(val) => this.updateInputVal(val, 'email')}
           />
 
           <Text style={styles.instruction}>Contact</Text>
           <TextInput
             //secureTextEntry={true} 
             style={styles.input}
-            onChangeText={text => this.setState({ contact: text })}
+            onChangeText={(val) => this.updateInputVal(val, 'contact')}
           />
 
           <Text style={styles.instruction}>Designation</Text>
           <TextInput
             //secureTextEntry={true} 
             style={styles.input}
-            onChangeText={text => this.setState({ designation: text })}
+            onChangeText={(val) => this.updateInputVal(val, 'designation')}
           />
 
           <View style={styles.row}>
@@ -75,7 +126,7 @@ export default class App extends Component {
               style={styles.Button}
               //onPress={this._onPressLoginButton}
               //disabled={!this.state.isFormValid}
-              onPress={()=> this.props.navigation.goBack()} 
+              onPress={() => this.registerUser()} 
             >
               <Text style={styles.ButtonContent}>Save</Text>
             </TouchableOpacity>
@@ -84,8 +135,7 @@ export default class App extends Component {
           </View>
 
           <StatusBar style="auto" />
-          
-        </ImageBackground>
+          </ImageBackground>
         </View>
       </ScrollView>
     );
@@ -143,6 +193,16 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 20,
-  }
+  },
 
+  preloader: {
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    position: 'absolute',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#fff'
+  }
 });

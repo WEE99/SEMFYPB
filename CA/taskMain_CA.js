@@ -32,87 +32,80 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('./img/backgroundImg.png')}
+        style={styles.backgroundImage}>
 
-      <View>
-      <Text style={styles.title}>Tasks</Text>
+      <View style={{alignItems: 'center'}}>
+      <Text style={styles.title}>Tasks Main</Text>
       </View>
 
-      <View style={styles.flexrow}>
-        <View >
-          <TouchableOpacity style={styles.taskbutton} onPress={pressTaskMainPage}><Text> </Text></TouchableOpacity>
+      <View style={{ alignItems: 'center', marginTop: 40 }}>
+        <View style={styles.flexrow}>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity style={styles.iconButton} onPress={pressAlert}>
+              <View style={styles.iconButtonBorder}>
+                <Icon name='warning' size={40} color="#F8C018"/>
+                <Text style={styles.icontext}>40</Text>
+                <Text style={styles.icontext}>Overdue</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View>
+            <TouchableOpacity style={styles.iconButton} onPress={pressCall}>
+              <View style={styles.iconButtonBorder}>
+                <Icon name='call' size={40} color="#F8C018"/>
+                <Text style={styles.icontext} >40</Text>
+                <Text style={styles.icontext}>Call</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View >
-          <TouchableOpacity style={styles.historybutton} onPress={pressHistory}><Text> </Text></TouchableOpacity>
+
+
+        <View style={styles.flexrow}>
+          <View style={styles.iconContainer}>
+            <TouchableOpacity style={styles.iconButton} onPress={pressAppoinment}>
+              <View style={styles.iconButtonBorder}>
+                <Icon name='groups' size={40} color="#F8C018"/>
+                <Text style={styles.icontext} >40</Text>
+                <Text style={styles.icontext}>Appointment</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+
+          <View>
+            <TouchableOpacity style={styles.iconButton} onPress={pressOthers}>
+              <View style={styles.iconButtonBorder}>
+                <Icon name='description' size={40} color="#F8C018"/>
+                <Text style={styles.icontext}>40</Text>
+                <Text style={styles.icontext}>Others</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
+        <StatusBar style="auto" />
       </View>
-
-
-      <View style={styles.flexrow}>
-        <View style={styles.iconContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={pressAlert}>
-           <View style={styles.iconButtonBorder}>
-           <Icon name='warning' size={40} /> 
-           <Text style={styles.icontext}>40</Text>
-           <Text style={styles.icontext}>Overdue</Text>
-           </View>
-        </TouchableOpacity>
-        </View>
-
-        <View>
-        <TouchableOpacity style={styles.iconButton} onPress={pressCall}>
-           <View style={styles.iconButtonBorder}>
-           <Icon name='call' size={40} /> 
-           <Text style={styles.icontext} >40</Text>
-           <Text style={styles.icontext}>Call</Text>
-           </View>
-        </TouchableOpacity>
-        </View>
-      </View>
-
-
-      <View style={styles.flexrow}>
-        <View style={styles.iconContainer}>
-        <TouchableOpacity style={styles.iconButton} onPress={pressAppoinment}>
-           <View style={styles.iconButtonBorder}>
-           <Icon name='groups' size={40} /> 
-           <Text style={styles.icontext} >40</Text>
-           <Text style={styles.icontext}>Appoinment</Text>
-           </View>
-        </TouchableOpacity>
-        </View>
-
-        <View>
-        <TouchableOpacity style={styles.iconButton} onPress={pressOthers}>
-           <View style={styles.iconButtonBorder}>
-           <Icon name='description' size={40} /> 
-           <Text style={styles.icontext}>40</Text>
-           <Text style={styles.icontext}>Others</Text>
-           </View>
-        </TouchableOpacity>
-        </View>
-      </View>
-
-
-
-
-      <StatusBar style="auto" />
+      </ImageBackground>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1
+  },
+
+  backgroundImage: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems:"center",
-    justifyContent: 'flex-start',
-    padding:"20%",
+    resizeMode: "cover"
   },
 
   title:{
     fontWeight:"bold",
-    fontSize:20,
-    color:"black",
+    fontSize:25,
+    color:"white",
+    marginTop: 10,
     alignItems:"flex-start",
   },
 
@@ -158,7 +151,7 @@ const styles = StyleSheet.create({
   },
 
   icontext:{
-    color:"orange",
+    color:"white",
     // fontSize:10,
     fontWeight:"bold",
   },

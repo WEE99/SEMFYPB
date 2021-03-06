@@ -1,24 +1,20 @@
 import React, { Component } from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, ImageBackground,
-    ScrollView,
-  } from 'react-native';
-  import Icon from 'react-native-vector-icons/AntDesign';
-
+import {StyleSheet, Text, View, TouchableOpacity, ImageBackground, ScrollView, } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
+import Icon2 from 'react-native-vector-icons/Ionicons';
 import firebase from '@react-native-firebase/app';
 
 export default class CR_OL extends Component {
     render() {
       return (
         <View style={styles.container}>
-          {/* <ImageBackground source={require('./backgroundImg.png')}
-            style={styles.backgroundImage}> */}
+          <ImageBackground source={require('./img/backgroundImg.png')}
+            style={styles.backgroundImage}>
             <Text style={styles.text}>Open Leads Report</Text>
-            <View style={styles.nav}>
-              <TouchableOpacity style={styles.roundButton} />
-              <TouchableOpacity style={styles.roundButton2} />
-              <TouchableOpacity style={styles.roundButton2} />
-            </View>
-  
+            <TouchableOpacity style={styles.backicon}
+                        onPress={() => this.props.navigation.navigate('overall')}>
+                        <Icon2 name='arrow-back' size={30} color='white' />
+                    </TouchableOpacity>
             <TouchableOpacity style={styles.bckground}>
               <View style={styles.header}>
                 <Text style={styles.ttleheader}>Name</Text>
@@ -45,7 +41,7 @@ export default class CR_OL extends Component {
             <TouchableOpacity style={styles.roundButton3} >
               <Icon name="filter" size={30} color="black" style={styles.icon} />
             </TouchableOpacity>
-          {/* </ImageBackground> */}
+          </ImageBackground>
         </View>
       );
     }
@@ -72,6 +68,7 @@ export default class CR_OL extends Component {
       fontSize: 24,
       fontWeight: "bold",
       textAlign: "center",
+      marginTop:15
     },
     roundButton: {
       width: 11,
@@ -90,12 +87,17 @@ export default class CR_OL extends Component {
       backgroundColor: 'white',
       alignSelf: 'center'
     },
+    backicon: {
+      marginTop: '3%',
+      marginLeft: '3%',
+      position: 'absolute'
+    },
     bckground: {
       backgroundColor: 'rgba(255, 255, 255, 0.6)',
       width: "80%",
       height: "70%",
       alignSelf: 'center',
-      margin: '5%',
+      margin: '10%',
       borderRadius: 10
     },
     header: {

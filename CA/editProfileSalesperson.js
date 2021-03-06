@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput,ImageBackground } from 'react-native';
 //import { ScrollView } from 'react-native-gesture-handler';
 
 export default class App extends Component {
@@ -25,6 +25,8 @@ export default class App extends Component {
     return (
       <ScrollView>
         <View style={styles.container}>
+        <ImageBackground source={require('./img/backgroundImg.png')}
+          style={styles.backgroundImage}>
           <Text style={styles.instruction}> Name</Text>
           <TextInput
             //secureTextEntry={true} 
@@ -82,6 +84,7 @@ export default class App extends Component {
           </View>
 
           <StatusBar style="auto" />
+          </ImageBackground>
         </View>
       </ScrollView>
     );
@@ -95,6 +98,10 @@ const styles = StyleSheet.create({
     padding: "10%",
     //alignItems: 'center',
     //justifyContent: 'center',
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover"
   },
 
   instruction: {

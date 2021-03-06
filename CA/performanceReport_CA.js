@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
-import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button , TouchableOpacity, ImageBackground,Image} from 'react-native';
 
 export default function App() {
 
@@ -15,6 +15,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('./img/backgroundImg.png')}
+        style={styles.backgroundImage}>
       <View>
       <Text style={styles.title}>Performance Report</Text>
       </View>
@@ -50,13 +52,8 @@ export default function App() {
         </TouchableOpacity>
         </View>
       </View>
-
-
-    
-
-
-
       <StatusBar style="auto" />
+      </ImageBackground>
     </View>
   );
 }
@@ -68,6 +65,11 @@ const styles = StyleSheet.create({
     alignItems:"center",
     justifyContent: 'flex-start',
     padding:"20%",
+  },
+
+  backgroundImage: {
+    flex: 1,
+    resizeMode: "cover"
   },
 
   title:{
