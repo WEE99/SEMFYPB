@@ -42,9 +42,9 @@ export default ({navigation, route}) => {
   };
 
 
-  const pressCreate =()=>{
+  const pressSave =()=>{
     {
-    alert("Call Task created  nav to Dashboard .js")
+    alert("Call Task Saveded  nav to Dashboard .js")
     navigation.goBack()
     }
 
@@ -230,9 +230,9 @@ export default ({navigation, route}) => {
             //onPress={this._onPressLoginButton}
             //disabled={!this.state.isFormValid}
             //onPress={this. _onPressCancelChangePswButton}
-            onPress= {pressCreate}
+            onPress= {pressSave}
             >
-            <Text style={styles.ButtonContent}>Create</Text>
+            <Text style={styles.ButtonContent}>Save</Text>
         </TouchableOpacity>
 
         <TouchableOpacity

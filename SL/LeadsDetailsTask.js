@@ -2,27 +2,74 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image,ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {Todotask1,Todotask2} from "./TablesandTimeFormat"
+import {auth, db, storage} from "./firebase";
+import { NavigationEvents } from 'react-navigation';
+import {orange, Todotask1,Todotask2} from "./TablesandTimeFormat"
 // LeadsDetailsTask
 
-export default function App() {
+const formatAMPM = (date) => {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? 'pm' : 'am';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes + ' ' + ampm;
+  return strTime;
+}
+const monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+// export default function App() {
+export default ({navigation, route}) => {
 
   const [todaysDate,setTodaysDate]=useState(new Date());
   const [todaysDateString,setTodaysDateString]=useState(todaysDate.toLocaleDateString("en-GB"));
+  const [Tasks,setTasks]=useState([]);
 
-  
+  const {id} = route.params;
+
+  useEffect(() => {
+    db.collection("tasks").where("leadId", "==", id)
+    .get()
+    .then((querySnapshot) => {
+      let TaskArr= [];
+        querySnapshot.forEach((docTasks) => {
+            let tasks = docTasks.data();
+            tasks.id = docTasks.id;
+
+            tasks.time = formatAMPM(tasks.date.toDate());
+
+            var m = tasks.date.toDate().getMonth()
+            tasks.date = monthArr[m] + " "+ tasks.date.toDate().getDate() + ", " + tasks.date.toDate().getFullYear();
+
+            TaskArr.push(tasks);
+            // doc.data() is never undefined for query doc snapshots
+            console.log(docTasks.id, " => ", docTasks.data());
+        });
+        setTasks(TaskArr);
+        console.log(TaskArr);
+    })
+    .catch((error) => {
+        console.log("Error getting documents: ", error);
+    });
+  },[]);
+
 
   const pressLeadsDetailsPage= ()=>{
-    alert("nav to LeadsDetails .js"); 
+    alert("nav to LeadsDetails .js");
+    navigation.navigate("Details");
   };
 
   const pressLeadsDetailsTasks= ()=>{
-    alert("nav to LeadsDetailsTask .js"); 
+    alert("nav to LeadsDetailsTask .js");
+    navigation.navigate("Tasks");
+
   };
 
-  const pressSpecifictTask= ()=>{
-    alert("nav to TaskDetail .js"); 
-  };
+  // const pressSpecifictTask= ()=>{
+  //   alert("nav to TaskDetail .js");
+  //   navigation.navigate("Task Detail");
+  // };
 
   const pressFilter= ()=>{
     alert("press to Filter"); 
@@ -30,13 +77,15 @@ export default function App() {
 
   const pressAdd= ()=>{
     alert("nav to NewCallTask .js"); 
+    navigation.navigate("New Call Task")
   };
 
   return (
     <View style={styles.container}>
-      <View>
+      <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
+      {/* <View>
       <Text style={styles.title}>Tasks</Text>
-      </View>
+      </View> */}
       
       <View style={styles.flexrowAlignSelf}>
         <View >
@@ -47,86 +96,11 @@ export default function App() {
         </View>
       </View>
 
-<ScrollView>
-      <View style={{paddingBottom:1, paddingTop:10}}>
-      <View style={{borderTopLeftRadius:10, borderTopRightRadius:10, backgroundColor:"orange", paddingVertical:1, marginHorizontal:15, elevation: 2}}>
-      <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"left"}}>
-                    2/5/2021
-                </Text>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"right"}}>
-                    Friday
-                </Text>
-            </View>
-      </View>
+      <ScrollView>
+    
+                {Tasks.length !== 0 && <Todotask1 data={Tasks} navigation={navigation} />}
+          
 
-      <TouchableOpacity  onPress={pressSpecifictTask}>
-      <View style={{borderBottomLeftRadius:10, borderBottomRightRadius:10, backgroundColor:"orange", paddingVertical:1, marginHorizontal:15, elevation: 2}}>
-      <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
-                    08:00    Call
-                </Text>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"right"}}>
-                    John David
-                </Text>
-            </View>
-      </View>
-      </TouchableOpacity>
-
-       <TouchableOpacity  onPress={pressSpecifictTask}>
-      <View style={{borderBottomLeftRadius:10, borderBottomRightRadius:10, backgroundColor:"orange", paddingVertical:1, marginHorizontal:15, elevation: 2}}>
-      <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
-                    08:00    Appoinment
-                </Text>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"right"}}>
-                    John David
-                </Text>
-            </View>
-      </View>
-      </TouchableOpacity>
-      
-      </View>
-
-      <View style={{paddingBottom:1, paddingTop:10}}>
-      <View style={{borderTopLeftRadius:10, borderTopRightRadius:10, backgroundColor:"orange", paddingVertical:1, marginHorizontal:15, elevation: 2}}>
-      <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"left"}}>
-                    2/6/2021
-                </Text>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"right"}}>
-                    Saturday
-                </Text>
-            </View>
-      </View>
-
-      <TouchableOpacity  onPress={pressSpecifictTask}>
-      <View style={{borderBottomLeftRadius:10, borderBottomRightRadius:10, backgroundColor:"orange", paddingVertical:1, marginHorizontal:15, elevation: 2}}>
-      <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
-                    12:30    Others
-                </Text>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"right"}}>
-                    Wilson
-                </Text>
-            </View>
-      </View>
-      </TouchableOpacity>
-
-       <TouchableOpacity  onPress={pressSpecifictTask}>
-      <View style={{borderBottomLeftRadius:10, borderBottomRightRadius:10, backgroundColor:"orange", paddingVertical:1, marginHorizontal:15, elevation: 2}}>
-      <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
-                    08:00    Call
-                </Text>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"right"}}>
-                    Alvin
-                </Text>
-            </View>
-      </View>
-      </TouchableOpacity>
-      
-      </View>
       </ScrollView>
 
 
@@ -145,6 +119,7 @@ export default function App() {
 
 
       <StatusBar style="auto" />
+      </ImageBackground>
     </View>
   );
 }
@@ -186,7 +161,7 @@ const styles = StyleSheet.create({
   },
 
   LeadsTasksbutton:{
-    backgroundColor: "orange",
+    backgroundColor:orange,
     borderRadius: 100,
     borderWidth:1,
     borderColor:"grey",
@@ -204,14 +179,23 @@ const styles = StyleSheet.create({
   BottomButton:
 {
   // alignSelf:"flex-end",
-  backgroundColor:"orange",
+  backgroundColor:orange,
   //borderRightWidth:1,
   borderRadius:100,
   marginRight:5,
-  width:50,
-  height:50,
-  paddingTop:8,
-  paddingLeft:7
+  width:45,
+  height:45,
+  paddingTop:5,
+  paddingLeft:5
+},
+
+bgimage: {
+  flex: 1,
+  width: '100%',
+  height: '100%',
+  resizeMode: "cover",
+  justifyContent: "flex-start"
+
 },
   
 });

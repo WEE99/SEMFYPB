@@ -28,16 +28,17 @@ import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackg
 
   return (
     <View style={styles.container}>
-      <View>
+    <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
+      {/* <View>
       <Text style={styles.title}>Report</Text>
-      </View>
-
+      </View> */}
+    <View style={{ alignSelf:"center", alignItems:"center", marginTop:30 }}>
       <View style={{ marginTop:10 }}>
         <View style={styles.iconContainer}>
         <TouchableOpacity style={styles.Button} onPress={pressReportOpen}>
            <View style={styles.OpenButtonBorder}>
            <Text style={styles.ReportText}>1</Text>
-           <Text style={styles.ReportText}>Open</Text>
+           <Text style={styles.ReportText}>Open Leads</Text>
            </View>
         </TouchableOpacity>
         </View>
@@ -49,7 +50,7 @@ import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackg
         <TouchableOpacity style={styles.Button} onPress={pressReportWon}>
            <View style={styles.WonButtonBorder}>
            <Text style={styles.ReportText} >50</Text>
-           <Text style={styles.ReportText}>Won</Text>
+           <Text style={styles.ReportText}>Won Leads</Text>
            </View>
         </TouchableOpacity>
         </View>
@@ -58,10 +59,11 @@ import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackg
         <TouchableOpacity style={styles.Button} onPress={pressReportLost}>
            <View style={styles.LostButtonBorder}> 
            <Text style={styles.ReportText} >10</Text>
-           <Text style={styles.ReportText}>Lost</Text>
+           <Text style={styles.ReportText}>Lost Leads</Text>
            </View>
         </TouchableOpacity>
         </View>
+      </View>
       </View>
 
 
@@ -70,6 +72,7 @@ import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackg
 
 
       <StatusBar style="auto" />
+    </ImageBackground>
     </View>
   );
 }
@@ -80,7 +83,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems:"center",
     justifyContent: 'flex-start',
-    padding:"20%",
+    // padding:"20%",
   },
 
   title:{
@@ -103,47 +106,58 @@ const styles = StyleSheet.create({
 
   OpenButtonBorder:{
     borderWidth:2,
-    borderColor:"grey",
+    borderColor:"#0055FF",
     borderRadius:10,
     padding:"10%",
     justifyContent:"center",
     textAlign:"center",
     alignItems:"center",
-    backgroundColor:"blue",
+    backgroundColor:"#0055FF",
     width:110,
     height:100
   },
 
   WonButtonBorder:{
     borderWidth:2,
-    borderColor:"grey",
+    borderColor:"#19CB37",
     borderRadius:10,
     padding:"10%",
     justifyContent:"center",
     textAlign:"center",
     alignItems:"center",
-    backgroundColor:"green",
+    backgroundColor:"#19CB37",
     width:110,
     height:100
   },
 
   LostButtonBorder:{
     borderWidth:2,
-    borderColor:"grey",
+    borderColor:"#F62727",
     borderRadius:10,
     padding:"10%",
     justifyContent:"center",
     textAlign:"center",
     alignItems:"center",
-    backgroundColor:"red",
+    backgroundColor:"#F62727",
     width:110,
     height:100
   },
 
   ReportText:{
+    textAlign:"center",
     color:"white",
     fontSize:20,
     fontWeight:"bold",
   },
+  
+
+  bgimage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: "cover",
+    justifyContent: "flex-start"
+  },
+
 
 });

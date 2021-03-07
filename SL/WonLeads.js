@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView} from 'react-native';
-import {TableRowWon} from "./TablesandTimeFormat";
+import {orange, TableRowWon} from "./TablesandTimeFormat";
 
 
 const arryWon =[
@@ -32,10 +32,11 @@ const arryWon =[
     
   return (
     <View style={styles.container}>
-
+      <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
+{/* 
       <View style={{alignItems:"center"}}>
       <Text style={styles.title}>Won Leads</Text>
-      </View>
+      </View> */}
 
       <View style={styles.flexrowfortable}>
         <View >
@@ -48,18 +49,19 @@ const arryWon =[
           <TouchableOpacity style={styles.openbutton} onPress={pressOpenLeads}><Text> </Text></TouchableOpacity>
         </View>
       </View>
-    <ScrollView>
-      <View style={{paddingBottom:40, paddingTop:10}}>
-        <View style={{borderRadius:10, backgroundColor:"#fff", paddingVertical:10, marginHorizontal:15, borderWidth:1, borderColor:"lightgrey", elevation: 2}}>
-            <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"white", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"center"}}>
+    <ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10}}>
+    <View style={{paddingBottom:40, paddingTop:10}}>
+        <View style={{borderRadius:10, backgroundColor:"#fff", marginHorizontal:15, borderWidth:1, borderColor:orange, elevation: 2, borderTopWidth:0}}>
+
+            <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:orange, backgroundColor:orange, paddingHorizontal:10, paddingBottom:4, borderTopLeftRadius:10, borderTopRightRadius:10}}>
+                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",textAlign:"center"}}>
                     Name
                 </Text>
-                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"center"}}>
+                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color: "balck", fontWeight:"bold",textAlign:"center"}}>
                     Quotation Sent
                 </Text>
-                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"center"}}>
-                    Quote Agreed
+                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"center"}}>
+                    Quote Agreed  
                 </Text>
             </View>
 
@@ -73,6 +75,7 @@ const arryWon =[
       <StatusBar style="auto" />
     </View>
     </ScrollView>
+    </ImageBackground>
   </View>
     );
 }
@@ -131,5 +134,14 @@ const styles = StyleSheet.create({
     height:10,
   },
 
-
+  bgimage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    padding:'5%',
+    paddingTop:0,
+    resizeMode: "cover",
+    justifyContent: "center"
+  },
+  
 });

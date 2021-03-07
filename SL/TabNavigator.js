@@ -1,9 +1,10 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons'; 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {auth} from './firebase';
 import {useRoute} from '@react-navigation/native';
@@ -17,9 +18,24 @@ import ProfileMain from "./ProfileMain";
 
 //Dashboard
 import Notification from "./Notification";
+import LeadsDetails from "./LeadsDetails";
+import LeadsDetailsTask from "./LeadsDetailsTask";
+import Quotation from './Quotation';
+import Remarks from './Remarks';
+import EditDetails from "./EditDetails";
+import NewCallTask from './NewCallTask';
+import TasksDetail from "./TasksDetail";
+import NewCallTaskEdit from "./NewCallTaskEdit";
 //TaskMainPage
 import HistoryPage from "./HistoryPage";
-import NewCallTask from './NewCallTask';
+import OverdueTask from './OverdueTask';
+import CallTask from './CallTask';
+import AppointmentTask from './AppointmentTask';
+import OtherTask from './OtherTask';
+import CallHistory from './CallHistory';
+import AppoinmentHistory from './AppointmentHistory';
+import OtherHistory from './OtherHistory';
+
 //ReportGraph
 import OpenLeads from "./OpenLeads";
 import LostLeads from "./LostLeads";
@@ -31,6 +47,7 @@ import EditPassword from "./EditPassword";
 import LoginPage from "./LoginPage";
 //LoginPage
 import ForgotPassword from "./ForgotPassword"
+import { orange, white } from './TablesandTimeFormat';
 
 
 // const DashboardStack = createStackNavigator();
@@ -49,7 +66,7 @@ export const LoginNavigator= () =>{
       <Tab.Navigator
       initialRouteName="Login"
       tabBarOptions={{
-        activeTintColor: '#FF8C00',
+        activeTintColor:orange,
         style: { backgroundColor: 'black' }
       }}
     >
@@ -95,7 +112,7 @@ return (
   <Tab.Navigator
     initialRouteName="Dashboard"
     tabBarOptions={{
-      activeTintColor: '#FF8C00',
+      activeTintColor:orange,
       style: { backgroundColor: 'black' }
     }}
   >
@@ -147,7 +164,15 @@ return (
 //}
 
 
-function DashboardStackNav() {
+function DashboardStackNav ({ navigation, route }) {
+    React.useLayoutEffect(() => {
+        const routeName = getFocusedRouteNameFromRoute(route);
+        if (routeName === "Quotation" || routeName ==="Remarks" || routeName ==="Edit Details" || routeName ==="New Call Task" || routeName ==="Task Detail" ||routeName ==="Edit Task"){
+            navigation.setOptions({tabBarVisible: false});
+        }else {
+            navigation.setOptions({tabBarVisible: true});
+        }
+    }, [navigation, route]); 
   return (
     <Stack.Navigator>
       <Stack.Screen name="Dashboard" component={Dashboard}
@@ -157,15 +182,18 @@ function DashboardStackNav() {
         headerTintColor:"white",
         headerRight: () => (
           <View style={{flexDirection:"row"}}>
-          <Icon
+          <TouchableOpacity style={{backgroundColor:orange,borderRadius:100, padding:5,alignContent:"center", marginRight:60}}  onPress={() => navigation.navigate('Notification')}>
+          {/* <Icon
               style={{
                marginRight:60
               }}
               name="notifications"
               size={25}
-              color="orange"
-              onPress={() => navigation.navigate('Notification')}
-          />
+              color={orange}
+              // onPress={() => navigation.navigate('Notification')}
+          /> */}
+          <MaterialIcons name="notifications-active" size={24} borderColor="black" />
+          </TouchableOpacity>
           </View>
       ),
     })}
@@ -176,6 +204,56 @@ function DashboardStackNav() {
         headerTitleAlign:"center",
         headerTintColor:"white",
       }} />
+      <Stack.Screen name="Details" component={LeadsDetails}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+      <Stack.Screen name="Tasks" component={LeadsDetailsTask}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+      <Stack.Screen name="Edit Details" component={EditDetails}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+      <Stack.Screen name="Quotation" component={Quotation}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+      <Stack.Screen name="Remarks" component={Remarks}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+       <Stack.Screen name="Task Detail" component={TasksDetail}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+      <Stack.Screen name="New Call Task" component={NewCallTask}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+      <Stack.Screen name="Edit Task" component={NewCallTaskEdit}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+
+
     </Stack.Navigator>
   )
 }
@@ -194,6 +272,55 @@ function TaskStackNav() {
       options={{
         headerStyle:{backgroundColor:"black"},
         headerLeft: null,
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+      <Stack.Screen name="Overdue Task" component={OverdueTask}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        // headerLeft: null,
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+      <Stack.Screen name="Call Task" component={CallTask}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        // headerLeft: null,
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+      <Stack.Screen name="Appointment Task" component={AppointmentTask}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        // headerLeft: null,
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+      <Stack.Screen name="Other Task" component={OtherTask}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        // headerLeft: null,
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+       <Stack.Screen name="Call History" component={CallHistory}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        // headerLeft: null,
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+       <Stack.Screen name="Appointment History" component={AppoinmentHistory}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        // headerLeft: null,
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }} />
+       <Stack.Screen name="Other History" component={OtherHistory}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        // headerLeft: null,
         headerTitleAlign:"center",
         headerTintColor:"white",
       }} />
@@ -259,7 +386,7 @@ function AccountStackNav ({ navigation, route }) {
               name="cog-outline"
               size={25}
               color="lightgrey"
-              onPress={() => alert("navigate to ProfileSetting .js")}
+              onPress={() => navigation.navigate("Settings")}
           />
           </View>
       ),

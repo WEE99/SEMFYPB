@@ -1,22 +1,58 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground, Image, ScrollView, Keyboard} from 'react-native';
+import { orange } from './TablesandTimeFormat';
 
-export default function App() {
+//export default function App() {
+export default ({navigation, route}) => {
 
+  const [Notes, setNotes]=useState("");
   const [EditNotes, setEditNotes]=useState("");
+  const [Outcome, setOutcome]=useState("");
   const [EditOutcome, setEditOutcome]=useState("");
+  const [TimeAMPM, setTimeAMPM]=useState("");
+  const [Time, setTime]=useState("");
+
+  const {id,address,date,time,leadId,name,status,title,type,userId,notes,outcome} = route.params;
+  var mS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+
+const formatAMPM = (date) => {
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var ampm = hours >= 12 ? '.P.M.' : '.A.M.';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0'+minutes : minutes;
+  var strTime = hours + ':' + minutes;
+  setTime(strTime);
+  setTimeAMPM(ampm);
+};
 
   const pressEdit= ()=>
-  {alert("Edit Complete")};
+  {alert("nav to NewCallTaskEdit .js")
+  navigation.navigate("Edit Task")};
 
   const pressDone= ()=>
-  {alert("Task Done")};
+  {alert("Task Done")
+  navigation.goBack()};
 
   ////button disapear method////
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
+
+    if(notes!==undefined && notes!==""){
+      setNotes(notes)
+    }
+    else{setNotes("No notes available for this task")}
+
+
+    if(outcome!==undefined && outcome!==""){
+      setOutcome(outcome)
+    }
+    else{setOutcome("No outcomes available for this task")}
+
+
     const keyboardDidShowListener = Keyboard.addListener(
       'keyboardDidShow',
       () => {
@@ -30,29 +66,36 @@ export default function App() {
       }
     );
 
+    console.log(route.params);
+
+    formatAMPM(date);
+
     return () => {
       keyboardDidHideListener.remove();
       keyboardDidShowListener.remove();
     };
+
+    
      
   },[]);
 
   
   return (
     <View style={styles.container}>
+    <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
       
-      <View>
+      {/* <View>
       <Text style={styles.title}>Tasks Detail</Text>
-      </View>
+      </View> */}
 
-<ScrollView>
+<ScrollView style={{alignSelf:"center",width:"60%"}}>
       <View style={styles.borderContainer}>
       <View style={styles.flexrow}>
       <View style={styles.leadsnameContainer}>
       <Text style={styles.leadsname}>Lead's Name</Text>
       </View>
       <View style={styles.nameContainer}>
-      <Text style={styles.nametext}  numberOfLines={1}>John Doe swefdfsfsfsdfsf sdfsdfs sda ad ad ad asdas das fs dfs fsdf sd</Text>
+      <Text style={styles.nametext}  numberOfLines={1}>{name}</Text>
       </View>
       </View>
       </View>
@@ -60,14 +103,14 @@ export default function App() {
       <View style={styles.flexrow}>
       <View style={styles.borderContainerDateTime}>
       <Text style={styles.leadDate}>Date</Text>
-      <Text style={styles.DateTimeText}>2 Feb</Text>
-      <Text style={styles.nametext}>2021</Text>
+      <Text style={styles.DateTimeText}>{date.getDate() + " " +mS[date.getMonth()]}</Text>
+      <Text style={styles.nametext}>{date.getFullYear()}</Text>
       </View>
 
       <View style={styles.borderContainerDateTime}>
       <Text style={styles.leadTime}>Time</Text>
-      <Text style={styles.DateTimeText}>8 : 30</Text>
-      <Text style={styles.nametext}>.P.M.</Text>
+      <Text style={styles.DateTimeText}>{Time}</Text>
+      <Text style={styles.nametext}>{TimeAMPM}</Text>
       </View>
       </View>
 
@@ -77,7 +120,7 @@ export default function App() {
       </View>
       <TextInput 
       style={styles.inputNotes}
-      placeholder='No notes available for this task' 
+      placeholder= {Notes}
       placeholderTextColor="white"
       multiline={true}
       onChangeText={(val) => setEditNotes(val)}
@@ -90,7 +133,7 @@ export default function App() {
       </View>
       <TextInput 
       style={styles.inputNotes}
-      placeholder='No outcomes available for this task' 
+      placeholder={Outcome} 
       placeholderTextColor="white"
       multiline={true}
       onChangeText={(val) => setEditOutcome(val)}
@@ -103,7 +146,7 @@ export default function App() {
 
       {!isKeyboardVisible &&  <View style={styles.ButtonView}>
        <TouchableOpacity
-            style={styles.Button}
+            style={styles.Button1}
             //onPress={this._onPressLoginButton}
             //disabled={!this.state.isFormValid}
             //onPress={this. _onPressCancelChangePswButton}
@@ -113,7 +156,7 @@ export default function App() {
         </TouchableOpacity>
 
         <TouchableOpacity
-            style={styles.Button}
+            style={styles.Button2}
             //onPress={this._onPressLoginButton}
             //disabled={!this.state.isFormValid}
            // onPress={this._onPressChangePswButton}
@@ -128,6 +171,7 @@ export default function App() {
 
 
       <StatusBar style="auto" />
+      </ImageBackground>
     </View>
   );
 }
@@ -138,7 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems:"center",
     justifyContent: 'flex-start',
-    paddingTop:"20%",
+    // paddingTop:"20%",
   },
 
   title:{
@@ -151,15 +195,16 @@ const styles = StyleSheet.create({
   borderContainer:{
     marginTop:10,
     borderWidth:1,
-    borderColor:"orange",
+    borderColor:orange,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius:10,
     padding:5,
-    width:200,
+    width:"1oo%",
   },
 
   flexrow:{
     flexDirection:"row",
-    justifyContent:"space-around",
+    justifyContent:"space-between",
   },
   
 leadsnameContainer:{
@@ -168,8 +213,7 @@ leadsnameContainer:{
 
 leadsname:{
     width:50,
-    color:"orange",
-    fontWeight:"bold",
+    color:orange,
     //marginRight:10
 },
 
@@ -180,42 +224,44 @@ nameContainer:{
 
 nametext:{
     alignSelf:"center",
-    fontWeight:"bold",
+    color:"white"
 },
 
 borderContainerDateTime:{
   marginTop:10,
   borderWidth:1,
-  borderColor:"orange",
+  borderColor:orange,
+  marginHorizontal:2,
+  backgroundColor: 'rgba(255, 255, 255, 0.2)',
   borderRadius:10,
   padding:5,
   //alignItems:"center",
-  width:100
+  width:"45%"
 },
 
 leadDate:{
-  color:"orange",
-  fontWeight:"bold",
+  color:orange,
   textAlign:"center"
 },
 
 leadTime:{
-  color:"orange",
-  fontWeight:"bold",
+  color:orange,
   textAlign:"center"
 },
 
 DateTimeText:{
-  fontWeight:"bold",
+  color:"white",
   alignSelf:"center",
   fontSize:20,
 },
 
 inputNotes:{
-  borderWidth:2,
-  borderColor:"lightgrey",
-  backgroundColor:"lightgrey",
+  // borderWidth:2,
+  // borderColor:"lightgrey",
+ // backgroundColor:"lightgrey",
   marginTop:10,
+  color:'white',
+  // fontWeight:"bold",
   padding:5,
   //fontWeight:"bold",
   height:50,
@@ -224,40 +270,60 @@ inputNotes:{
 },
 
 leadsindtruction:{
-  color:"orange",
-  fontWeight:"bold",
+  color:orange,
 },
 
 ButtonView: {
-  width: '100%',
-  backgroundColor:"white",
-  position: 'absolute',
-  bottom: 0,
-  flexDirection: 'row',
-  alignItems:"stretch",
-  borderWidth:2,
-  borderColor:"lightgrey",
-  //justifyContent: 'space-around',
-  //backgroundColor:"black",
-  },
-
-Button:{
-  borderWidth:3,
-  //borderColor:"lightgrey",
-  // backgroundColor:'black',
-  padding: 10,
-  borderTopColor: '#fff',
-  borderLeftColor: '#fff',
-  borderBottomColor: '#fff',
-  borderRightColor: 'lightgrey',
-  width:"50%",
-  // borderRadius:5,
-  },
-
-ButtonContent:{
-  textAlign:'center',
-  color:"orange",
-  // fontWeight:'bold',
+    width: '100%',
+    backgroundColor:orange,
+    position: 'absolute',
+    bottom: 0,
+    flexDirection: 'row',
+    alignItems:"stretch",
+    borderWidth:2,
+    borderColor:orange,
+    //justifyContent: 'space-around',
+    //backgroundColor:"black",
+    },
+  
+    Button1:{
+      borderRightWidth:1,
+      //borderColor:"lightgrey",
+      backgroundColor:orange,
+      padding: 10,
+      // borderTopColor: "white",
+      borderRightColor: 'white',
+      // borderBottomColor: 'white',
+      // borderRightColor: 'white',
+      width:"50%",
+      // borderRadius:5,
+      },
+  
+    Button2:{
+      borderLeftWidth:1,
+      //borderColor:"lightgrey",
+      backgroundColor:orange,
+      padding: 10,
+      // borderTopColor: "white",
+      // borderLeftColor: 'white',
+      // borderBottomColor: 'white',
+      borderLeftColor: 'white',
+      width:"50%",
+      // borderRadius:5,
+      },
+  
+  ButtonContent:{
+    textAlign:'center',
+    color:"black",
+    fontWeight:'bold',
+    },
+  
+  bgimage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: "cover",
+    justifyContent: "flex-start"
   },
     
 

@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground, Image, Switch} from 'react-native';
+import { orange } from './TablesandTimeFormat';
 
 
-export default function App() {
+// export default function App() {
+export default ({navigation, route}) => {
 
   const [isEnabled1, setIsEnabled1] = useState(false);
   const [isEnabled2, setIsEnabled2] = useState(true);
@@ -14,24 +16,27 @@ export default function App() {
   const pressSave =()=>{
     {
     alert("Edit Notification Succesful nav to ProfileSetting .js")
+    navigation.goBack()
     }
 
   };
 
   const pressCancel =()=>{
     alert("nav to ProfileSetting .js")
+    navigation.goBack()
   };
 
 
   return (
     <View style={styles.container}>
-      <View>
+      <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
+      {/* <View>
       <Text style={styles.title}>Notification</Text>
-      </View>
+      </View> */}
 
       <View style={styles.FlexSwitch}>
         <View style={styles.Switchintrustion}>
-          <Text>Appointment Reminder</Text>
+          <Text style={{color:orange}}>Appointment Reminder</Text>
         </View>
 
         <View style={styles.Switch}>
@@ -47,7 +52,7 @@ export default function App() {
 
       <View style={styles.FlexSwitch}>
         <View style={styles.Switchintrustion}>
-          <Text>New Incomming Leads</Text>
+          <Text style={{color:orange}}>New Incomming Leads</Text>
         </View>
 
         <View style={styles.Switch}>
@@ -64,7 +69,7 @@ export default function App() {
 
       <View style={styles.ButtonView}>
        <TouchableOpacity
-            style={styles.Button}
+            style={styles.Button1}
             //onPress={this._onPressLoginButton}
             //disabled={!this.state.isFormValid}
             //onPress={this. _onPressCancelChangePswButton}
@@ -74,7 +79,7 @@ export default function App() {
         </TouchableOpacity>
 
         <TouchableOpacity
-            style={styles.Button}
+            style={styles.Button2}
             //onPress={this._onPressLoginButton}
             //disabled={!this.state.isFormValid}
            // onPress={this._onPressChangePswButton}
@@ -86,6 +91,7 @@ export default function App() {
 
 
       <StatusBar style="auto" />
+      </ImageBackground>
     </View>
   );
 }
@@ -96,7 +102,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems:"center",
     justifyContent: 'flex-start',
-    paddingTop:"20%",
+    // paddingTop:"20%",
   },
 
   title:{
@@ -111,10 +117,12 @@ const styles = StyleSheet.create({
     width:"80%",
     flexDirection:"row",
     borderWidth:2,
-    borderColor:"lightgrey",
+    borderColor:orange,
     padding:10,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius:5,
     alignItems:"center",
+    alignSelf:"center",
   },
 
   Switchintrustion:{
@@ -131,33 +139,54 @@ const styles = StyleSheet.create({
 
   ButtonView: {
     width: '100%',
-    backgroundColor:"white",
+    backgroundColor:orange,
     position: 'absolute',
     bottom: 0,
     flexDirection: 'row',
     alignItems:"stretch",
     borderWidth:2,
-    borderColor:"lightgrey",
+    borderColor:orange,
     //justifyContent: 'space-around',
     //backgroundColor:"black",
     },
   
-  Button:{
-    borderWidth:3,
+  Button1:{
+    borderRightWidth:1,
     //borderColor:"lightgrey",
-    // backgroundColor:'black',
+    backgroundColor:'orange',
     padding: 10,
-    borderTopColor: '#fff',
-    borderLeftColor: '#fff',
-    borderBottomColor: '#fff',
-    borderRightColor: 'lightgrey',
+    // borderTopColor: "white",
+    borderRightColor: 'white',
+    // borderBottomColor: 'white',
+    // borderRightColor: 'white',
+    width:"50%",
+    // borderRadius:5,
+    },
+
+  Button2:{
+    borderLeftWidth:1,
+    //borderColor:"lightgrey",
+    backgroundColor:'orange',
+    padding: 10,
+    // borderTopColor: "white",
+    // borderLeftColor: 'white',
+    // borderBottomColor: 'white',
+    borderLeftColor: 'white',
     width:"50%",
     // borderRadius:5,
     },
   
   ButtonContent:{
     textAlign:'center',
-    color:"orange",
-    // fontWeight:'bold',
+    color:"black",
+    fontWeight:'bold',
+    },
+
+  bgimage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: "cover",
+    justifyContent: "flex-start"
     },
 });

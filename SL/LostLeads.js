@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView} from 'react-native';
-import {TableRowLost} from "./TablesandTimeFormat";
+import {orange, TableRowLost} from "./TablesandTimeFormat";
 
 
 const arryLost =[
@@ -35,10 +35,11 @@ const arryLost =[
 
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
 
-      <View style={{alignItems:"center"}}>
+      {/* <View style={{alignItems:"center"}}>
       <Text style={styles.title}>Lost Leads</Text>
-      </View>
+      </View> */}
 
       <View style={styles.flexrowfortable}>
         <View >
@@ -52,15 +53,15 @@ const arryLost =[
         </View>
       </View>
 
-<ScrollView>
-      <View style={{paddingBottom:40, paddingTop:10}}>
-        <View style={{borderRadius:10, backgroundColor:"#fff", paddingVertical:10, marginHorizontal:15, borderWidth:1, borderColor:"lightgrey", elevation: 2}}>
+<ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10}}>
+     <View style={{paddingBottom:40, paddingTop:10}}>
+        <View style={{borderRadius:10, backgroundColor:"#fff", marginHorizontal:15, borderWidth:1, borderColor:orange, elevation: 2, borderTopWidth:0}}>
 
-            <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"white", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"center"}}>
+            <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:orange, backgroundColor:orange, paddingHorizontal:10, paddingBottom:4, borderTopLeftRadius:10, borderTopRightRadius:10}}>
+                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",textAlign:"center"}}>
                     Name
                 </Text>
-                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"center"}}>
+                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"center"}}>
                     Remarks
                 </Text>
             </View>
@@ -68,14 +69,12 @@ const arryLost =[
             {arryLost.map((info) =>
                 <TableRowLost key={info.id} data={info} />
             )}
-
-
-
             </View>
       <StatusBar style="auto" />
     </View>
 </ScrollView>
-  </View>
+</ImageBackground>
+</View>
     );
 }
 
@@ -87,6 +86,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     //padding:"20%",
   },
+
 
   title:{
     fontWeight:"bold",
@@ -131,6 +131,17 @@ const styles = StyleSheet.create({
     borderColor:"grey",
     width:10,
     height:10,
+  },
+
+  bgimage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    padding:"5%",
+    paddingTop:0,
+    resizeMode: "cover",
+    justifyContent: "center"
+  
   },
 
 

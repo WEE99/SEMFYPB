@@ -41,8 +41,8 @@ export default ({navigation, route}) => {
   return (
     <View style={styles.container}>
     {/* https://wallpaperaccess.com/full/1503970.jpg */}
-    <ImageBackground source={{uri: ''}} style={styles.backgroundimage}>
-    
+    {/* <ImageBackground source={{uri: ''}} style={styles.backgroundimage}> */}
+    <ImageBackground source={require('./img/backgroundImg.png')} style={styles.backgroundimage}>
     <View style={styles.LogintitleContainer}>
       <Text style={styles.title}>Sales Customer Management System</Text>
     </View>
@@ -51,10 +51,10 @@ export default ({navigation, route}) => {
     <View style={styles.usernameandpasswordcontainer}>
 
     <View style={styles.usernameC}>
-      <Text style={styles.username}>Username : </Text>
+      <Text style={styles.username}>Email : </Text>
       <TextInput 
       style={styles.input}
-      placeholder='Username'
+      placeholder='Email'
       onChangeText={(val) => setLoginEmail(val)}
        />
     </View>
@@ -128,11 +128,13 @@ const styles = StyleSheet.create({
   },
 
   usernameandpasswordcontainer:{
-  backgroundColor:"white",
+  backgroundColor:"#FFFFFF",
   padding: "10%",
   borderWidth:2,
+  backgroundColor: 'rgba(255, 255, 255, 0.6)',
   borderColor:"black",
   alignItems:'center',
+  borderRadius:10
   },
 
   LogintitleContainer: {
@@ -144,13 +146,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: 'center',
     fontWeight: "bold",
-    color:"lightgrey",
+    color:"#F8C018",
 
   },
 
   input: {
-    borderWidth: 2,
-    backgroundColor: '#D3D3D3',
+    // borderWidth: 2,
+    backgroundColor: '#F3EEEE',
     borderTopColor: '#fff',
     borderLeftColor: '#fff',
     borderRightColor: '#fff',
@@ -163,13 +165,13 @@ const styles = StyleSheet.create({
   },
 
   forgot:{
-    color:"black",
+    color:"#000000",
     fontSize:11,
     textAlign:"center",
   },
 
   SignINButton: {
-    width: 200,
+    width:160 ,
     marginTop: 20,
     backgroundColor: "black",
     padding: 10,
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
   },
 
   SignIN: {
-    color: "white",
+    color: "#F8C018",
     fontSize: 20,
     fontWeight:'bold',
     justifyContent: "center",

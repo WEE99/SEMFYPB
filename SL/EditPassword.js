@@ -1,10 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image,ScrollView, KeyboardAvoidingView, Keyboard} from 'react-native';
+import { orange } from './TablesandTimeFormat';
 
 
 
-export default function App() {
+// export default function App() {
+export default ({navigation, route}) => {
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export default function App() {
     if(Newpsw==Retypepsw && Newpsw!="" && Oldpsw!="" && Newpsw!="")
     {
     alert("Resset Succesful nav to ProfileSetting .js")
+    navigation.goBack()
     }
     else
     {alert('Pasword not Match or No Input')}
@@ -41,6 +44,7 @@ export default function App() {
 
   const pressCancel =()=>{
     alert("nav to ProfileSetting .js")
+    navigation.goBack()
   };
 
   const [Oldpsw, setOldpsw]=useState("");
@@ -51,9 +55,10 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <View>
+      <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
+      {/* <View>
       <Text style={styles.title}>Password</Text>
-      </View>
+      </View> */}
 
       <View style={styles.SetpswContainer}>
       <Text style={styles.intructionpsw}>Old Password</Text>
@@ -66,7 +71,8 @@ export default function App() {
             onChangeText={(val) => setOldpsw(val)}
             />
         <Text style={styles.intructionpsw}>New Password</Text>
-        <TextInput 
+        <TextInput
+            placeholderTextColor={"white"} 
             secureTextEntry={true} 
             style={styles.inputpsw}
             // onBlur={ () => setShow(true) }
@@ -91,7 +97,7 @@ export default function App() {
       
       {!isKeyboardVisible &&  <View style={styles.ButtonView}>
        <TouchableOpacity
-            style={styles.Button}
+            style={styles.Button1}
             //onPress={this._onPressLoginButton}
             //disabled={!this.state.isFormValid}
             //onPress={this. _onPressCancelChangePswButton}
@@ -101,7 +107,7 @@ export default function App() {
         </TouchableOpacity>
 
         <TouchableOpacity
-            style={styles.Button}
+            style={styles.Button2}
             //onPress={this._onPressLoginButton}
             //disabled={!this.state.isFormValid}
            // onPress={this._onPressChangePswButton}
@@ -116,6 +122,7 @@ export default function App() {
      
 
       <StatusBar style="auto" />
+      </ImageBackground>
     </View>
   
   );
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems:"center",
     justifyContent: 'flex-start',
-    paddingTop:"20%",
+    // paddingTop:"20%",
   },
 
   title:{
@@ -139,6 +146,7 @@ const styles = StyleSheet.create({
 
   SetpswContainer:{
     marginTop:20,
+    alignSelf:"center",
     width:"80%",
     // backgroundColor:"grey",
     },
@@ -146,14 +154,17 @@ const styles = StyleSheet.create({
   intructionpsw:{
     fontWeight:"bold",
     marginTop:10,
-    color:"orange",
+    color:orange,
     },
   
   inputpsw:{
     marginTop:10,
     borderWidth:2,
     borderColor:"lightgrey",
+    backgroundColor:"white",
+    borderRadius:10,
     width:"100%",
+    color:"black",
     //backgroundColor:"lightgrey",
     padding:10,
     borderRadius:5,
@@ -161,35 +172,54 @@ const styles = StyleSheet.create({
   
   ButtonView: {
     width: '100%',
-    backgroundColor:"white",
+    backgroundColor:orange,
     position: 'absolute',
     bottom: 0,
     flexDirection: 'row',
     alignItems:"stretch",
     borderWidth:2,
-    borderColor:"lightgrey",
+    borderColor:orange,
     //justifyContent: 'space-around',
     //backgroundColor:"black",
     },
   
-  Button:{
-    borderWidth:3,
-    //borderColor:"lightgrey",
-    // backgroundColor:'black',
-    padding: 10,
-    borderTopColor: '#fff',
-    borderLeftColor: '#fff',
-    borderBottomColor: '#fff',
-    borderRightColor: 'lightgrey',
-    width:"50%",
-    // borderRadius:5,
-    },
+    Button1:{
+      borderRightWidth:1,
+      //borderColor:"lightgrey",
+      backgroundColor:orange,
+      padding: 10,
+      // borderTopColor: "white",
+      borderRightColor: 'white',
+      // borderBottomColor: 'white',
+      // borderRightColor: 'white',
+      width:"50%",
+      // borderRadius:5,
+      },
+  
+    Button2:{
+      borderLeftWidth:1,
+      //borderColor:"lightgrey",
+      backgroundColor:orange,
+      padding: 10,
+      // borderTopColor: "white",
+      // borderLeftColor: 'white',
+      // borderBottomColor: 'white',
+      borderLeftColor: 'white',
+      width:"50%",
+      // borderRadius:5,
+      },
   
   ButtonContent:{
     textAlign:'center',
-    color:"orange",
-    // fontWeight:'bold',
+    color:"black",
+    fontWeight:'bold',
     },
 
-
+    bgimage: {
+      flex: 1,
+      width: '100%',
+      height: '100%',
+      resizeMode: "cover",
+      justifyContent: "flex-start"
+      },
 });

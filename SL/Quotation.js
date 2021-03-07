@@ -1,9 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
+import { orange } from './TablesandTimeFormat';
 
 
-export default function App() {
+// export default function App() {
+export default ({navigation, route}) => {
 
   const [QuotationSent,setQuotationSent]=useState("");
   const [QuotationAgreed,setQuotationAgreed]=useState("");
@@ -11,20 +13,23 @@ export default function App() {
   const pressSave =()=>{
     {
     alert("Edit Quotation Succesful nav to Dashboard .js")
+    navigation.goBack()
     }
 
   };
 
   const pressCancel =()=>{
     alert("nav to Dashboard .js")
+    navigation.goBack()
   };
 
   
   return (
     <View style={styles.container}>
-      <View>
+      <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
+      {/* <View>
       <Text style={styles.title}>Quotation</Text>
-      </View>
+      </View> */}
 
       <View style={styles.FlexQuote}>
         <View style={styles.intrustion}>
@@ -32,7 +37,7 @@ export default function App() {
         </View>
 
         <View style={styles.RMContainer}> 
-        <Text style={styles.Quotationtext}>RM</Text>
+        <Text style={styles.Quotationtext2}>RM</Text>
         <View style={styles.inputquoteView}>
         <TextInput 
             style={styles.inputquote}
@@ -48,7 +53,7 @@ export default function App() {
         </View>
 
         <View style={styles.RMContainer}> 
-        <Text style={styles.Quotationtext}>RM</Text>
+        <Text style={styles.Quotationtext2}>RM</Text>
         <View style={styles.inputquoteView}>
         <TextInput 
             style={styles.inputquote}
@@ -63,7 +68,7 @@ export default function App() {
 
       <View style={styles.ButtonView}>
        <TouchableOpacity
-            style={styles.Button}
+            style={styles.Button1}
             //onPress={this._onPressLoginButton}
             //disabled={!this.state.isFormValid}
             //onPress={this. _onPressCancelChangePswButton}
@@ -73,7 +78,7 @@ export default function App() {
         </TouchableOpacity>
 
         <TouchableOpacity
-            style={styles.Button}
+            style={styles.Button2}
             //onPress={this._onPressLoginButton}
             //disabled={!this.state.isFormValid}
            // onPress={this._onPressChangePswButton}
@@ -86,6 +91,7 @@ export default function App() {
 
 
       <StatusBar style="auto" />
+      </ImageBackground>
     </View>
   );
 }
@@ -96,8 +102,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems:"center",
     justifyContent: 'flex-start',
-    paddingTop:"20%",
+    // paddingTop:"20%",
   },
+
 
   title:{
     fontWeight:"bold",
@@ -110,10 +117,13 @@ const styles = StyleSheet.create({
     marginTop:10,
     width:"80%",
     flexDirection:"row",
-    //borderWidth:2,
-    //borderColor:"lightgrey",
+    borderWidth:2,
+    borderColor:orange,
+    borderRadius:10,
     padding:10,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     //borderRadius:5,
+    alignSelf:"center",
     alignItems:"center",
   },
 
@@ -126,7 +136,7 @@ const styles = StyleSheet.create({
 
   RMContainer:{
     flexDirection:"row",
-    borderWidth:2,
+    // borderWidth:2,
     borderColor:"lightgrey",
     width:"50%",
     borderRadius:5,
@@ -141,44 +151,76 @@ const styles = StyleSheet.create({
   },
 
   inputquote:{
+    color:"white",
+    fontWeight:"bold",
+    borderWidth:2,
+    borderRadius:10,
+    borderColor:orange,
   },
 
   Quotationtext:{
-    color:"orange",
+    color:orange,
+    fontWeight:'bold',
+  },
+
+  Quotationtext2:{
+    color:"white",
     fontWeight:'bold',
   },
 
   ButtonView: {
     width: '100%',
-    backgroundColor:"white",
+    backgroundColor:orange,
     position: 'absolute',
     bottom: 0,
     flexDirection: 'row',
     alignItems:"stretch",
     borderWidth:2,
-    borderColor:"lightgrey",
+    borderColor:orange,
     //justifyContent: 'space-around',
     //backgroundColor:"black",
     },
   
-  Button:{
-    borderWidth:3,
-    //borderColor:"lightgrey",
-    // backgroundColor:'black',
-    padding: 10,
-    borderTopColor: '#fff',
-    borderLeftColor: '#fff',
-    borderBottomColor: '#fff',
-    borderRightColor: 'lightgrey',
-    width:"50%",
-    // borderRadius:5,
-    },
+    Button1:{
+      borderRightWidth:1,
+      //borderColor:"lightgrey",
+      backgroundColor:orange,
+      padding: 10,
+      // borderTopColor: "white",
+      borderRightColor: 'white',
+      // borderBottomColor: 'white',
+      // borderRightColor: 'white',
+      width:"50%",
+      // borderRadius:5,
+      },
+  
+    Button2:{
+      borderLeftWidth:1,
+      //borderColor:"lightgrey",
+      backgroundColor:orange,
+      padding: 10,
+      // borderTopColor: "white",
+      // borderLeftColor: 'white',
+      // borderBottomColor: 'white',
+      borderLeftColor: 'white',
+      width:"50%",
+      // borderRadius:5,
+      },
   
   ButtonContent:{
     textAlign:'center',
-    color:"orange",
-    // fontWeight:'bold',
+    color:"black",
+    fontWeight:'bold',
     },
+  
+  bgimage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: "cover",
+    justifyContent: "flex-start"
+  },
+
 
   
 });

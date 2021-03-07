@@ -1,17 +1,19 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View,ScrollView } from 'react-native';
+import { StyleSheet, Text, View,ScrollView, ImageBackground } from 'react-native';
+import { orange } from './TablesandTimeFormat';
 
 export default function App() {
   return (
     <View style={styles.container}>
+      <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
 
-      <View>
+      {/* <View>
       <Text style={styles.title}>Notification</Text>
-      </View>
+      </View> */}
 <ScrollView>
       <View style={styles.notification}>
-        <Text style={styles.notificationContent}>New Leads had been added sdadasdasda da dada sdas dasdas sdada asd adadad sAS sASa s sS  aadasd</Text>
+        <Text style={styles.notificationContent}>New Leads had been added </Text>
         <Text style={styles.notificationtime}>1:45 pm</Text>
       </View>
 
@@ -21,6 +23,7 @@ export default function App() {
       </View>
 </ScrollView>
       <StatusBar style="auto" />
+      </ImageBackground>
     </View>
   );
 }
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems:"center",
     justifyContent: 'flex-start',
-    padding:"20%",
+    // padding:"20%",
   },
 
 
@@ -39,6 +42,7 @@ const styles = StyleSheet.create({
     fontWeight:"bold",
     fontSize:20,
     color:"black",
+    alignSelf:"center",
     alignItems:"flex-start",
   },
 
@@ -46,19 +50,29 @@ const styles = StyleSheet.create({
     marginTop:10,
     borderWidth:1,
     borderRadius:10,
-    borderColor:"orange",
+    alignSelf:"center",
+    borderColor:orange,
     padding:5,
-    width:"100%"
+    width:250
   },
 
   notificationContent:{
     textAlign:"left",
+    color:"white",
     fontWeight:"bold"
   },
 
   notificationtime:{
     fontWeight:"bold",
-    color:"orange",
+    color:orange,
     alignSelf:"flex-end",
+  },
+
+  bgimage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: "cover",
+    justifyContent: "flex-start"
   },
 });

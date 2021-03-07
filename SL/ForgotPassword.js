@@ -29,13 +29,14 @@ const  pressRessetPassword= ()=>
   return (
     <View style={styles.container}>
       {/* https://wallpaperaccess.com/full/1503970.jpg */}
-      <ImageBackground source={{ uri: 'https://images.unsplash.com/photo-1562710057-b3a85fa9ba85?ixlib=rb-1.2.1&w=1000&q=80' }} style={styles.image}>
+      {/* <ImageBackground source={{ uri: 'https://images.unsplash.com/photo-1562710057-b3a85fa9ba85?ixlib=rb-1.2.1&w=1000&q=80' }} style={styles.image}> */}
+      <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.image}>
 
 
         <View style={styles.emailwhite}>
 
           <View style={styles.usernameC}>
-            <Text style={styles.email}>User Email : </Text>
+            <Text style={styles.email}>Email : </Text>
             <TextInput
               style={styles.input}
               placeholder='Email'
@@ -81,18 +82,20 @@ image: {
 },
 
 emailwhite: {
-  backgroundColor: "white",
+  backgroundColor: 'rgba(255, 255, 255, 0.6)',
+  borderRadius:10,
   padding: 50,
   marginLeft: "18%",
   marginRight: "18%",
   alignItems: 'center',
+  // opacity:"85%",
 },
 
 
 input: {
-  borderWidth: 2,
+  // borderWidth: 2,
   //borderColor: '#FF0000',
-  backgroundColor: '#D3D3D3',
+  backgroundColor: "#F3EEEE",
   // borderColor: '#FF0000',
   borderTopColor: '#fff',
   borderLeftColor: '#fff',
@@ -114,6 +117,7 @@ RessetButton: {
   width: 200,
   marginTop: 20,
   backgroundColor: "black",
+  borderRadius:10,
   padding: 10,
   //borderRadius: 50,
 },
@@ -125,7 +129,7 @@ email: {
 
 
 Resset: {
-  color: "white",
+  color: "#F8C018",
   fontSize: 20,
   fontWeight: 'bold',
   justifyContent: "center",
