@@ -62,7 +62,7 @@ export default ({navigation, route}) => {
       <View style={styles.border}>
       <View style={styles.flexrow}>  
         <View style={styles.StatusTextContainer}>
-        <Text style={{color:orange, fontWeight:"bold"}}>Status</Text>
+        <Text style={{color:orange, fontWeight:"bold",fontSize:15}}>Status</Text>
         </View>
 
         <View>
@@ -70,7 +70,7 @@ export default ({navigation, route}) => {
         <Picker
         style={styles.dropdown}
         selectedValue={status}
-        style={{height: 50, width: 130, paddingLeft:"30%", borderWidth:0, backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, color:"black",fontWeight:"bold"}}
+        style={{height: 50, width: 100, paddingLeft:"30%", borderWidth:0, backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, color:"black",fontWeight:"bold"}}
         onValueChange={(itemValue, itemIndex) =>
         setstatus(itemValue)
         }>
@@ -115,7 +115,7 @@ export default ({navigation, route}) => {
   <View style={styles.border}>
   <View style={styles.flexrow}>
         <View style={styles.StatusTextContainer}>
-          <Text style={{color:orange, fontWeight:"bold", zIndex:-1}}>Quotation Sent to Lead</Text>
+          <Text style={{color:orange, fontWeight:"bold", zIndex:-1, fontSize:15}}>Quotation Sent to Lead</Text>
         </View>
 
         <View style={styles.RMContainer}> 
@@ -133,7 +133,7 @@ export default ({navigation, route}) => {
       <View style={styles.border}>
       <View style={styles.flexrow}>
         <View style={styles.StatusTextContainer}>
-          <Text style={{color:orange, fontWeight:"bold"}}>Quotation Agreed by Lead</Text>
+          <Text style={{color:orange, fontWeight:"bold",fontSize:15}}>Quotation Agreed by Lead</Text>
         </View>
 
         <View style={styles.RMContainer}> 
@@ -152,7 +152,7 @@ export default ({navigation, route}) => {
       <View style={styles.border}>
         <View>
         <View style={styles.StatusTextContainer}>
-          <Text style={{color:orange, fontWeight:"bold"}}>Remarks</Text>
+          <Text style={{color:orange, fontWeight:"bold",fontSize:15}}>Remarks</Text>
         </View>
 
         <View >
@@ -228,7 +228,7 @@ const styles = StyleSheet.create({
 
   flexrow:{
     flexDirection:"row",
-    justifyContent:"space-around",
+    justifyContent:"space-between",
     zIndex:-1
   },
 

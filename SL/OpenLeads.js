@@ -49,7 +49,7 @@ export default ({navigation, route}) => {
         </View>
       </View>
 
-<ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10}}>
+<ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, marginLeft:"5%", marginRight:"5%", marginBottom:"5%"}}>
 <View style={{paddingBottom:40, paddingTop:10}}>
         <View style={{borderRadius:10, backgroundColor:"#fff", marginHorizontal:15, borderWidth:1, borderColor:orange, elevation: 2, borderTopWidth:0}}>
 
@@ -135,12 +135,8 @@ const styles = StyleSheet.create({
     flex: 1,
     width: '100%',
     height: '100%',
-    padding:"5%",
-    paddingTop:0,
     resizeMode: "cover",
-    justifyContent: "center"
-  
+    justifyContent: "flex-start"
   },
-
 
 });

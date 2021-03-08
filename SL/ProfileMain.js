@@ -196,9 +196,10 @@ const styles = StyleSheet.create({
 
   userinfo:{
      marginLeft:10,
+     alignSelf:"center"
     //textAlign:"center",
-    justifyContent:"center",
-    flex:1,
+    // justifyContent:"center",
+    // flex:1,
   },
 
   userdata:{

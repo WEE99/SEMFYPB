@@ -156,7 +156,7 @@ useEffect(() => {
       <Icon name='notifications' size={25}  color="orange"/> 
       </TouchableOpacity>
       </View> */}
-<ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10}}>
+<ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, margin:"5%"}}>
     <View style={{paddingBottom:40, paddingTop:10}}>
         <View style={{borderRadius:10, backgroundColor:"#fff",  marginHorizontal:15, borderWidth:1, borderColor:orange, elevation: 2, borderTopWidth:0}}>
 
@@ -241,11 +241,9 @@ const styles = StyleSheet.create({
 
   bgimage: {
     flex: 1,
-    padding:'5%',
     width: '100%',
     height: '100%',
     resizeMode: "cover",
-    justifyContent: "center"
-  
+    justifyContent: "flex-start"
   },
 });

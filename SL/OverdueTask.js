@@ -81,7 +81,7 @@ export default ({navigation, route}) => {
       <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
 
     
-  <ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.6)', borderRadius:10}}>
+  <ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.6)', borderRadius:10, margin:"5%"}}>
       <View style={{paddingBottom:40, paddingTop:10}}>
         <View style={{borderRadius:10, backgroundColor:"#fff", paddingVertical:10, marginHorizontal:15, borderWidth:1, borderColor:"lightgrey", elevation: 2}}>
 
@@ -133,16 +133,12 @@ const styles = StyleSheet.create({
     // paddingRight:"20%"
     justifyContent:"center"
   },
-
   bgimage: {
     flex: 1,
     width: '100%',
     height: '100%',
-    padding:"5%",
     resizeMode: "cover",
-    justifyContent: "center"
-  
+    justifyContent: "flex-start"
   },
-
 
 });
