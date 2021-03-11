@@ -38,12 +38,12 @@ export default class CR_O extends Component {
 
               <View style={styles.row2}>
                 <TouchableOpacity style={styles.wonLead}
-                  onPress={() => this.props.navigation.navigate('TopNav2', { screen: 'Open' })}>
+                  onPress={() => this.props.navigation.navigate('TopNav2', { screen: 'Won' })}>
                   <Text style={styles.no}>40</Text>
                   <Text numberOfLines={2} style={styles.typeTitle}>Won Leads</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.lostLead}
-                  onPress={() => this.props.navigation.navigate('TopNav2', { screen: 'Open' })}>
+                  onPress={() => this.props.navigation.navigate('TopNav2', { screen: 'Lost' })}>
                   <Text style={styles.no}>40</Text>
                   <Text numberOfLines={2} style={styles.typeTitle}>Lost Leads</Text>
                 </TouchableOpacity>

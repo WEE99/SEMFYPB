@@ -1,26 +1,4 @@
-// import React, { Component } from 'react';
-// import { createAppContainer } from 'react-navigation';
-// import { createStackNavigator} from 'react-navigation-stack';
-
-import {
-  StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image, ScrollView
-} from 'react-native';
-// // import Icon from 'react-native-vector-icons/MaterialIcons';
-// // import Icon2 from 'react-native-vector-icons/Feather';
-
-import firebase from '@react-native-firebase/app';
-// import { createStackNavigator } from '@react-navigation/stack';
-
-// const instructions = Platform.select({
-//   ios: 'Press Cmd+R to reload,\nCmd+D or shake for dev menu',
-//   android: 'Double tap R on your keyboard to reload,\nShake or press menu button for dev menu',
-// });
-
-// const firebaseCredentials = Platform.select({
-//   ios: 'https://invertase.link/firebase-ios',
-//   android: 'https://invertase.link/firebase-android',
-// });
-
+import {View} from 'react-native';
 import * as React from 'react';
 import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';

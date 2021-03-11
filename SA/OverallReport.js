@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, ImageBackground, ScrollView, TouchableOpacityBase
+  StyleSheet, Text, View, TouchableOpacity, ImageBackground
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+
+// import f from '../firebase';
 
 export default class OR extends Component {
     render() {

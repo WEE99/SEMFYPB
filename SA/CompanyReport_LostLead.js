@@ -15,7 +15,7 @@ export default class CR_LL extends Component {
                     <View flexDirection='row'>
                         <Text style={styles.text}>Report</Text>
                         <TouchableOpacity style={styles.backicon}
-                            onPress={() => this.props.navigation.navigate('TopNav1')}>
+                            onPress={() => this.props.navigation.navigate('Overall Company Report')}>
                             <Icon2 name='arrow-back' size={30} color='white' />
                         </TouchableOpacity>
                     </View>
