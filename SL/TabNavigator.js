@@ -45,6 +45,7 @@ import ProfileSetting from "./ProfileSetting";
 import EditNotification from "./EditNotification";
 import EditPassword from "./EditPassword";
 import LoginPage from "./LoginPage";
+import EditProfile from "./EditProfile";
 //LoginPage
 import ForgotPassword from "./ForgotPassword"
 import { orange, white } from './TablesandTimeFormat';
@@ -363,7 +364,7 @@ function ReportStackNav() {
 function AccountStackNav ({ navigation, route }) {
   React.useLayoutEffect(() => {
       const routeName = getFocusedRouteNameFromRoute(route);
-      if (routeName === "Logout" || routeName ==="Password" || routeName==="Notifications"){
+      if (routeName === "Logout" || routeName ==="Password" || routeName==="Notifications" || routeName==="Edit Profile"){
           navigation.setOptions({tabBarVisible: false});
       }else {
           navigation.setOptions({tabBarVisible: true});
@@ -404,6 +405,12 @@ function AccountStackNav ({ navigation, route }) {
         headerTintColor:"white",
       }}/>
       <Stack.Screen name="Password" component={EditPassword}
+      options={{
+        headerStyle:{backgroundColor:"black"},
+        headerTitleAlign:"center",
+        headerTintColor:"white",
+      }}/>
+      <Stack.Screen name="Edit Profile" component={EditProfile}
       options={{
         headerStyle:{backgroundColor:"black"},
         headerTitleAlign:"center",

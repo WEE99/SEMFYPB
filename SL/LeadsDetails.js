@@ -1,8 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
-import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView, SafeAreaView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialIcons } from '@expo/vector-icons'; 
 import {Entypo} from 'react-native-vector-icons';
+import { Fontisto } from '@expo/vector-icons';
+import { Foundation } from '@expo/vector-icons'; 
+import { Octicons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';  
+import { Ionicons } from '@expo/vector-icons'; 
 import { orange } from './TablesandTimeFormat';
 //LeadsDetails
 
@@ -61,7 +67,8 @@ export default ({navigation, route}) => {
       </View> */}
 
       <View  style={styles.LeadsContainer}>
-      <ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, paddingTop:"5%", paddingBottom:"10%",padding:"10%", marginRight:"5%"}}>
+      <ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, paddingTop:"5%", paddingBottom:"10%",padding:"1%",alignSelf:"center",marginLeft:"5%",marginRight:"5%"}}>
+      <View style={{alignSelf:"center"}}>
       <View style={{width:310, alignSelf:"center",paddingLeft:15, zIndex:2, flexDirection:"row", justifyContent:"space-between"}}>
       <View style={{paddingHorizontal:5,paddingVertical:10, marginVertical:3, backgroundColor:orange, borderRadius:10, maxWidth:100,flex:0.5, maxHeight:40}}>
         <Text style={{color:"black",fontWeight:"bold",alignSelf:"center"}}>{name}</Text>
@@ -106,14 +113,15 @@ export default ({navigation, route}) => {
           </View>
         </View>
 
-        <View style={{marginTop:90}}></View>
+        <View style={{marginTop:"23%"}}></View>
 
       
         <View style={styles.LeadsInterest}>
 
           <View style={styles.flexrow}>
           <View style={styles.iconcontainer}>
-          <Icon name='book' size={30} style={styles.LeadsDetailIcon} />
+          {/* <Icon name='book' size={30} style={styles.LeadsDetailIcon} /> */}
+          <Ionicons name="search" size={30} style={styles.LeadsDetailIcon} />
           </View>
 
           <View style={styles.textcontainer}>
@@ -125,7 +133,8 @@ export default ({navigation, route}) => {
 
           <View style={styles.flexrow}>
           <View style={styles.iconcontainer}>
-          <Icon name='message' size={30} style={styles.LeadsDetailIcon} />
+          {/* <Icon name='message' size={30} style={styles.LeadsDetailIcon} /> */}
+          <MaterialIcons name="comment" size={30} style={styles.LeadsDetailIcon}  />
           </View>
 
           <View style={styles.textcontainer}>
@@ -141,13 +150,16 @@ export default ({navigation, route}) => {
           
          <View style={styles.textcontainer}>
           <Text style={styles.textintrustion}>Status</Text>
-          <Text>{contacted? "Contacted":"NOt Contacted"}</Text>
+          <Text>{contacted? "Contacted":"Not Contacted"}</Text>
           </View>
           </View>
 
           <View style={styles.flexrow}>
           <View style={styles.iconcontainer}>
           <Icon name='euro' size={30} style={styles.LeadsDetailIcon}/> 
+          {/* <Foundation name="dollar" size={65} style={styles.LeadsDetailIcon} /> */}
+          {/* <Fontisto name="dollar" size={50} style={styles.LeadsDetailIcon}/> */}
+          {/* <FontAwesome5 name="dollar-sign" size={50}  style={styles.LeadsDetailIcon} /> */}
           </View>
 
           <View style={styles.textcontainer}>
@@ -167,6 +179,7 @@ export default ({navigation, route}) => {
           </View>
           </View>
         </View>
+        </View>
         </ScrollView>
       </View>
       
@@ -175,17 +188,20 @@ export default ({navigation, route}) => {
       <View style={styles.flexrow2}>
         <View>
           <TouchableOpacity style={styles.BottomButton} onPress={pressEdit}>
-          <Icon name='edit' size={35} style={styles.LeadsDetailIcon2} /> 
+          {/* <Icon name='edit' size={35} style={styles.LeadsDetailIcon2} />  */}
+          <FontAwesome5 name="edit" size={28} color="black" />
           </TouchableOpacity>
         </View>
         <View >
           <TouchableOpacity style={styles.BottomButton} onPress={pressCall}>
-            <Icon name='call' size={35} style={styles.LeadsDetailIcon2} />
+            {/* <Icon name='call' size={35} style={styles.LeadsDetailIcon2} /> */}
+            <Ionicons name="md-call-outline" size={28} color="black" />
             </TouchableOpacity>
         </View>
         <View >
           <TouchableOpacity style={styles.BottomButton} onPress={pressMail}>
-            <Icon name='mail' size={35} style={styles.LeadsDetailIcon2} />
+            {/* <Icon name='mail' size={35} style={styles.LeadsDetailIcon2} /> */}
+            <Octicons name="mail" size={28} color="black" />
             </TouchableOpacity>
         </View>
       </View>
@@ -261,13 +277,15 @@ const styles = StyleSheet.create({
 
 LeadsContainer:{
   marginTop:10,
-  alignSelf:"flex-start",
+  alignSelf:"center",
   //borderWidth:2,
   padding:5,
   // paddingLeft:"20%",
   // paddingRight:"20%",
   paddingTop:0,
   borderColor:"green",
+  // backgroundColor:"red",
+  height:"85%",
   width:'100%',
 },
 
@@ -292,20 +310,20 @@ LeadsInfo:{
   alignSelf:"center",
   borderWidth:2,
   marginTop:30,
-  marginLeft:10,
+  marginLeft:5,
   paddingTop:15,
   padding:5,
   borderColor:"lightgrey",
   backgroundColor:"white",
   borderRadius:10,
   position:"absolute",
-  width:300,
+  width:296,
   // width:"95%",
   zIndex:1
 },
 
 LeadsDetailIcon:{marginRight:10, color:orange},
-LeadsDetailIcon2:{marginRight:10},
+// LeadsDetailIcon2:{marginRight:10},
 
 LeadsInterest:{
   alignSelf:"center",
@@ -335,20 +353,32 @@ BottomButton:
   marginRight:5,
   width:45,
   height:45,
-  paddingTop:5,
-  paddingLeft:5
+  alignItems:"center",
+  justifyContent:"center"
+  // paddingTop:5,
+  // paddingLeft:5
 },
+
 
 bgimage: {
   flex: 1,
   width: '100%',
   height: '100%',
   resizeMode: "cover",
-  padding:"5%",
-  paddingRight:0,
-  paddingTop:0,
+  // padding:"5%",
+  // paddingRight:0,
+  // paddingTop:0,
   justifyContent: "flex-start"
 
 },
+
+// bgimage: {
+//   flex: 1,
+//   width: '100%',
+//   height: '100%',
+//   resizeMode: "cover",
+//   justifyContent: "flex-start"
+// },
+
 
 });

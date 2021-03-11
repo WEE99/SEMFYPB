@@ -55,7 +55,8 @@ export default ({navigation, route}) => {
   return (
     <View style={styles.container}>
       <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
-      {/* <View>
+      {/* <View>/
+      
       <Text style={styles.title}>Edit Details</Text>
       </View> */}
 
@@ -223,7 +224,7 @@ const styles = StyleSheet.create({
     width:"80%",
     borderRadius:10,
     marginTop:10,
-    zIndex:-1
+    zIndex:2
   },
 
   flexrow:{

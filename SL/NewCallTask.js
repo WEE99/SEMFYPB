@@ -3,7 +3,9 @@ import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput, ScrollView, Platform, ImageBackground } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 //import DatePicker from "react-datepicker";
-import {MaterialCommunityIcons} from 'react-native-vector-icons';
+// import {MaterialCommunityIcons} from 'react-native-vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { MaterialIcons } from '@expo/vector-icons'; 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {formatAMPM, orange} from './TablesandTimeFormat';
 // NewCallTask!
@@ -79,7 +81,8 @@ export default ({navigation, route}) => {
       <View style={styles.Flexpicker}>
      
         <View >
-        <MaterialCommunityIcons name='calendar' size={40} style={styles.icon} /> 
+        {/* <MaterialCommunityIcons name='calendar' size={40} style={styles.icon} />  */}
+        <MaterialCommunityIcons name="calendar-range-outline" size={40} style={styles.icon} />
         </View>
 
         <View style={styles.ContentView}>
@@ -100,7 +103,8 @@ export default ({navigation, route}) => {
       <View style={styles.Flexpicker}>
      
         <View>
-        <MaterialCommunityIcons name="clock" size={40} style={styles.icon}/> 
+        {/* <MaterialCommunityIcons name="clock" size={40} style={styles.icon}/>  */}
+        <MaterialCommunityIcons name="clock-time-four-outline" size={40} style={styles.icon} />
         </View>
 
         <View style={styles.ContentView}>
@@ -117,7 +121,8 @@ export default ({navigation, route}) => {
       <View style={styles.notesouterview}>
       <View style={styles.Flexpicker}>
       <View>
-      <MaterialCommunityIcons name="note" size={40} style={styles.icon}/> 
+      {/* <MaterialCommunityIcons name="note" size={40} style={styles.icon}/> */}
+      <MaterialIcons name="comment" size={40} style={styles.icon} />
       </View>
 
       <View style={styles.ContentView}>
@@ -194,6 +199,7 @@ export default ({navigation, route}) => {
         <TextInput
         style={styles.TextInputNotes}
         placeholder="Write down notes here"
+        placeholderTextColor={"white"}
         multiline={true}
         onChangeText={(val) => seteditnote(val)}
         />
@@ -210,6 +216,7 @@ export default ({navigation, route}) => {
     
      {(show && !isWeb)&&
         <DateTimePicker
+        style={styles.datetimepickerweb}
           testID="dateTimePicker"
           value={date}
           mode={mode}
@@ -308,6 +315,11 @@ const styles = StyleSheet.create({
     marginLeft:"10%"
   },
 
+  // datetimepickerweb:{
+  //   backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  //   color:"red",
+  // },
+
   TextDateTime:{
     color:"white",
     fontWeight:'bold',
@@ -315,11 +327,12 @@ const styles = StyleSheet.create({
 
   TextInputDateTime:{
     borderWidth:2,
-    borderColor:"lightgrey",
+    borderColor:orange,
+    color:"white",
     borderRadius:10,
     width:100,
     padding:5,
-    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     textAlign:"center",
   },
 
@@ -328,7 +341,7 @@ const styles = StyleSheet.create({
     borderWidth:2,
     color:"white",
     fontWeight:"bold",
-    // backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderColor:orange,
     borderRadius:10,
     marginRight:20,

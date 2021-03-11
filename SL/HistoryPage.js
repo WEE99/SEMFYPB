@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { orange } from './TablesandTimeFormat';
 
 //export default function App() {
@@ -77,7 +78,8 @@ export default ({navigation, route}) => {
         <View style={styles.iconContainer}>
         <TouchableOpacity style={styles.iconButton} onPress={pressOthers}>
            <View style={styles.iconButtonBorder}>
-           <Icon name='description' size={40} color={orange} /> 
+           {/* <Icon name='description' size={40} color={orange} />  */}
+           <MaterialCommunityIcons name="message-bulleted" size={40} color={orange} />
            <Text style={styles.icontext}>40</Text>
            <Text style={styles.icontext}>Others</Text>
            </View>

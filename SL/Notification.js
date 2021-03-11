@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     borderWidth:1,
     borderRadius:10,
     alignSelf:"center",
+    backgroundColor:"rgba(255, 255, 255, 0.2)",
     borderColor:orange,
     padding:5,
     width:250

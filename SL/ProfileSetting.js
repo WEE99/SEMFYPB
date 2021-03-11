@@ -11,6 +11,7 @@ export default ({navigation, route}) => {
 
   const pressEditProfile=()=>{
     alert('nav to EditProfile .js')
+    navigation.navigate('Edit Profile');
   };
 
 
@@ -29,7 +30,8 @@ export default ({navigation, route}) => {
   };
 
   const pressLogout=()=>{
-    var r = confirm("Are you sure you want to Logout?");
+    // var r = confirm("Are you sure you want to Logout?");
+    var r=true;
     if (r == true) {
       auth.signOut().then(() => {
         console.log("Logout Successfully");

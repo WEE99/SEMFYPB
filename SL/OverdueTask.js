@@ -133,6 +133,7 @@ const styles = StyleSheet.create({
     // paddingRight:"20%"
     justifyContent:"center"
   },
+  
   bgimage: {
     flex: 1,
     width: '100%',

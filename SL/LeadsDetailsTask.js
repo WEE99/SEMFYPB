@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image,ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { AntDesign } from '@expo/vector-icons'; 
 import {auth, db, storage} from "./firebase";
 import { NavigationEvents } from 'react-navigation';
 import {orange, Todotask1,Todotask2} from "./TablesandTimeFormat"
@@ -79,7 +80,6 @@ export default ({navigation, route}) => {
     alert("nav to NewCallTask .js"); 
     navigation.navigate("New Call Task")
   };
-
   return (
     <View style={styles.container}>
       <ImageBackground source={require('./img/backgroundImg.png')}  style={styles.bgimage}>
@@ -96,18 +96,22 @@ export default ({navigation, route}) => {
         </View>
       </View>
 
+      
+      <View style={{marginTop:10,backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, paddingTop:"5%", paddingBottom:"10%",padding:"1%",alignSelf:"center",marginLeft:"5%",marginRight:"5%", height:"85%",width:"90%"}}>
       <ScrollView>
     
                 {Tasks.length !== 0 && <Todotask1 data={Tasks} navigation={navigation} />}
           
 
       </ScrollView>
+      </View>
 
 
       <View style={styles.flexrow2}>
         <View>
           <TouchableOpacity style={styles.BottomButton} onPress={pressFilter}>
-          <Icon name='height' size={35} /> 
+          {/* <Icon name='height' size={35} />  */}
+          <AntDesign name="filter" size={35} color="black" />
           </TouchableOpacity>
         </View>
         <View >
