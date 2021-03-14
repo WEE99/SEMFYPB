@@ -70,14 +70,16 @@ export default ({navigation, route}) => {
 
         <Picker
         style={styles.dropdown}
+        itemStyle={{ backgroundColor: "red", color: "blue", fontFamily:"Ebrima", fontSize:17 }}
         selectedValue={status}
-        style={{height: 50, width: 100, paddingLeft:"30%", borderWidth:0, backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, color:"black",fontWeight:"bold"}}
+        style={{height: 50, width: 100, paddingLeft:"30%", borderWidth:0, backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, color:"white",fontWeight:"bold"}}
         onValueChange={(itemValue, itemIndex) =>
         setstatus(itemValue)
         }>
-        <Picker.Item label="OPEN" value="Open" />
-        <Picker.Item label="WON" value="Won" />
-        <Picker.Item label="LOST" value="Lost" />
+    
+        <Picker.Item label="OPEN" value="Open" color="black"/>
+        <Picker.Item label="WON" value="Won" color="black"/>
+        <Picker.Item label="LOST" value="Lost" color="black"/>
         </Picker>
         {/* <DropDownPicker
         items={[

@@ -70,8 +70,8 @@ export default ({navigation, route}) => {
       <ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, paddingTop:"5%", paddingBottom:"10%",padding:"1%",alignSelf:"center",marginLeft:"5%",marginRight:"5%"}}>
       <View style={{alignSelf:"center"}}>
       <View style={{width:310, alignSelf:"center",paddingLeft:15, zIndex:2, flexDirection:"row", justifyContent:"space-between"}}>
-      <View style={{paddingHorizontal:5,paddingVertical:10, marginVertical:3, backgroundColor:orange, borderRadius:10, maxWidth:100,flex:0.5, maxHeight:40}}>
-        <Text style={{color:"black",fontWeight:"bold",alignSelf:"center"}}>{name}</Text>
+      <View style={{paddingVertical:5, marginVertical:3, backgroundColor:orange, borderRadius:10, maxWidth:100,flex:0.5, maxHeight:40}}>
+        <Text style={{fontSize:20,color:"black",fontWeight:"bold",alignSelf:"center"}}>{name}</Text>
       </View>
 
       <View style={{borderRadius:50,backgroundColor:orange, width:100,height:100, alignItems:"center",flexDirection:"column",justifyContent:"center"}}>

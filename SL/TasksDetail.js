@@ -199,7 +199,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderRadius:10,
     padding:5,
-    width:"1oo%",
+    width:"100%",
   },
 
   flexrow:{

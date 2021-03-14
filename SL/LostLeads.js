@@ -6,7 +6,7 @@ import {orange, TableRowLost} from "./TablesandTimeFormat";
 
 const arryLost =[
   {id:1, Lname: "Bob",company: "Google. Co", Remarks:"Not Interessed"},
-  {id:2, Lname: "John Doe",company: "Nuclear reacher", Remarks:"Very Not Interested really not into it worst person to work with ban this client"},
+  {id:2, Lname: "John Doe",company: "Nuclear reacher", Remarks:"Very Not Interested really not into it worst person to work with ban this client"}, //"Very Not Interested really not into it worst person to work with ban this client"
   {id:3, Lname: "William ",company: "SPACE X", Remarks:"He wanna deal in RM 2"},
   {id:4, Lname: "Saruna",company: "Karuna", Remarks:"Cannot la this"},
   {id:5, Lname: "Saruna",company: "Karuna", Remarks:"Cannot la this"},
@@ -53,15 +53,24 @@ const arryLost =[
         </View>
       </View>
 
-<ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, marginLeft:"5%", marginRight:"5%", marginBottom:"5%"}}>
-     <View style={{paddingBottom:40, paddingTop:10}}>
-        <View style={{borderRadius:10, backgroundColor:"#fff", marginHorizontal:15, borderWidth:1, borderColor:orange, elevation: 2, borderTopWidth:0}}>
+      <ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', marginLeft:"5%", marginRight:"5%", marginBottom:"5%"}}>
+<View style={{paddingBottom:40, paddingTop:10}}>
+        <View style={{borderRadius:10, marginHorizontal:15, elevation: 2}}>
 
-            <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:orange, backgroundColor:orange, paddingHorizontal:10, paddingBottom:4, borderTopLeftRadius:10, borderTopRightRadius:10}}>
+            {/* <View style={{flexDirection:"row", borderBottomWidth:1, borderColor:orange, backgroundColor:orange, paddingHorizontal:10, paddingBottom:4, borderTopLeftRadius:10, borderTopRightRadius:10}}>
                 <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",textAlign:"center"}}>
                     Name
                 </Text>
                 <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"center"}}>
+                    Status
+                </Text>
+            </View> */}
+
+            <View style={{flexDirection:"row", backgroundColor:orange, paddingHorizontal:10, borderRadius:10,height:51}}>
+                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",justifyContent:"center",alignItems:"center",textAlign:"center",borderRightWidth:1,borderColor:"white",height:"80%",alignSelf:"center",paddingTop:10}}>
+                    Name
+                </Text>
+                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "balck", fontWeight:"bold",textAlign:"center", justifyContent:"center",alignItems:"center",textAlign:"center",height:"80%",alignSelf:"center",paddingTop:10}}>
                     Remarks
                 </Text>
             </View>
@@ -69,10 +78,15 @@ const arryLost =[
             {arryLost.map((info) =>
                 <TableRowLost key={info.id} data={info} />
             )}
+
+
+
             </View>
       <StatusBar style="auto" />
     </View>
-</ScrollView>
+  </ScrollView>
+
+
 </ImageBackground>
 </View>
     );

@@ -78,6 +78,7 @@ useEffect(() => {
   console.log(user.uid)
   if(user){
     db.collection("users").where("UID", "==",user.uid)
+    // db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
     .get()
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
@@ -160,17 +161,17 @@ useEffect(() => {
     <View style={{paddingBottom:40, paddingTop:10}}>
         <View style={{borderRadius:10, backgroundColor:"#fff",  marginHorizontal:15, borderWidth:1, borderColor:orange, elevation: 2, borderTopWidth:0}}>
 
-            <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:orange, backgroundColor:orange, paddingHorizontal:10, paddingBottom:4, borderTopLeftRadius:10, borderTopRightRadius:10}}>
-                <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",textAlign:"center"}}>
+            <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:orange, backgroundColor:orange, paddingHorizontal:10, borderTopLeftRadius:10, borderTopRightRadius:10,height:40}}>
+                <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",justifyContent:"center",alignItems:"center",textAlign:"center",borderRightWidth:1,paddingTop:10}}>
                     Name
                 </Text>
-                <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"center"}}>
+                <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"center",justifyContent:"center",alignItems:"center",textAlign:"center", borderRightWidth:1,paddingTop:10}}>
                     Contacted
                 </Text>
-                <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"center"}}>
+                <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"center",justifyContent:"center",alignItems:"center",textAlign:"center", borderRightWidth:1,paddingTop:10}}>
                     Quote Sent
                 </Text>
-                <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color: "balck", fontWeight:"bold",textAlign:"center"}}>
+                <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color: "balck", fontWeight:"bold",textAlign:"center", justifyContent:"center",alignItems:"center",textAlign:"center",paddingTop:10}}>
                     Status
                 </Text>
             </View>

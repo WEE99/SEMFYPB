@@ -9,22 +9,24 @@ export const redDClr = "#630e0e";
 export const blueDClr = "#27708a";
 export const white="#fff";
 export const orange="#F8C018";
+export const tableorange="#B56118";
 
-const myheight=100;
+const myheight=50;
+const myheight2=70;//59 in andriod emulator not working it cover the words in the all row with that height
 
 
 
 
 export const TableRowDashboard =({data,navigation,handlePressLead, handlePressQuote, handlePressLost, handlePressWon})=>{
   return (
-        <View style={{flexDirection:"row",borderTopWidth:1, borderColor:"lightgrey", paddingHorizontal:10, paddingTop:2, marginBottom:3, alignItems:"center", height:myheight}}>
+        <View style={{flexDirection:"row",borderTopWidth:1, borderColor:"lightgrey", paddingHorizontal:10, alignItems:"center", height:myheight}}>
 
-          <TouchableOpacity style={{flex:0.25,fontSize: 13, paddingVertical: 2, fontWeight:"bold",textAlign:"center"}}
+          <TouchableOpacity style={{flex:0.25,fontSize: 13, paddingVertical: 2, fontWeight:"bold",textAlign:"center",borderRightWidth:1, height:"100%"}}
            onPress={()=>{
             navigation.navigate('Details', data)
             }}>
-          <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"center"}}  numberOfLines={1}>
-               {data.name}</Text><Text style={{fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"center"}} numberOfLines={1}> {data.company}</Text>
+          <Text style={{fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"left"}}  numberOfLines={1}>{data.name}</Text>
+          <Text style={{fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"left"}} numberOfLines={1}>{data.company}</Text>
           
           </TouchableOpacity>
 
@@ -32,12 +34,12 @@ export const TableRowDashboard =({data,navigation,handlePressLead, handlePressQu
                 {data.contacted}
           </Text> */}
           {data.contacted? 
-          <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color:blueDClr, fontWeight:"bold",textAlign:"center"}}><AntDesign name="check" size={24} color={greenDClr}/></Text> : 
-          <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color:white, fontWeight:"bold",textAlign:"center"}}></Text> }  
+          <Text style={{flex:0.25,height:"100%", fontSize: 13, paddingVertical: 2, color:blueDClr, fontWeight:"bold",justifyContent:"center",alignItems:"center",textAlign:"center",display:"flex",borderRightWidth:1,paddingTop:10}}><AntDesign name="check" size={24} color={greenDClr}/></Text> : 
+          <Text style={{flex:0.25,height:"100%", fontSize: 13, paddingVertical: 2, color:white, fontWeight:"bold",justifyContent:"center",alignItems:"center",textAlign:"center",display:"flex",borderRightWidth:1,paddingTop:10}}></Text> }  
 
-          <TouchableOpacity style={{flex:0.25,fontSize: 13, paddingVertical: 2, fontWeight:"bold",textAlign:"center"}}
+          <TouchableOpacity style={{flex:0.25,height:"100%",fontSize: 13, paddingVertical: 2, fontWeight:"bold",justifyContent:"center",alignItems:"center",display:"flex",borderRightWidth:1}}
            onPress={handlePressQuote}>
-          <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"center"}}>
+          <Text style={{fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"center"}}>
                 RM {data.quote}
                 {/* {data.result==="Won"? "RM "+ data.quote:"-"} */}
           </Text>
@@ -73,26 +75,25 @@ const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Satur
 
 export const TableRowWon =({data})=>{
   return (
-        <View style={{flexDirection:"row",borderTopWidth:1,  borderColor:"lightgrey", paddingHorizontal:10, paddingTop:2, marginBottom:3, alignItems:"center", height:myheight}}>
+        <View style={{flexDirection:"row",borderTopWidth:1, borderColor:"lightgrey", paddingHorizontal:10, alignItems:"center", height:myheight2, backgroundColor: 'rgba(255, 255, 255, 0.9)',borderRadius:10, marginTop:10}}>
 
-          <View style={{flex:0.33,fontSize: 13, paddingVertical: 2, fontWeight:"bold",textAlign:"center"}}>
-          <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"center"}}  numberOfLines={1}>
-               {data.Lname}</Text><Text style={{fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"center"}} numberOfLines={1}> {data.company}</Text>
+          <View style={{flex:0.33,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center",borderRightWidth:1, borderColor:orange, height:"70%"}}>
+          <Text style={{fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"left"}}  numberOfLines={1}>
+               {data.Lname}</Text><Text style={{fontSize: 13, paddingVertical: 2, color:tableorange, fontWeight:"bold",textAlign:"left"}} numberOfLines={1}>{data.company}</Text>
           </View>
           
-          <View style={{flex:0.33,fontSize: 13, paddingVertical: 2, fontWeight:"bold",textAlign:"center"}}>
-          <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"center"}}>
+          <View style={{flex:0.33,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center",borderRightWidth:1, borderColor:orange, height:"70%"}}>
+          <Text style={{fontSize: 13, paddingVertical: 2, color:tableorange, fontWeight:"bold",textAlign:"center", paddingTop:10}}>
                 {data.QuoteSent}
           </Text>
           </View>
 
-          <View style={{flex:0.33,fontSize: 13, paddingVertical: 2, fontWeight:"bold",textAlign:"center"}}>
-          <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"center"}}>
+          <View style={{flex:0.33,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center", height:"70%"}}>
+          <Text style={{fontSize: 13, paddingVertical: 2, color:tableorange, fontWeight:"bold",textAlign:"center" , paddingTop:10}}>
                 {data.QuoteAgreed}
           </Text>
           </View>
-          
-          
+
         </View>
   )
 };
@@ -100,15 +101,17 @@ export const TableRowWon =({data})=>{
 
 export const TableRowLost =({data})=>{
   return (
-        <View style={{flexDirection:"row",borderTopWidth:1,  borderColor:"lightgrey", paddingHorizontal:10, paddingTop:2, marginBottom:3, alignItems:"center", height:myheight}}>
+        <View style={{flexDirection:"row",borderTopWidth:1, borderColor:"lightgrey", paddingHorizontal:10, alignItems:"center", height:myheight2, backgroundColor: 'rgba(255, 255, 255, 0.9)',borderRadius:10, marginTop:10}}>
 
-          <View style={{flex:0.5,fontSize: 13, paddingVertical: 2, fontWeight:"bold",textAlign:"center"}}>
-          <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"center"}}  numberOfLines={1}>
-               {data.Lname}</Text><Text style={{fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"center"}} numberOfLines={1}> {data.company}</Text>
+          <View style={{flex:0.5,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center",borderRightWidth:1, borderColor:orange, height:"70%"}}>
+          <Text style={{fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"left"}}  numberOfLines={1}>
+               {data.Lname}</Text><Text style={{fontSize: 13, paddingVertical: 2, color:tableorange, fontWeight:"bold",textAlign:"left"}} numberOfLines={1}>{data.company}</Text>
           </View>
+          {/* <Text style={{fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"left"}}  numberOfLines={1}>{data.name}</Text>
+          <Text style={{fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"left"}} numberOfLines={1}>{data.company}</Text> */}
           
-          <View style={{flex:0.5,fontSize: 13, paddingVertical: 2, fontWeight:"bold",textAlign:"center"}}>
-          <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"center"}}>
+          <View style={{flex:0.5,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center", height:"70%"}}>
+          <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color:tableorange, fontWeight:"bold",textAlign:"center", paddingTop:10, paddingLeft:5}} numberOfLines={1}>
                 {data.Remarks}
           </Text>
           </View>   
@@ -119,15 +122,15 @@ export const TableRowLost =({data})=>{
 
 export const TableRowOpen =({data})=>{
   return (
-        <View style={{flexDirection:"row",borderTopWidth:1,  borderColor:"lightgrey", paddingHorizontal:10, paddingTop:2, marginBottom:3, alignItems:"center", height:myheight}}>
+        <View style={{flexDirection:"row",borderTopWidth:1, borderColor:"lightgrey", paddingHorizontal:10, alignItems:"center", height:myheight2, backgroundColor: 'rgba(255, 255, 255, 0.9)',borderRadius:10, marginTop:10}}>
 
-          <View style={{flex:0.5,fontSize: 13, paddingVertical: 2, fontWeight:"bold",textAlign:"center"}}>
-          <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "grey", fontWeight:"bold",textAlign:"center"}}  numberOfLines={1}>
-               {data.Lname}</Text><Text style={{fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"center"}} numberOfLines={1}> {data.company}</Text>
+          <View style={{flex:0.5,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center",borderRightWidth:1, borderColor:orange, height:"70%"}}>
+          <Text style={{fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"left"}}  numberOfLines={1}>
+               {data.Lname}</Text><Text style={{fontSize: 13, paddingVertical: 2, color:tableorange, fontWeight:"bold",textAlign:"left"}} numberOfLines={1}>{data.company}</Text>
           </View>
           
-          <View style={{flex:0.5,fontSize: 13, paddingVertical: 2, fontWeight:"bold",textAlign:"center"}}>
-          <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "orange", fontWeight:"bold",textAlign:"center"}}>
+          <View style={{flex:0.5,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center", height:"70%"}}>
+          <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color:tableorange, fontWeight:"bold",textAlign:"center", paddingTop:10}}>
                 {data.Status}
           </Text>
           </View>   
