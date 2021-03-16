@@ -24,7 +24,7 @@ export default class OR extends Component {
             <View style={styles.picture}>
               <Image
                 style={styles.tinyLogo}
-                source={require('./img/backgroundImg.png')}
+                source={require('./img/sample.jpg')}
               />
             </View>
 

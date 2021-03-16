@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/SimpleLineIcons';
+import Pie from 'react-native-pie'
 
 export default class CR_L extends Component {
   render() {
@@ -15,15 +16,93 @@ export default class CR_L extends Component {
 
           <ScrollView style={styles.bckground}>
             <Text style={styles.subTitle}>Per Company Performance</Text>
-              <TouchableOpacity style={styles.companyNameBox}
+            <TouchableOpacity style={styles.companyNameBox}
               onPress={() => this.props.navigation.navigate('Overall Company Report')}>
-                <View style={{
-                  width: '20%', height: '90%', backgroundColor: 'black',
-                  marginLeft: '5%' , marginTop: '9%', marginBottom: '9%'
-                }} />
-                <Text style={styles.companyName}>Google.co</Text>
-                <Icon2 name="arrow-right" size={15} color="black" />
-              </TouchableOpacity>
+
+              <View style={{
+                marginLeft: '5%', marginTop: '3%', marginBottom: '3%'
+              }} >
+                <Pie
+                  radius={20}
+                  sections={[
+                    {
+                      percentage: 30,
+                      color: '#0055FF',
+                    },
+                    {
+                      percentage: 30,
+                      color: '#19CB37',
+                    },
+                    {
+                      percentage: 40,
+                      color: '#F62727',
+                    },
+                  ]}
+                  strokeCap={'butt'}
+                />
+              </View>
+              <Text style={styles.companyName}>Google.co</Text>
+              <Icon2 name="arrow-right" size={15} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.companyNameBox}
+              onPress={() => this.props.navigation.navigate('Overall Company Report')}>
+
+              <View style={{
+                marginLeft: '5%', marginTop: '3%', marginBottom: '3%'
+              }} >
+                <Pie
+                  radius={20}
+                  sections={[
+                    {
+                      percentage: 30,
+                      color: '#0055FF',
+                    },
+                    {
+                      percentage: 30,
+                      color: '#19CB37',
+                    },
+                    {
+                      percentage: 40,
+                      color: '#F62727',
+                    },
+                  ]}
+                  strokeCap={'butt'}
+                />
+              </View>
+              <Text style={styles.companyName}>Google.co</Text>
+              <Icon2 name="arrow-right" size={15} color="black" />
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.companyNameBox}
+              onPress={() => this.props.navigation.navigate('Overall Company Report')}>
+
+              <View style={{
+                marginLeft: '5%', marginTop: '3%', marginBottom: '3%'
+              }} >
+                <Pie
+                  radius={20}
+                  sections={[
+                    {
+                      percentage: 30,
+                      color: '#0055FF',
+                    },
+                    {
+                      percentage: 30,
+                      color: '#19CB37',
+                    },
+                    {
+                      percentage: 40,
+                      color: '#F62727',
+                    },
+                  ]}
+                  strokeCap={'butt'}
+                />
+              </View>
+              <Text style={styles.companyName}>Google.co</Text>
+              <Icon2 name="arrow-right" size={15} color="black" />
+            </TouchableOpacity>
+            
           </ScrollView>
 
           <TouchableOpacity style={styles.roundButton3} >

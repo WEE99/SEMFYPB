@@ -15,7 +15,7 @@ export default class CR_OL extends Component {
                     <View flexDirection='row'>
                         <Text style={styles.text}>Report</Text>
                         <TouchableOpacity style={styles.backicon}
-                            onPress={() => this.props.navigation.navigate('TopNav1', { screen: 'Company' })}>
+                            onPress={() => this.props.navigation.navigate('TopNav3', { screen: 'Open' })}>
                             <Icon2 name='arrow-back' size={30} color='white' />
                         </TouchableOpacity>
                     </View>
@@ -28,7 +28,7 @@ export default class CR_OL extends Component {
                         </View>
 
                         <TouchableOpacity style={styles.box}
-                        onPress={() => this.props.navigation.navigate('Lead Profle')}>
+                            onPress={() => this.props.navigation.navigate('Lead Profle')}>
                             <View style={styles.info}>
                                 <View style={styles.custInfo}>
                                     <Text numberOfLines={1} style={styles.custName}>Siti Nur Aliah</Text>
@@ -36,10 +36,6 @@ export default class CR_OL extends Component {
                                 </View>
                                 <Text style={styles.verticalLine2}>|</Text>
                                 <Text numberOfLines={1} style={styles.custStatus}>New lead</Text>
-                            </View>
-                            <View style={styles.info2}>
-                                <Text style={styles.textSLinCharge}>Person In Charge: </Text>
-                                <Text style={styles.SLinCharge}>Siti Nur Aliah</Text>
                             </View>
                         </TouchableOpacity>
                     </ScrollView>
@@ -111,12 +107,8 @@ let styles = StyleSheet.create({
         marginTop: 3
     },
     info: {
+        marginLeft: '2%',
         flexDirection: 'row',
-    },
-    info2: {
-        flexDirection: 'row',
-        alignSelf: 'center',
-        margin: "1%"
     },
     custInfo: {
         margin: 5,
@@ -144,13 +136,6 @@ let styles = StyleSheet.create({
         width: "91%",
         justifyContent: 'space-evenly',
         marginBottom: 10
-    },
-    SLinCharge: {
-        fontSize: 12,
-        color: "#B56118",
-    },
-    textSLinCharge: {
-        fontSize: 12
     },
     roundButton3: {
         width: 41,

@@ -105,6 +105,7 @@ let styles = StyleSheet.create({
         marginTop: 3
     },
     info: {
+        marginLeft: '2%',
         flexDirection: 'row',
     },
     info2: {

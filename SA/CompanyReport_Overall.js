@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, ImageBackground, ScrollView
+  StyleSheet, Text, View, TouchableOpacity, ImageBackground, ScrollView, Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/SimpleLineIcons';
 import Icon3 from 'react-native-vector-icons/Ionicons';
+import Pie from 'react-native-pie'
 
 export default class CR_O extends Component {
   render() {
@@ -26,8 +27,25 @@ export default class CR_O extends Component {
             </View>
             <View style={styles.bckground}>
               <View style={styles.row}>
-                <View style={styles.openLead}>
-                  <Text></Text>
+                <View>
+                  <Pie
+                    radius={70}
+                    sections={[
+                      {
+                        percentage: 30,
+                        color: '#0055FF',
+                      },
+                      {
+                        percentage: 30,
+                        color: '#19CB37',
+                      },
+                      {
+                        percentage: 40,
+                        color: '#F62727',
+                      },
+                    ]}
+                    strokeCap={'butt'}
+                  />
                 </View>
                 <TouchableOpacity style={styles.openLead}
                   onPress={() => this.props.navigation.navigate('TopNav2', { screen: 'Open' })}>
@@ -61,10 +79,10 @@ export default class CR_O extends Component {
               <TouchableOpacity style={styles.companyAdminBox}
                 onPress={() => this.props.navigation.navigate('CA Profile')}>
                 <View style={styles.salesNameBox}>
-                  <View style={{
-                    width: 34, height: 34, borderRadius: 34,
-                    backgroundColor: 'black', marginLeft: '5%'
-                  }}></View>
+                  <Image
+                    style={{ width: 34, height: 34, borderRadius: 34, marginLeft: '5%', marginTop: '1%', marginBottom: '1%' }}
+                    source={require('./img/sample.jpg')}
+                  />
                   <View style={styles.companyName2}>
                     <Text numberOfLines={1}>Siti Nur Aliah</Text>
                     <Text numberOfLines={1} style={styles.compName2}>Google.co</Text>
@@ -86,13 +104,31 @@ export default class CR_O extends Component {
                 <TouchableOpacity style={styles.salesNameBox}
                   onPress={() => this.props.navigation.navigate('TopNav3')}>
                   <View style={{
-                    width: '15%', height: '100%', backgroundColor: 'black',
-                    marginLeft: '5%'
-                  }} />
-                  <View style={{
-                    width: 34, height: 34, borderRadius: 34,
-                    backgroundColor: 'black', marginLeft: '5%'
-                  }}></View>
+                    marginLeft: '5%', marginTop: '1%', marginBottom: '1%'
+                  }} >
+                    <Pie
+                      radius={20}
+                      sections={[
+                        {
+                          percentage: 30,
+                          color: '#0055FF',
+                        },
+                        {
+                          percentage: 30,
+                          color: '#19CB37',
+                        },
+                        {
+                          percentage: 40,
+                          color: '#F62727',
+                        },
+                      ]}
+                      strokeCap={'butt'}
+                    />
+                  </View>
+                  <Image
+                    style={{ width: 34, height: 34, borderRadius: 34, marginLeft: '5%', marginTop: '1%', marginBottom: '1%' }}
+                    source={require('./img/sample.jpg')}
+                  />
                   <View style={styles.companyName3}>
                     <Text numberOfLines={1}>Siti Nur Aliah</Text>
                     <Text numberOfLines={1} style={styles.compName2}>Google.co</Text>

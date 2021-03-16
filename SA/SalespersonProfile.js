@@ -15,7 +15,7 @@ export default class OR extends Component {
           <View flexDirection='row'>
             <Text style={styles.text}>Report</Text>
             <TouchableOpacity style={styles.backicon}
-              onPress={() => this.props.navigation.navigate('Overall Company Report')}>
+              onPress={() => this.props.navigation.goBack()}>
               <Icon3 name='arrow-back' size={30} color='white' />
             </TouchableOpacity>
           </View>
@@ -24,7 +24,7 @@ export default class OR extends Component {
             <View style={styles.picture}>
               <Image
                 style={styles.tinyLogo}
-                source={require('./img/backgroundImg.png')}
+                source={require('./img/sample.jpg')}
               />
             </View>
 

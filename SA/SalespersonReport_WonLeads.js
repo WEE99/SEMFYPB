@@ -4,6 +4,7 @@ import {
   TouchableNativeFeedback, ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icon2 from 'react-native-vector-icons/Ionicons';
 
 export default class CR_WL extends Component {
   render() {
@@ -11,11 +12,12 @@ export default class CR_WL extends Component {
       <View style={styles.container}>
         <ImageBackground source={require('./img/backgroundImg.png')}
           style={styles.backgroundImage}>
-          <Text style={styles.text}>Report</Text>
-          <View style={styles.nav}>
-            <TouchableOpacity style={styles.roundButton2} />
-            <TouchableOpacity style={styles.roundButton} />
-            <TouchableOpacity style={styles.roundButton2} />
+          <View flexDirection='row'>
+            <Text style={styles.text}>Report</Text>
+            <TouchableOpacity style={styles.backicon}
+              onPress={() => this.props.navigation.navigate('TopNav3', { screen: 'Won' })}>
+              <Icon2 name='arrow-back' size={30} color='white' />
+            </TouchableOpacity>
           </View>
 
           <ScrollView style={styles.bckground}>
@@ -44,10 +46,6 @@ export default class CR_WL extends Component {
                 <Text numberOfLines={1} style={styles.custPrice}>RM1200</Text>
                 <Text style={styles.verticalLine2}>|</Text>
                 <Text numberOfLines={1} style={styles.custPrice}>RM1200</Text>
-              </View>
-              <View style={styles.info2}>
-                <Text style={styles.textSLinCharge}>Person In Charge: </Text>
-                <Text style={styles.SLinCharge}>Siti Nur Aliah</Text>
               </View>
             </TouchableOpacity>
           </ScrollView>
@@ -115,12 +113,8 @@ let styles = StyleSheet.create({
     marginTop: 3
   },
   info: {
+    marginLeft: '2%',
     flexDirection: 'row',
-  },
-  info2: {
-    flexDirection: 'row',
-    alignSelf: 'center',
-    margin: "1%"
   },
   custInfo: {
     margin: 5,
@@ -149,13 +143,6 @@ let styles = StyleSheet.create({
     width: "91%",
     maxHeight: "50%",
     justifyContent: 'space-evenly'
-  },
-  SLinCharge: {
-    fontSize: 12,
-    color: "#B56118",
-  },
-  textSLinCharge: {
-    fontSize: 12
   },
   roundButton3: {
     width: 41,

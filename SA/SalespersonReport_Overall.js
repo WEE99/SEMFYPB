@@ -4,6 +4,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/Ionicons';
+import Pie from 'react-native-pie'
 
 export default class OR extends Component {
   render() {
@@ -14,15 +15,32 @@ export default class OR extends Component {
           <View flexDirection='row'>
             <Text style={styles.text}>Report</Text>
             <TouchableOpacity style={styles.backicon}
-              onPress={() => this.props.navigation.navigate('Overall Company Report')}>
+              onPress={() => this.props.navigation.goBack()}>
               <Icon2 name='arrow-back' size={30} color='white' />
             </TouchableOpacity>
           </View>
 
           <View style={styles.bckground}>
             <View style={styles.row}>
-              <View style={styles.openLead}>
-                <Text></Text>
+              <View>
+                <Pie
+                  radius={70}
+                  sections={[
+                    {
+                      percentage: 30,
+                      color: '#0055FF',
+                    },
+                    {
+                      percentage: 30,
+                      color: '#19CB37',
+                    },
+                    {
+                      percentage: 40,
+                      color: '#F62727',
+                    },
+                  ]}
+                  strokeCap={'butt'}
+                />
               </View>
               <TouchableOpacity style={styles.openLead}
                 onPress={() => this.props.navigation.navigate('TopNav4', { screen: 'Open' })}>

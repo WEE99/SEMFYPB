@@ -31,6 +31,8 @@ import OpenLead_Salesperson from './layout/SalespersonReport_OpenLead.js';
 import WonLead_Salesperson from './layout/SalespersonReport_WonLeads.js';
 import LostLead_Salesperson from './layout/SalespersonReport_LostLead.js';
 
+import SettingPage from './layout/Setting.js';
+
 const BottomTab = createBottomTabNavigator();
 const ReportStack = createStackNavigator();
 const AccountStack = createStackNavigator();
@@ -407,6 +409,7 @@ function AccountStackNav() {
         headerShown: false
       }}>
       <AccountStack.Screen name="Account" component={Profile} />
+      <AccountStack.Screen name="Setting" component={SettingPage} />
     </AccountStack.Navigator>
   )
 }

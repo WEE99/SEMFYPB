@@ -37,6 +37,10 @@ export default class CR_LL extends Component {
                                 <Text style={styles.verticalLine2}>|</Text>
                                 <Text numberOfLines={1} style={styles.custStatus}>Not interested</Text>
                             </View>
+                            <View style={styles.info2}>
+                                <Text style={styles.textSLinCharge}>Person In Charge: </Text>
+                                <Text style={styles.SLinCharge}>Siti Nur Aliah</Text>
+                            </View>
                         </TouchableOpacity>
                     </ScrollView>
 
@@ -98,7 +102,20 @@ let styles = StyleSheet.create({
         marginTop: 3
     },
     info: {
+        marginLeft: '2%',
         flexDirection: 'row',
+    },
+    info2: {
+        flexDirection: 'row',
+        alignSelf: 'center',
+        margin: "1%"
+    },
+    SLinCharge: {
+        fontSize: 12,
+        color: "#B56118",
+    },
+    textSLinCharge: {
+        fontSize: 12
     },
     custInfo: {
         margin: 5,

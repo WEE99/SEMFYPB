@@ -3,7 +3,6 @@ import {
   StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import Icon2 from 'react-native-vector-icons/Feather';
 
 export default class OR extends Component {
   render() {
@@ -11,13 +10,18 @@ export default class OR extends Component {
       <View style={styles.container}>
         <ImageBackground source={require('./img/backgroundImg.png')}
           style={styles.backgroundImage}>
-          <Text style={styles.text}>Profile</Text>
-
+          <View flexDirection='row'>
+            <Text style={styles.text}>Report</Text>
+            <TouchableOpacity style={styles.backicon}
+              onPress={() => this.props.navigation.navigate('Setting')}>
+              <Icon name='settings' size={30} color='white' />
+            </TouchableOpacity>
+          </View>
           <TouchableOpacity style={styles.bckground}>
             <View style={styles.picture}>
               <Image
                 style={styles.tinyLogo}
-                source={require('./img/backgroundImg.png')}
+                source={require('./img/sample.jpg')}
               />
             </View>
 
@@ -55,10 +59,16 @@ let styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     textAlign: "center",
-    marginBottom: '10%',
-    marginTop: '3%'
+    marginTop: '3%',
+    flex: 1,
+    marginLeft: '10%'
+  },
+  backicon: {
+    marginTop: '3%',
+    marginRight: '3%',
   },
   bckground: {
+    marginTop: '13%',
     backgroundColor: 'rgba(255, 255, 255, 0.3)',
     width: "80%",
     height: "70%",

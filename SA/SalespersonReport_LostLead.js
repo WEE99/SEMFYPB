@@ -4,6 +4,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icon2 from 'react-native-vector-icons/Ionicons';
 
 export default class CR_LL extends Component {
   render() {
@@ -11,11 +12,12 @@ export default class CR_LL extends Component {
       <View style={styles.container}>
         <ImageBackground source={require('./img/backgroundImg.png')}
           style={styles.backgroundImage}>
-          <Text style={styles.text}>Report</Text>
-          <View style={styles.nav}>
-            <TouchableOpacity style={styles.roundButton2} />
-            <TouchableOpacity style={styles.roundButton2} />
-            <TouchableOpacity style={styles.roundButton} />
+          <View flexDirection='row'>
+            <Text style={styles.text}>Report</Text>
+            <TouchableOpacity style={styles.backicon}
+              onPress={() => this.props.navigation.navigate('TopNav3', { screen: 'Lost' })}>
+              <Icon2 name='arrow-back' size={30} color='white' />
+            </TouchableOpacity>
           </View>
 
           <ScrollView style={styles.bckground}>
