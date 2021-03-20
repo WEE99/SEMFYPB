@@ -78,7 +78,7 @@ export default ({navigation, route}) => {
 
   const pressAdd= ()=>{
     alert("nav to NewCallTask .js"); 
-    navigation.navigate("New Call Task")
+    navigation.navigate("New Task")
   };
   return (
     <View style={styles.container}>
