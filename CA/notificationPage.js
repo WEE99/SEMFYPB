@@ -1,92 +1,86 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, Switch, ImageBackground } from 'react-native';
-//import { ScrollView } from 'react-native-gesture-handler';
-import { Card } from 'react-native-paper';
-export default class App extends Component {
-    state = {  
-        switchValue1: false,
-        switchValue2: false,
-    };  
+import React from 'react';
+import { StyleSheet, TouchableOpacity, Text, View, ScrollView, ImageBackground } from 'react-native';
+import { orange } from './TablesandTimeFormat';
+import Icon2 from 'react-native-vector-icons/Ionicons';
 
-  render() {
-    return (
-      <ScrollView>
-        <View style={styles.container}>
-        <ImageBackground source={require('./img/backgroundImg.png')}
-          style={styles.backgroundImage}>
+export default function App({navigation}) {
+  return (
+    <View style={styles.container}>
+      <ImageBackground source={require('./img/backgroundImg.png')} style={styles.bgimage}>
         <Text style={styles.title}>Notification</Text>
-        <Card style={styles.cardBorder}>
-            <View style={styles.row}>
-                <Text style={styles.text}>You just got assigned to a lead!</Text>
-                <Text style={styles.time}>1:45PM</Text>
-            </View>
-        </Card>
-        <Card style={styles.cardBorder}>
-        <View style={styles.row}>
-            <Text style={styles.text}>Appointment with Elsa Swift</Text>
-            <Text style={styles.time}>1:45PM</Text>
-        </View>
-        </Card>
+        <TouchableOpacity style={styles.backicon}
+          onPress={() => navigation.navigate('dashboard')}>
+          <Icon2 name='arrow-back' size={30} color='white' />
+        </TouchableOpacity>
+        <ScrollView>
+          <View style={styles.notification}>
+            <Text style={styles.notificationContent}>New Leads had been added </Text>
+            <Text style={styles.notificationtime}>1:45 pm</Text>
+          </View>
+
+          <View style={styles.notification}>
+            <Text style={styles.notificationContent}>New Leads had been added sdadasdasda da dada sdas dasdas sdada asd adadad sAS sASa s sS  aadasd</Text>
+            <Text style={styles.notificationtime}>1:45 pm</Text>
+          </View>
+        </ScrollView>
         <StatusBar style="auto" />
-        </ImageBackground>
-        </View>
-      </ScrollView>
-    );
-  }
+      </ImageBackground>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: "10%",
-    margin: 20
-    //alignItems: 'center',
-    //justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: 'flex-start',
+    // padding:"20%",
   },
 
-  backgroundImage: {
-    flex: 1,
-    resizeMode: "cover"
-  },
 
   title: {
     fontWeight: "bold",
     fontSize: 20,
-    textAlign: 'center',
-    
-  },
-  cardBorder:{
-    borderWidth:1,
-    marginTop: 10,
-  },
-  text: {
-      fontSize: 15,
-        padding: 5,
-  },
-  time: {
-    padding: 5,
-    alignSelf: "flex-end"
-},
-  row: {
-    flexDirection: "column",
-    justifyContent: 'space-around',
-    
-  },
-
-  Button: {
-    backgroundColor: "black",
-    padding: 10,
-    width: 130,
-    borderRadius: 5,
-  },
-
-  ButtonContent: {
-    textAlign: 'center',
     color: "white",
-    fontWeight: 'bold',
+    alignSelf: "center",
+    alignItems: "flex-start",
+  },
+  backicon: {
+    marginTop: '3%',
+    marginLeft: '3%',
+    position: 'absolute'
   },
 
+  notification: {
+    marginTop: 20,
+    borderWidth: 1,
+    borderRadius: 10,
+    alignSelf: "center",
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    borderColor: orange,
+    padding: 5,
+    width: 250
+  },
 
+  notificationContent: {
+    textAlign: "left",
+    color: "white",
+    fontWeight: "bold"
+  },
+
+  notificationtime: {
+    fontWeight: "bold",
+    color: orange,
+    alignSelf: "flex-end",
+  },
+
+  bgimage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    resizeMode: "cover",
+    justifyContent: "flex-start"
+  },
 });
