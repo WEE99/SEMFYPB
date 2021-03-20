@@ -241,7 +241,7 @@ function DashboardStackNav ({ navigation, route }) {
         headerTitleAlign:"center",
         headerTintColor:"white",
       }} />
-      <Stack.Screen name="New Call Task" component={NewCallTask}
+      <Stack.Screen name="New Task" component={NewCallTask}
       options={{
         headerStyle:{backgroundColor:"black"},
         headerTitleAlign:"center",

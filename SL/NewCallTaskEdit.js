@@ -8,6 +8,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons'; 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {formatAMPM, orange} from './TablesandTimeFormat';
+import {Picker} from '@react-native-picker/picker';
 // NewCallTask!
 
 
@@ -21,6 +22,7 @@ export default ({navigation, route}) => {
   const [mytime, setMyTime] = useState("");
   const [editnotes,seteditnote]=useState("");
   const [isWeb,setIsWeb]=useState(false);
+  const [editTaskType,seteditTaskType]=useState("")
 
   const onChange = (event, selectedDate) => {
     const cd = selectedDate || date;
@@ -118,6 +120,30 @@ export default ({navigation, route}) => {
       </View>
       </TouchableOpacity>
 
+      <View style={styles.Flexpicker}>
+     <View>
+     {/* <MaterialCommunityIcons name="clock" size={40} style={styles.icon}/>  */}
+     {/* <MaterialCommunityIcons name="clock-time-four-outline" size={40} style={styles.icon} /> */}
+     <MaterialIcons name="add-task" size={40} style={styles.icon} />
+     </View>
+
+     <View style={styles.ContentView}>
+     <Picker
+        style={styles.dropdown}
+        itemStyle={{ backgroundColor: "red", color: "blue", fontFamily:"Ebrima", fontSize:17 }}
+        selectedValue={editTaskType}
+        style={{height: 50, width: 100, paddingLeft:"20%", borderWidth:2, backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, borderColor:orange, color:"white",fontWeight:"bold"}}
+        onValueChange={(itemValue, itemIndex) =>
+        seteditTaskType(itemValue)
+        }>
+    
+        <Picker.Item label="Call" value="Call" color="black"/>
+        <Picker.Item label="Meeting" value="Meeting" color="black"/>
+        <Picker.Item label="Others" value="Others" color="black"/>
+        </Picker>
+     </View>
+   </View>
+
       <View style={styles.notesouterview}>
       <View style={styles.Flexpicker}>
       <View>
@@ -187,6 +213,31 @@ export default ({navigation, route}) => {
           </View>
         </View>
         </TouchableOpacity>
+
+    <View style={styles.Flexpicker}>
+     <View>
+     {/* <MaterialCommunityIcons name="clock" size={40} style={styles.icon}/>  */}
+     {/* <MaterialCommunityIcons name="clock-time-four-outline" size={40} style={styles.icon} /> */}
+     <MaterialIcons name="add-task" size={40} style={styles.icon} />
+     </View>
+
+     <View style={styles.ContentView2}>
+     <Picker
+        style={styles.dropdown}
+        itemStyle={{ backgroundColor: "red", color: "blue", fontFamily:"Ebrima", fontSize:17 }}
+        selectedValue={editTaskType}
+        style={styles.dropdownvalue}
+        // style={{height: 50, width: 100, paddingLeft:"20%", borderWidth:2, backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:"", borderColor:orange, color:"white",fontWeight:"bold"}}
+        onValueChange={(itemValue, itemIndex) =>
+        seteditTaskType(itemValue)
+        }>
+    
+        <Picker.Item label="Call" value="Call" color="black"/>
+        <Picker.Item label="Meeting" value="Meeting" color="black"/>
+        <Picker.Item label="Others" value="Others" color="black"/>
+        </Picker>
+     </View>
+   </View>
 
       <View style={styles.notesouterview}>
       <View style={styles.Flexpicker}>
@@ -315,6 +366,19 @@ const styles = StyleSheet.create({
     marginLeft:"10%"
   },
 
+  ContentView2:{
+    //position:"absolute",
+    //right:50,
+    marginLeft:"10%",
+    height: 50,
+    width: 100, 
+    //paddingLeft:"20%",
+    borderWidth:2,
+    borderRadius:10,
+    borderColor:orange,
+    color:"white",fontWeight:"bold"
+  },
+
   // datetimepickerweb:{
   //   backgroundColor: 'rgba(255, 255, 255, 0.2)',
   //   color:"red",
@@ -411,5 +475,22 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     justifyContent: "flex-start"
   },
+
+  dropdown:{
+    textAlign:"center",
+    // zIndex:200
+  },
+
+  dropdownvalue:{
+    height: 48,
+    width: 98, 
+    paddingLeft:"20%",
+    borderWidth:2,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderRadius:10,
+    borderColor:orange,
+    color:"white",fontWeight:"bold"
+    },
+
 
 });
