@@ -168,7 +168,7 @@ return (
 function DashboardStackNav ({ navigation, route }) {
     React.useLayoutEffect(() => {
         const routeName = getFocusedRouteNameFromRoute(route);
-        if (routeName === "Quotation" || routeName ==="Remarks" || routeName ==="Edit Details" || routeName ==="New Call Task" || routeName ==="Task Detail" ||routeName ==="Edit Task"){
+        if (routeName === "Quotation" || routeName ==="Remarks" || routeName ==="Edit Details" || routeName ==="New Task" || routeName ==="Task Detail" ||routeName ==="Edit Task"){
             navigation.setOptions({tabBarVisible: false});
         }else {
             navigation.setOptions({tabBarVisible: true});

@@ -132,13 +132,13 @@ export default ({navigation, route}) => {
         style={styles.dropdown}
         itemStyle={{ backgroundColor: "red", color: "blue", fontFamily:"Ebrima", fontSize:17 }}
         selectedValue={editTaskType}
-        style={{height: 50, width: 100, paddingLeft:"20%", borderWidth:2, backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, borderColor:orange, color:"white",fontWeight:"bold"}}
+        style={{height: 50, width: 130, paddingLeft:"10%", borderWidth:2, backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, borderColor:orange, color:"white",fontWeight:"bold"}}
         onValueChange={(itemValue, itemIndex) =>
         seteditTaskType(itemValue)
         }>
     
         <Picker.Item label="Call" value="Call" color="black"/>
-        <Picker.Item label="Meeting" value="Meeting" color="black"/>
+        <Picker.Item label="Appointment" value="Appointment" color="black"/>
         <Picker.Item label="Others" value="Others" color="black"/>
         </Picker>
      </View>
@@ -233,7 +233,7 @@ export default ({navigation, route}) => {
         }>
     
         <Picker.Item label="Call" value="Call" color="black"/>
-        <Picker.Item label="Meeting" value="Meeting" color="black"/>
+        <Picker.Item label="Appointment" value="Appointment" color="black"/>
         <Picker.Item label="Others" value="Others" color="black"/>
         </Picker>
      </View>
@@ -371,7 +371,7 @@ const styles = StyleSheet.create({
     //right:50,
     marginLeft:"10%",
     height: 50,
-    width: 100, 
+    width: 130, 
     //paddingLeft:"20%",
     borderWidth:2,
     borderRadius:10,
@@ -394,7 +394,7 @@ const styles = StyleSheet.create({
     borderColor:orange,
     color:"white",
     borderRadius:10,
-    width:100,
+    width:130,
     padding:5,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     textAlign:"center",
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
 
   dropdownvalue:{
     height: 48,
-    width: 98, 
+    width: 128, 
     paddingLeft:"20%",
     borderWidth:2,
     backgroundColor: 'rgba(255, 255, 255, 0.2)',

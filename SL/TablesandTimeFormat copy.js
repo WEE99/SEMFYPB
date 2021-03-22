@@ -138,135 +138,7 @@ export const TableRowOpen =({data})=>{
   )
 };
 
-// export const Todotask1=({data,navigation})=>{
-
-//       const [tasklist,settasklist]=useState([]);
-
-//       useEffect(() => {
-//             let arr=[];
-//             console.log(data);
-//            for(let a=0; a< data.length;a++)
-//            {
-//             if(a > 0)
-//             {
-//                  if (data[a].date !== data[a-1].date)
-//                  {
-//                        let o={};
-//                        o.date = data[a].date;
-//                        o.data = [];
-//                        o.data.push(data[a].id);
-//                        arr.push(o);
-//                  }
-//                  else
-//                  {
-//                         arr[arr.length-1].data.push(data[a].id);
-//                  }
-//             }
-//             else 
-//             {
-//                   let o={};
-//                   o.date = data[a].date;
-//                   o.data = [];
-//                   o.data.push(data[a].id);
-//                   arr.push(o);   
-//             }
-//            }
-//            settasklist(arr);
-//           },[]);
-        
-//       return (
-//             <View>
-//             {tasklist.map((task)=>
-//             <Todotask2 key={task.date} data={task} navigation={navigation}/>
-//             )}
-//             </View>
-//       )
-//     };
-
-
-// export const Todotask2=({data,navigation})=>{
-
-//       const [day,setday]=useState("");
-
-//       useEffect(() => {
-//             console.log(data.data);
-//             let d=new Date(data.date);
-//             setday(d.getDay());
-//           },[]);
-
-//       return (
-//             <View>
-//             <View style={{paddingTop:10}}>
-//             <View style={{borderTopLeftRadius:10, borderTopRightRadius:10, backgroundColor:"#FFFFFF", marginHorizontal:15, elevation: 2}}>
-//             <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-//                       <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"left"}}>
-//                           {data.date}
-//                       </Text>
-//                       <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color:orange,textAlign:"right"}}>
-//                          {days[day]}
-//                       </Text>
-//                   </View>
-//             </View>
-//             </View>
-//             {data.data.map((task)=>
-//             <Todotask3 key={task} data={task} navigation={navigation}/>
-//             )}
-//             <View style={{borderBottomRightRadius:10,borderBottomLeftRadius:10, backgroundColor:"#ffffff",height:10,marginHorizontal:15}}>
-
-//             </View>
-//             </View>
-//       )
-//     };
-
-    
-// export const Todotask3=({data,navigation})=>{
-
-//       const [tasksData, settasksData]= useState({});
-      
-//       useEffect(() => {
-//             console.log(data)
-//             db.collection("tasks").doc(data).get().then((doc) => {
-//                   if (doc.exists) {
-//                       let O = doc.data();
-//                       console.log("Document data:", doc.data());
-//                       O.time = formatAMPM(O.date.toDate());
-//                       O.date = O.date.toDate();
-//                       settasksData(O);
-//                   } else {
-//                       // doc.data() will be undefined in this case
-//                       console.log("No such document!");
-//                   }
-//               }).catch((error) => {
-//                   console.log("Error getting document:", error);
-//               });
-              
-//           },[]);
-
-//       const handleSpecificTask=()=>{
-//             navigation.navigate("Task Detail",tasksData);
-//       }
-
-//       // pressSpecifictTask
-//       return (
-//             <TouchableOpacity  onPress={handleSpecificTask}>
-//             <View style={{backgroundColor:"#FFFFFF", paddingVertical:1, marginHorizontal:15, elevation: 2}}>
-//             <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-//                       <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
-//                           {tasksData.time}   <Text style={{color:orange}}> {tasksData.title}</Text>
-//                       </Text>
-//                       {/* <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"right"}}>
-//                           {tasksData.name}
-//                       </Text> */}
-//                   </View>
-//             </View>
-//             </TouchableOpacity>
-      
-//       )
-//     };
-
-
-
-export const Todotask1=({data,navigation,mytype})=>{
+export const Todotask1=({data,navigation})=>{
 
       const [tasklist,settasklist]=useState([]);
 
@@ -305,20 +177,19 @@ export const Todotask1=({data,navigation,mytype})=>{
       return (
             <View>
             {tasklist.map((task)=>
-            <Todotask2 key={task.date} data={task} navigation={navigation} mytype={mytype}/>
+            <Todotask2 key={task.date} data={task} navigation={navigation}/>
             )}
             </View>
       )
     };
 
 
-export const Todotask2=({data,navigation,mytype})=>{
+export const Todotask2=({data,navigation})=>{
 
       const [day,setday]=useState("");
 
       useEffect(() => {
             console.log(data.data);
-            console.log(mytype);
             let d=new Date(data.date);
             setday(d.getDay());
           },[]);
@@ -338,7 +209,7 @@ export const Todotask2=({data,navigation,mytype})=>{
             </View>
             </View>
             {data.data.map((task)=>
-            <Todotask3 key={task} data={task} navigation={navigation} mytype={mytype}/>
+            <Todotask3 key={task} data={task} navigation={navigation}/>
             )}
             <View style={{borderBottomRightRadius:10,borderBottomLeftRadius:10, backgroundColor:"#ffffff",height:10,marginHorizontal:15}}>
 
@@ -348,7 +219,7 @@ export const Todotask2=({data,navigation,mytype})=>{
     };
 
     
-export const Todotask3=({data,navigation,mytype})=>{
+export const Todotask3=({data,navigation})=>{
 
       const [tasksData, settasksData]= useState({});
       
@@ -372,11 +243,7 @@ export const Todotask3=({data,navigation,mytype})=>{
           },[]);
 
       const handleSpecificTask=()=>{
-            if (mytype === "Taskindividual" )
-            {
-                  navigation.navigate("Task Detail",tasksData);
-            }
-           
+            navigation.navigate("Task Detail",tasksData);
       }
 
       // pressSpecifictTask
@@ -384,45 +251,9 @@ export const Todotask3=({data,navigation,mytype})=>{
             <TouchableOpacity  onPress={handleSpecificTask}>
             <View style={{backgroundColor:"#FFFFFF", paddingVertical:1, marginHorizontal:15, elevation: 2}}>
             <View style={{flexDirection:"row", paddingHorizontal:10, paddingBottom:2, marginBottom:3}}>
-                     
-                      {
-                      mytype ==="Taskindividual" && 
                       <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
-                      {tasksData.time}   <Text style={{color:orange}}> {tasksData.title}</Text>
+                          {tasksData.time}   <Text style={{color:orange}}> {tasksData.title}</Text>
                       </Text>
-                      }
-
-                      {
-                      mytype === "Overdue" && 
-                      <Text style={{flex:1,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
-                      {tasksData.time}   <Text style={{color:"red"}}> {tasksData.name} - {tasksData.title}</Text>
-                      </Text>
-                      }
-
-                      {
-                      mytype === "Call" && 
-                      <Text style={{flex:1,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
-                      {tasksData.time}   <Text style={{color:"green"}}> {tasksData.name}</Text>
-                      </Text>
-                      }
-
-                      {
-                      mytype === "Appointment" && 
-                      <Text style={{flex:1,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
-                      {tasksData.time}   <Text style={{color:blueDClr}}>  {tasksData.name}</Text>
-                      </Text>
-                      }
-
-{
-                      mytype === "Others" && 
-                      <Text style={{flex:1,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"left"}}>
-                      {tasksData.time}   <Text style={{color:"black"}}>  {tasksData.name}</Text>
-                      </Text>
-                      }
-
-
-                      
-
                       {/* <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color: "black",textAlign:"right"}}>
                           {tasksData.name}
                       </Text> */}
@@ -432,3 +263,6 @@ export const Todotask3=({data,navigation,mytype})=>{
       
       )
     };
+
+
+

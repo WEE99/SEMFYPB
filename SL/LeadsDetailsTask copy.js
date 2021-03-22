@@ -29,41 +29,15 @@ export default ({navigation, route}) => {
 
   const {id} = route.params;
 
-  // useEffect(() => {
-  //   db.collection("tasks").where("leadId", "==", id)
-  //   .get()
-  //   .then((querySnapshot) => {
-  //     let TaskArr= [];
-  //       querySnapshot.forEach((docTasks) => {
-  //           let tasks = docTasks.data();
-  //           tasks.id = docTasks.id;
-
-  //           tasks.time = formatAMPM(tasks.date.toDate());
-
-  //           var m = tasks.date.toDate().getMonth()
-  //           tasks.date = monthArr[m] + " "+ tasks.date.toDate().getDate() + ", " + tasks.date.toDate().getFullYear();
-
-  //           TaskArr.push(tasks);
-  //           // doc.data() is never undefined for query doc snapshots
-  //           console.log(docTasks.id, " => ", docTasks.data());
-  //       });
-  //       setTasks(TaskArr);
-  //       console.log(TaskArr);
-  //   })
-  //   .catch((error) => {
-  //       console.log("Error getting documents: ", error);
-  //   });
-  // },[]);
-
   useEffect(() => {
-    db.collection("tasks").where("leadId", "==", id).where("status", "==", "Not completed").orderBy("date", "asc")
+    db.collection("tasks").where("leadId", "==", id)
     .get()
     .then((querySnapshot) => {
       let TaskArr= [];
         querySnapshot.forEach((docTasks) => {
             let tasks = docTasks.data();
             tasks.id = docTasks.id;
-            tasks.mytype="Taskindividual";
+
             tasks.time = formatAMPM(tasks.date.toDate());
 
             var m = tasks.date.toDate().getMonth()
@@ -126,8 +100,8 @@ export default ({navigation, route}) => {
       <View style={{marginTop:10,backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, paddingTop:"5%", paddingBottom:"10%",padding:"1%",alignSelf:"center",marginLeft:"5%",marginRight:"5%", height:"85%",width:"90%"}}>
       <ScrollView>
     
-                {/* {Tasks.length !== 0 && <Todotask1 data={Tasks} navigation={navigation} />} */}
-                {Tasks.length !== 0 && <Todotask1 data={Tasks} navigation={navigation} mytype="Taskindividual" />}
+                {Tasks.length !== 0 && <Todotask1 data={Tasks} navigation={navigation} />}
+          
 
       </ScrollView>
       </View>
