@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 
 //export default function App() {
 export default class Touchables extends Component {
@@ -34,6 +34,15 @@ export default class Touchables extends Component {
             onPress={()=> this.props.navigation.navigate('Change Password Settings')}
           >
             <Text style={styles.buttoncontent}>CHANGE PASSWORD</Text>
+          </TouchableOpacity>
+        </View>
+        
+        <View>
+          <TouchableOpacity
+            style={styles.AccButton}
+            onPress={()=> this.props.navigation.navigate('Logout')}
+          >
+            <Text style={styles.buttoncontent}>LOGOUT</Text>
           </TouchableOpacity>
         </View>
       </View>

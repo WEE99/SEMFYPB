@@ -1,11 +1,56 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, ImageBackground, Image
+  StyleSheet, Text, View, TouchableOpacity, Alert, ImageBackground, Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { firebase } from './firebase';
+import { ActivityIndicator } from 'react-native-paper';
 
 export default class OR extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      nickname: '',
+      name: '',
+      email: '',
+      designation: '',
+      phone: '',
+      Name: ''
+    }
+  }
+
+  componentDidMount() {
+    var db = firebase.firestore();
+    db.collection("users").where("UID", "==", 'aaa')
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          this.state.nickname = doc.data().nickname
+          this.state.name = doc.data().name
+          this.state.email = doc.data().email
+          this.state.phone = doc.data().phone
+          this.state.isLoading = false
+          Alert.alert(
+            doc.data().nickname + this.state.nickname
+          );
+        });
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  }
+
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={{ flex: 1, paddingTop: 20 }}>
+          <ActivityIndicator />
+        </View>
+      )
+    }
     return (
       <View style={styles.container}>
         <ImageBackground source={require('./img/backgroundImg.png')}
@@ -25,7 +70,7 @@ export default class OR extends Component {
               />
             </View>
 
-            <Text numberOfLines={2} style={styles.name}>Siti Nur Aliah</Text>
+            <Text numberOfLines={2} style={styles.name}>{this.state.nickname}Siti Nur Aliah</Text>
             <Text style={styles.username}>Kibboby</Text>
             <View style={styles.info}>
               <View style={styles.row}>

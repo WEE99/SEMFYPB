@@ -119,7 +119,8 @@ let styles = StyleSheet.create({
     marginRight: '2%',
     backgroundColor: '#F8C018',
     alignSelf: 'flex-end',
-    marginRight: '5%'
+    marginRight: '5%',
+    
   },
   icon: {
     alignSelf: 'center',

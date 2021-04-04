@@ -1,13 +1,77 @@
 import React, { Component } from 'react';
 import {
-  StyleSheet, Text, View, TouchableOpacity, ImageBackground, ScrollView, Image
+  StyleSheet, Text, View, TouchableOpacity, Alert,ImageBackground, ScrollView, Image
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/SimpleLineIcons';
 import Icon3 from 'react-native-vector-icons/Ionicons';
 import Pie from 'react-native-pie'
+import { firebase } from './firebase';
 
 export default class CR_O extends Component {
+
+  constructor() {
+    super();
+    this.state = {
+      UID: '',
+      admin: false,
+      companyName: '',
+      email: '',
+      name: '',
+      nickname: '',
+      password: '',
+      phoneNumber: '',
+      photoURL: '',
+      role: ''
+    };
+  }
+
+  alertAddNewUser(role){
+    this.state.role = role;
+    Alert.alert(
+      "Confirmation",
+      "Add A New " + role,
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel"
+        },
+        { text: 'Confirm', onPress: () => this.createNewUser() }
+      ],
+      { cancelable: false }
+    );
+  }
+
+  createNewUser = (role) => {
+    
+    this.generate_random_username_password();
+    var db = firebase.firestore();
+    db.collection("users").add({
+      nickname: this.state.nickname,
+      password: this.state.password,
+      UID: this.state.UID,
+      admin: false,
+      companyName: this.state.companyName,
+      email: this.state.email,
+      name: this.state.name,
+      phoneNumber: this.state.phoneNumber,
+      photoURL: this.state.photoURL,
+      role: this.state.role
+    })
+      .then((docRef) => {
+        console.log("Document written with ID: ", docRef.id);
+      })
+      .catch((error) => {
+        console.error("Error adding document: ", error);
+      });
+  }
+
+  generate_random_username_password() {
+    this.state.nickname = Math.random().toString(36).substr(2, 5);
+    this.state.password = Math.random().toString(36).substr(2, 8);
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -71,7 +135,7 @@ export default class CR_O extends Component {
             <View>
               <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.companyAdminTitle}>Company Admin</Text>
-                <TouchableOpacity style={styles.roundButton4} >
+                <TouchableOpacity style={styles.roundButton4} onPress={() => this.alertAddNewUser('Company Admin')}>
                   <Icon name="plus" size={25} color="black" style={styles.icon2} />
                 </TouchableOpacity>
               </View>
@@ -95,7 +159,7 @@ export default class CR_O extends Component {
             <View>
               <View style={{ flexDirection: 'row' }}>
                 <Text style={styles.salespersonTitle}>Salesperson</Text>
-                <TouchableOpacity style={styles.roundButton4} >
+                <TouchableOpacity style={styles.roundButton4} onPress={() => this.alertAddNewUser('Salesperson')}>
                   <Icon name="plus" size={25} color="black" style={styles.icon2} />
                 </TouchableOpacity>
               </View>

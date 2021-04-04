@@ -4,10 +4,34 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 
-// import f from '../firebase';
+import { firebase } from './firebase';
 import Pie from 'react-native-pie'
 
 export default class OR extends Component {
+  constructor() {
+    super();
+    this.state = {
+      size: ''
+    };
+  }
+
+  componentDidMount() {
+    // this.load_data();
+    // this.setState({
+    //   size: 4
+    // })
+  }
+
+  load_data() {
+    var db = firebase.firestore();
+    db.collection('leads').get().then(snap => {
+      this.state.size = snap.size
+    })
+      .catch((error) => {
+        console.error("Error reading document: ", error);
+      });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -16,6 +40,7 @@ export default class OR extends Component {
           <Text style={styles.text}>Report</Text>
 
           <View style={styles.bckground}>
+            <Text>{this.state.size} ffsvf</Text>
             <Text style={styles.subTitle}>Overall Performance</Text>
             <View style={styles.row}>
               <View>

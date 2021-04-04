@@ -1,96 +1,106 @@
 import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 
 //export default function App() {
 export default class Touchables extends Component {
-  
-state={
-    newpsw:'',
-    retypepsw:''
-    };
+  state = {
+    oldpsw: '',
+    newpsw: '',
+    retypepsw: '',
+  };
 
- render(){
-  return (
-    <View style={styles.container}>
-
-      <View style={styles.SetpswC}>
-        <Text style={styles.intructionpsw}>New Password</Text>
-        <TextInput 
-            secureTextEntry={true} 
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.SetpswC}>
+          <Text style={styles.intructionpsw}>Old Password</Text>
+          <TextInput
+            secureTextEntry={true}
             style={styles.inputpsw}
-            onChangeText={text => this.setState({newpsw:text})}
-            />
-        <Text style={styles.intructionpsw}>Retype  Password</Text>
-        <TextInput 
+            onChangeText={(text) => this.setState({ oldpsw: text })}
+          />
+          <Text style={styles.intructionpsw}>New Password</Text>
+          <TextInput
+            secureTextEntry={true}
             style={styles.inputpsw}
-            onChangeText={text => this.setState({retypepsw:text})}
-            />
+            onChangeText={(text) => this.setState({ newpsw: text })}
+          />
+          <Text style={styles.intructionpsw}>Retype Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.inputpsw}
+            onChangeText={(text) => this.setState({ retepsw: text })}
+          />
         </View>
-      
-      <View style={styles.ButtonView}>
-       <TouchableOpacity
+
+        <View style={styles.ButtonView}>
+          <TouchableOpacity
             style={styles.Button}
-            onPress={()=> this.props.navigation.goBack()} 
-            >
+            onPress={() => this.props.navigation.goBack()}>
             <Text style={styles.ButtonContent}>Cancel</Text>
-            </TouchableOpacity>
-        <TouchableOpacity
+          </TouchableOpacity>
+          <TouchableOpacity
             style={styles.Button}
-            onPress={()=> this.props.navigation.goBack()} 
-            >
+            onPress={() => this.props.navigation.goBack()}>
             <Text style={styles.ButtonContent}>Save</Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
-      <StatusBar style="auto" />
-    </View>
-  );
-}}
+        <StatusBar style="auto" />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     //alignItems: 'Left',
-    padding:"10%"
+    padding: '10%',
   },
 
-  SetpswC:{
-  backgroundColor:"white",
+  SetpswC: {
+    backgroundColor: 'white',
   },
 
-  intructionpsw:{
-  fontWeight:"bold",
-  marginTop:10,
+  intructionpsw: {
+    fontWeight: 'bold',
+    marginTop: 10,
   },
 
-  inputpsw:{
-  marginTop:10,
-  //borderWidth:2,
-  backgroundColor:"lightgrey",
-  padding:10,
-  borderRadius: 5
+  inputpsw: {
+    marginTop: 10,
+    //borderWidth:2,
+    backgroundColor: 'lightgrey',
+    padding: 10,
+    borderRadius: 5,
   },
 
   ButtonView: {
-  marginTop:20,
-  flexDirection: 'row',
-  justifyContent: 'space-around',
-  //backgroundColor:"black",
+    marginTop: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    //backgroundColor:"black",
   },
 
-  Button:{
-  backgroundColor:'black',
-  padding: 10,
-  width:'30%',
-  borderRadius: 5,
+  Button: {
+    backgroundColor: 'black',
+    padding: 10,
+    width: '30%',
+    borderRadius: 5,
   },
 
-  ButtonContent:{
-  textAlign:'center',
-  color:"white",
-  fontWeight:'bold',
+  ButtonContent: {
+    textAlign: 'center',
+    color: 'white',
+    fontWeight: 'bold',
   },
-
 });

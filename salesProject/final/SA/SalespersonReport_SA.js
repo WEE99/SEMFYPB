@@ -1,112 +1,75 @@
-import React, { Component } from 'react';
-import { Text, View, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
-import { Card } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/AntDesign';
+import React from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default class ListofCompany extends Component {
-  constructor(props) {
-    super(props);
+const SalespersonAccountSuperAdmin = () => {
+  return (
+    <View
+      style={{
+        flex: 1,
+        padding: '10%',
+        marginTop: 20,
+      }}>
+      <View style={styles.Icon}>
+        <Image style={styles.profileImg} source={require('../img/sample.jpg')} />
+        <View>
+          <Text style={styles.Username}>John David</Text>
+          <Text style={styles.designation}>Salesperson</Text>
+        </View>
+      </View>
 
-    this.state = {
-      LeadList: [
-        { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Won' }
-        , { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Lost' }
-      ],
-    }
-  }
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Salesperson Detail')}
+          style={styles.nav}>
+          <Text style={styles.navTitle}>Detail</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Salesperson Report')}
+          style={styles.cardActive}>
+          <Text style={styles.activeTitle}>Report</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => this.props.navigation.navigate('Salesperson Leads')}
+          style={styles.nav}>
+          <Text style={styles.navTitle}>Leads</Text>
+        </TouchableOpacity>
+      </View>
 
-  //to be further implemented by onPress function to go to company's detail page
-  getLeadsData = (item) => {
-    //var RollNo = item.RollNo;
-    //var StudentName = item.StudentName;
-    //var Course = item.Course;
-
-    //alert(RollNo + "\n" + StudentName + "\n" + Course);
-  }
-
-  //to implement changing between pages
-  _onPressButton() {
-    //alert('You tapped the button!')
-  }
-
-  render() {
-    return (
-      <ScrollView>
-        <View style={{ flex: 1, padding:"10%"}}>
-
-          <Text style={styles.Name}>John David</Text>
-
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-          <TouchableOpacity
-              onPress={() =>this.props.navigation.navigate('Salesperson Detail')}
-              style={styles.nav}>
-              <Text style={styles.navTitle}>Detail</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>this.props.navigation.navigate('Salesperson Report')}
-              style={styles.cardActive}>
-              <Text style={styles.activeTitle}>Report</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() =>this.props.navigation.navigate('Salesperson Leads')}
-              style={styles.nav}>
-              <Text style={styles.navTitle}>Leads</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.pieChartArea} />
-          <View style={{ marginLeft: 20 }}>
+<View style={styles.pieChartArea} />
+          <View style={{ marginLeft: 5 , height:600, width: '90%'}}>
             <View style={styles.Direction}>
-              <Text style={styles.TextLeads}>Total Number of Leads</Text>
+              <Text style={styles.Text} numberOfLine={2}>Total Number of Salesperson </Text>
+              <Text style={styles.Salesperson}>20</Text>
+            </View>
+            <View style={styles.Direction}>
+              <Text style={styles.Text} numberOfLine={2}>Total Number of Leads</Text>
               <Text style={styles.Leads}>20</Text>
             </View>
             <View style={styles.Direction}>
-              <Text style={styles.WonLeadNo}>Total Number of Won Leads</Text>
+              <Text style={styles.Text} numberOfLine={2}>Total Number of Won Leads</Text>
               <Text style={styles.Won}>80</Text>
             </View>
             <View style={styles.Direction}>
-              <Text style={styles.LostLeadNo}>Total Number of Lost Leads</Text>
+              <Text style={styles.Text} numberOfLine={2}>Total Number of Lost Leads</Text>
               <Text style={styles.Lost}>20</Text>
             </View>
           </View>
 
-        </View>
-      </ScrollView>
-    );
-  }
-}
+    </View>
+  );
+};
 
+export default SalespersonAccountSuperAdmin;
 
 const styles = StyleSheet.create({
-  nav: {
-    margin: 5,
-    backgroundColor: 'lightgrey',
-    padding: 5,
-    textAlign: 'center',
-    borderRadius: 5,
-    width: '20%'
-  },
-  navTitle: {
-    fontSize: 12
-  },
-  cardActive: {
-    margin: 5,
-    backgroundColor: 'black',
-    padding: 5,
-    width: '20%',
-    textAlign: 'center',
-    borderRadius: 5
-  },
-  activeTitle: {
-    color: 'white',
-    fontSize: 12
-  },
-  Name: {
-    fontFamily: 'Roboto',
-    fontWeight: 'bold',
-    fontSize: 18,
-    marginLeft: 15,
-    marginTop: 10
+  profileImg: {
+    borderRadius: 50,
+    marginStart: 10,
+    marginTop: 2.5,
+    height: 70,
+    width: 70,
+    borderColor: 'black',
   },
   Username: {
     marginLeft: 15,
@@ -117,152 +80,103 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     fontSize: 12,
   },
-  Info: {
-    marginTop: 2.5,
-    marginStart: 35,
-    fontSize: 14,
-  },
-  Text: {
-    marginTop: 2.5,
-    marginLeft: 15,
-    fontSize: 14,
-  },
-  TextMargin: {
-    marginBottom: 5
-  },
-  Direction: {
+  Icon: {
     flexDirection: 'row',
-    marginTop: 10
+    marginTop: 10,
+  },
+   nav: {
+    margin: 5,
+    backgroundColor: 'lightgrey',
+    padding: 5,
+    textAlign: 'center',
+    borderRadius: 5,
+    width: 88,
+  },
+  navTitle: {
+    fontSize: 12,
+    textAlign: 'center',
+  },
+  cardActive: {
+    margin: 5,
+    backgroundColor: 'black',
+    padding: 5,
+    textAlign: 'center',
+    borderRadius: 5,
+    width: 88,
+  },
+  activeTitle: {
+    color: 'white',
+    fontSize: 12,
+    textAlign: 'center',
   },
   pieChartArea: {
     height: '30%',
     borderColor: 1,
     borderWidth: 1,
     width: '60%',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   Direction: {
     flexDirection: 'row',
     marginTop: 10,
-    alignItems: 'baseline',
+    justifyContent: 'space-evenly'
   },
   Text: {
     marginTop: 2.5,
     marginLeft: 15,
-    fontSize: 14,
+    fontSize: 16,
     marginBottom: 5,
-    fontSize: 12,
-    color: 'grey',
-    marginRight: 65,
+    width: '65%',
   },
-  TextAdmin: {
+  Salesperson: {
     marginTop: 2.5,
-    marginLeft: 15,
-    fontSize: 14,
-    marginBottom: 5,
-    fontSize: 12,
-    color: 'grey',
-  },
-  TextSalesperson: {
-    marginTop: 2.5,
-    marginLeft: 15,
-    fontSize: 14,
-    marginBottom: 5,
-    fontSize: 12,
-    color: 'grey',
-    marginRight: 25
-  },
-  TextLeads: {
-    marginTop: 2.5,
-    marginLeft: 15,
-    fontSize: 14,
-    marginBottom: 5,
-    fontSize: 12,
-    color: 'grey',
-    marginRight: 59
-  },
-  WonLeadNo:{
-    marginRight: 32,
-    marginTop: 2.5,
-    marginLeft: 15,
-    fontSize: 14,
-    marginBottom: 5,
-    fontSize: 12,
-    color: 'grey'
-  },
-  LostLeadNo:{
-    marginRight: 34,
-    marginTop: 2.5,
-    marginLeft: 17,
-    fontSize: 14,
-    marginBottom: 5,
-    fontSize: 12,
-    color: 'grey'
-  },
-  User:{
-    marginTop: 2.5,
-    marginStart: 35,
-    fontSize: 24,
-    fontWeight: 'bold',
-    backgroundColor: '#dcdcdc',
-    width: '15%',
-    textAlign: 'center',
-    borderRadius: 5,
-    padding: 5,
-  },
-  Admin:{
-    marginTop: 2.5,
-    marginStart: 35,
-    fontSize: 24,
-    fontWeight: 'bold',
-    backgroundColor: '#ffdead',
-    width: '15%',
-    textAlign: 'center',
-    borderRadius: 5,
-    padding: 5,
-  },
-  Salesperson:{
-    marginTop: 2.5,
-    marginStart: 35,
     fontSize: 24,
     fontWeight: 'bold',
     backgroundColor: '#f4a460',
     width: '15%',
     textAlign: 'center',
     borderRadius: 5,
-    padding: 5
+    padding: 5,
+    marginLeft: '15%'
   },
-  Leads:{
+  Leads: {
     marginTop: 2.5,
-    marginStart: 35,
     fontSize: 24,
     fontWeight: 'bold',
     backgroundColor: '#a0522d',
     width: '15%',
     textAlign: 'center',
     borderRadius: 5,
-    padding: 5
+    padding: 5,
+    marginLeft: '15%'
   },
-  Won:{
+  Won: {
     marginTop: 2.5,
-    marginStart: 35,
     fontSize: 24,
     fontWeight: 'bold',
     backgroundColor: '#32cd32',
     width: '15%',
     textAlign: 'center',
     borderRadius: 5,
-    padding: 5
+    padding: 5,
+    marginLeft: '15%'
   },
-  Lost:{
+  Lost: {
     marginTop: 2.5,
-    marginStart: 35,
     fontSize: 24,
     fontWeight: 'bold',
     backgroundColor: '#ff0000',
     width: '15%',
     textAlign: 'center',
     borderRadius: 5,
-    padding: 5
+    padding: 5,
+    marginLeft: '15%'
+  },
+  CompanyName: {
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginLeft: 5,
+    marginTop: 10,
   },
 });

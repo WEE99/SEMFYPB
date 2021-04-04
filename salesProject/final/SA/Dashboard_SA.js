@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler';
+import {
+  FlatList,
+  TouchableNativeFeedback,
+} from 'react-native-gesture-handler';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
 
@@ -11,63 +14,64 @@ export default class ExampleTwo extends Component {
       CompanyList: [
         { Company: 'Facebook' },
         { Company: 'Google' },
-        { Company: 'Android' }
-      ]
-    }
+        { Company: 'Android' },
+      ],
+    };
   }
 
   render() {
     return (
       <ScrollView style={styles.container}>
-        
         <FlatList
           data={this.state.CompanyList}
-          renderItem={({ item }) =>
-            <Card style={styles.cardView} onPress={() => this.props.navigation.navigate('Request')}>
+          renderItem={({ item }) => (
+            <Card
+              style={styles.cardView}
+              onPress={() => this.props.navigation.navigate('Request')}>
               <View style={styles.LeadIcon}>
-                <Text style={{ flex: 1 }}>{item.Company} sent a a request for additional account(s)</Text>
-                <View style={{ justifyContent: "flex-end" }}>
-                  <Icon name="right" size={15} style={styles.icon}/>
+                <Text style={{ flex: 1 }}>
+                  {item.Company} sent a a request for additional account(s)
+                </Text>
+                <View style={{ justifyContent: 'flex-end' }}>
+                  <Icon name="right" size={15} style={styles.icon} />
                 </View>
               </View>
             </Card>
-          }
+          )}
         />
       </ScrollView>
-    )
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding:"10%",
-    //padding: 16,
-    //paddingTop: 30,
+    padding: '10%',
     backgroundColor: '#fff',
-    marginTop: 10
+    marginTop: 20,
   },
   cardView: {
     backgroundColor: 'lightgrey',
     margin: 5,
-    padding: 5
+    padding: 5,
   },
   icon: {
-    paddingTop: 3,
     paddingLeft: 5,
     textAlign: 'right',
-    paddingRight: 5
+    paddingRight: 5,
+    marginBottom: 10
   },
   title: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     fontSize: 14,
     paddingLeft: 5,
     marginBottom: 10,
-    marginTop: 10
+    marginTop: 10,
   },
   LeadIcon: {
-    backgroundColor: 'lightgrey', 
+    backgroundColor: 'lightgrey',
     flexDirection: 'row',
-    padding: 5
-  }
+    padding: 5,
+  },
 });

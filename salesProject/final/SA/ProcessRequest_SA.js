@@ -5,18 +5,16 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 //export default function App() {
 export default class Touchables extends Component {
-
   _onPressDeclineButton() {
-    alert('Decline Request')
+    alert('Decline Request');
   }
 
   _onPressApproveButton() {
-    alert('Approve Request')
+    alert('Approve Request');
   }
   render() {
     return (
       <View style={styles.container}>
-
         <View style={styles.companynameView}>
           <Text style={styles.boldtext}>COMPANY NAME</Text>
 
@@ -29,7 +27,6 @@ export default class Touchables extends Component {
             <Text style={styles.details}>Number of Salesperson </Text>
             <Text style={styles.amounts}> 12 </Text>
           </View>
-
         </View>
 
         <View style={styles.companyrequestView}>
@@ -44,10 +41,11 @@ export default class Touchables extends Component {
           <View style={styles.commentView}>
             <Text>
               What is Lorem Ipsum Lorem Ipsum is simply dummy text of the
-              printing and typesetting industry Lorem Ipsum has been the industry's standard
-              dummy text ever since the 1500s when an unknown printer took a galley of type
-              and scrambled it to make a type specimen book it has?
-       </Text>
+              printing and typesetting industry Lorem Ipsum has been the
+              industry's standard dummy text ever since the 1500s when an
+              unknown printer took a galley of type and scrambled it to make a
+              type specimen book it has?
+            </Text>
           </View>
 
           <View style={styles.ButtonView}>
@@ -55,8 +53,7 @@ export default class Touchables extends Component {
               style={styles.Button}
               //onPress={this._onPressLoginButton}
               //disabled={!this.state.isFormValid}
-              onPress={this._onPressDeclineButton}
-            >
+              onPress={this._onPressDeclineButton}>
               <Text style={styles.ButtonContent}>DECLINE</Text>
             </TouchableOpacity>
 
@@ -64,15 +61,11 @@ export default class Touchables extends Component {
               style={styles.Button}
               //onPress={this._onPressLoginButton}
               //disabled={!this.state.isFormValid}
-              onPress={this._onPressApproveButton}
-            >
+              onPress={this._onPressApproveButton}>
               <Text style={styles.ButtonContent}>APPROVE</Text>
             </TouchableOpacity>
           </View>
         </View>
-
-
-
 
         <StatusBar style="auto" />
       </View>
@@ -84,15 +77,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: "10%",
-    //alignItems: 'center',
+    padding: '10%'
+    , marginTop: 20
+    //alignItems: center',
     //justifyContent: 'center',
   },
 
   companynameView: {
     borderWidth: 3,
     padding: 5,
-    borderColor: "lightgrey",
+    borderColor: 'lightgrey',
   },
 
   companyrequestView: {
@@ -101,23 +95,23 @@ const styles = StyleSheet.create({
   },
 
   boldtext: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
     fontSize: 20,
   },
 
   detailflexdirectionrow: {
     marginTop: 10,
-    flexDirection: "row",
+    flexDirection: 'row',
   },
 
   details: {
     width: 200,
-    color: "grey",
+    color: 'grey',
   },
 
   amounts: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
 
   commentView: {
@@ -126,23 +120,22 @@ const styles = StyleSheet.create({
 
   ButtonView: {
     marginTop: 10,
-    flexDirection: "row",
+    flexDirection: 'row',
     alignSelf: 'center',
-    padding: 10
+    padding: 10,
   },
 
   Button: {
     margin: 10,
-    backgroundColor: "black",
+    backgroundColor: 'black',
     padding: 10,
     width: 100,
-    alignItems: "center",
+    alignItems: 'center',
     borderRadius: 5,
   },
 
   ButtonContent: {
-    color: "white",
-    fontWeight: "bold",
+    color: 'white',
+    fontWeight: 'bold',
   },
-
 });
