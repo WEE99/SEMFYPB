@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey'
   },
   SecCol: {
-    fontSize: 12,
+    fontSize: 11.5,
     width: '22%',
     borderLeftColor: 'black',
     borderLeftWidth: 1,

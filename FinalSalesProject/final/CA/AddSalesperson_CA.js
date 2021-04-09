@@ -36,12 +36,17 @@ export default class App extends Component {
         .add({
             name: this.state.Name,
             password: this.state.password,
-            designation: this.state.designation,
+            role: this.state.role,
             email: this.state.email,
             contact: this.state.contact
         })
-        .then((docRef) =>{
-            console.log("Document written with ID:", docRef.id);
+        .then(function(x){
+            var id;
+            id = x.id;
+            var update = db.collection("users").doc(id)
+            return update.update({
+                docId : id
+            })
         })
         .catch((error)=>{
             console.log("Error adding document:", error);
@@ -112,7 +117,7 @@ export default class App extends Component {
                     <TextInput
                         //secureTextEntry={true} 
                         style={styles.input}
-                        onChangeText={(val) => this.updateInputVal(val, 'designation')}
+                        onChangeText={(val) => this.updateInputVal(val, 'role')}
                     />
 
 

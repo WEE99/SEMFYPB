@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
   reminder:{
   marginTop:20,
   marginBottom:10,
-  fontSize:30,
   fontWeight:"bold",
   },
 

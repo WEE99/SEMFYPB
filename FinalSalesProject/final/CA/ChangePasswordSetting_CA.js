@@ -7,8 +7,9 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native
 export default class Touchables extends Component {
   
 state={
-    newpsw:'',
-    retypepsw:''
+  oldpsw: '',
+  newpsw: '',
+  retypepsw: ''
     };
 
  render(){
@@ -16,6 +17,13 @@ state={
     <View style={styles.container}>
 
       <View style={styles.SetpswC}>
+      <Text style={styles.intructionpsw}>Old  Password</Text>
+        <TextInput 
+            //secureTextEntry={true} 
+            style={styles.inputpsw}
+            onChangeText={text => this.setState({oldpsw:text})}
+            />
+
         <Text style={styles.intructionpsw}>New Password</Text>
         <TextInput 
             secureTextEntry={true} 
@@ -28,6 +36,7 @@ state={
             style={styles.inputpsw}
             onChangeText={text => this.setState({retypepsw:text})}
             />
+            
         </View>
       
       <View style={styles.ButtonView}>

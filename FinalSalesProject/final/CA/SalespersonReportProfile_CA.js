@@ -1,24 +1,29 @@
-import React, { Component } from 'react';
-import { Text, View, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import React, { Component, useEffect, useState } from 'react';
+import { render } from 'react-dom';
+import { Text, View, StyleSheet, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
+import { ScrollView, State } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-export default class ListofCompany extends Component {
-  constructor(props) {
-    super(props);
-
-  }
-
-  //to be further implemented by onPress function to go to company's detail page
-  getLeadsData = (item) => {
-    //var RollNo = item.RollNo;
-    //var StudentName = item.StudentName;
-    //var Course = item.Course;
-
-    //alert(RollNo + "\n" + StudentName + "\n" + Course);
-  }
+import { TabRouter } from 'react-navigation';
+import {auth, db, storage} from "./firebase";
 
 
-  render() {
+export default class SalespersonReportProfile extends Component{
+  state = {Count: 0};
+
+  // componentDidMount() {
+
+
+  // }
+
+
+  render(){
+    var employeeData = db.collection("leads").where("adminID", "==", this.props.route.params.paramId);
+    employeeData.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        console.log(this.state.Count)
+        // this.setState({Count:Count+1});
+      });
+    });
     return (
       <View style={{ flex: 1, padding: "10%" }}>
 
@@ -43,9 +48,7 @@ export default class ListofCompany extends Component {
             size={45}
             style={styles.profileImg} />
           <View>
-            <Text style={styles.Username}>
-              John David
-                    </Text>
+            <Text style={styles.Username}>{this.props.route.params.paramName}</Text>
             <Text style={styles.designation}>
               Salesperson
                     </Text>
@@ -55,19 +58,18 @@ export default class ListofCompany extends Component {
         <View>
           <View style={styles.Direction}>
             <Text style={[styles.Text, { marginEnd: 25 }]}>Email</Text>
-            <Text style={styles.Info}>abc@gmail.com</Text>
+            <Text style={styles.Info}>{this.props.route.params.paramEmail}</Text>
           </View>
           <View style={styles.Direction}>
             <Text style={[styles.Text, { marginEnd: 8 }]}>Contact</Text>
-            <Text style={styles.Info}>+6 012 345 6789</Text>
+            <Text style={styles.Info}>{this.props.route.params.paramContact}</Text>
           </View>
         </View>
-
         <View>
           <Text style={styles.title}>LEADS REPORT</Text>
             <View style={styles.Direction}>
               <Text style={styles.Text}>Total Number of Leads Assigned</Text>
-              <Text style={styles.No}>100</Text>
+              <Text style={styles.No}>{this.state.Count}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.WonLeadNo}>Total Number of Won Leads</Text>
@@ -78,11 +80,11 @@ export default class ListofCompany extends Component {
               <Text style={styles.No}>20</Text>
             </View>
         </View>
-
       </View>
     );
   }
 }
+
 
 
 const styles = StyleSheet.create({

@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput,ActivityIndicator } from 'react-native';
 //import { ScrollView } from 'react-native-gesture-handler';
-import {firebase} from './firebase.js';
+import {auth, storage, db} from './firebase.js';
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -12,30 +12,8 @@ export default class App extends Component {
       address: '',
       email: '',
       contact: '',
-      isLoading: true
     }
   };
-
-
-componentDidMount(){
-  const dbRef = firebase.firestore().collection('users').doc(this.props.route.params.userkey)
-    dbRef.get().then((res) => {
-      if (res.exists) {
-        const user = res.data();
-        this.setState({
-          key: res.id,
-          name: user.name,
-          email: user.email,
-          contact: user.contact,
-          company: user.company,
-          address: user.address,
-          isLoading: false
-        });
-      } else {
-        console.log("Document does not exist!");
-      }
-    });
-}
 
 inputValueUpdate = (val, prop) => {
   const state = this.state;
@@ -44,44 +22,20 @@ inputValueUpdate = (val, prop) => {
 }
 
 updateUser() {
-  this.setState({
-    isLoading: true,
-  });
-  const updateDBRef = firebase.firestore().collection('users').doc(this.state.key);
-  updateDBRef.set({
+  db.collection("users").doc("V4d1aKlbbQa9HXMPX6A1")
+  .update({
     name: this.state.name,
-    email: this.state.email,
-    contact: this.state.contact,
-    company: this.state.company,
+    companyName: this.state.company,
     address: this.state.address,
-  }).then((docRef) => {
-    this.setState({
-      key: '',
-      name: '',
-      email: '',
-      conatact: '',
-      company: '',
-      address: '',
-      isLoading: false,
-    });
-    this.props.navigation.navigate('Account');
+    email: this.state.email,
+    phoneNumber: this.state.contact,
   })
-  .catch((error) => {
-    console.error("Error: ", error);
-    this.setState({
-      isLoading: false,
-    });
-  });
+  .then(() => {
+    console.log("Profile Updated");
+  })
 }
 
   render() {
-    if (this.state.isLoading) {
-      return (
-        <View style={styles.preloader}>
-          <ActivityIndicator size="large" color="#9E9E9E" />
-        </View>
-      )
-    }
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -139,7 +93,7 @@ updateUser() {
               style={styles.Button}
               //onPress={this._onPressLoginButton}
               //disabled={!this.state.isFormValid}
-              onPress={() => this.updateUser()}
+              onPress={() => this.updateUser().forceUpdate}
             >
               <Text style={styles.ButtonContent}>Save</Text>
             </TouchableOpacity>
