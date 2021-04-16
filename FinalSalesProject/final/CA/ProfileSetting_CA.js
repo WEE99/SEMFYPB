@@ -32,6 +32,14 @@ updateUser() {
   })
   .then(() => {
     console.log("Profile Updated");
+    alert("Profile Updated");
+  })
+  this.setState({ 
+    name:"",
+    company: "",
+    address: "",
+    email: "",
+    contact:""
   })
 }
 
@@ -93,7 +101,7 @@ updateUser() {
               style={styles.Button}
               //onPress={this._onPressLoginButton}
               //disabled={!this.state.isFormValid}
-              onPress={() => this.updateUser().forceUpdate}
+              onPress={() => this.updateUser()}
             >
               <Text style={styles.ButtonContent}>Save</Text>
             </TouchableOpacity>

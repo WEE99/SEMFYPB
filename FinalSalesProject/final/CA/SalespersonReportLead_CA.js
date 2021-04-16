@@ -1,28 +1,29 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
-
+import {auth, db, storage} from "./firebase";
 
 export default class ListofCompany extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+
+    state = {
       LeadList: [
-        { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Won' }
-        , { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Lost' }
       ],
     }
-  }
-
-  //to be further implemented by onPress function to go to company's detail page
-  getLeadsData = (item) => {
-    //var RollNo = item.RollNo;
-    //var StudentName = item.StudentName;
-    //var Course = item.Course;
-
-    //alert(RollNo + "\n" + StudentName + "\n" + Course);
-  }
+  
+    componentDidMount(){
+      this.displayLeads();
+    }
 
 
+    displayLeads(){
+      let leadList = [];
+      var dashboardData = db.collection("leads").where("adminID", "==", "HiVB7rApJqMSbGfLTPEbtVVdvXc2");
+      dashboardData.onSnapshot((querySnapShot) => {
+        querySnapShot.forEach((doc) => {
+          leadList.push(doc.data());
+        });
+        this.setState({ LeadList : leadList});
+      });
+    }
   render() {
     return (
       <View style={{ flex: 1, padding: "10%" }}>
@@ -49,9 +50,9 @@ export default class ListofCompany extends Component {
           <FlatList
             data={this.state.LeadList}
             renderItem={({ item }) =>
-              <View style={styles.cardView} onPress={() => this.getLeadsData(item)}>
-                <Text style={styles.firstCol}>{item.Leads}   ({item.Company})</Text>
-                <Text style={styles.SecCol}>{item.Status}</Text>
+              <View style={styles.cardView}>
+                <Text style={styles.firstCol}>{item.name}   ({item.company})</Text>
+                <Text style={styles.SecCol}>{item.result}</Text>
               </View>
             }
           />

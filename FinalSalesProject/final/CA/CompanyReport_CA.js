@@ -1,24 +1,50 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
 import { Card } from 'react-native-paper';
-
+import {auth, db, storage} from "./firebase";
 export default class ListofCompany extends Component {
-    constructor(props) {
-        super(props);
+    state=
+    {
+        sl:0,
+        leads:0,
+        won:0,
+        lose:0,
     }
 
-    //to be further implemented by onPress function to go to company's detail page
-    getCompanyData = (item) => {
-        //var RollNo = item.RollNo;
-        //var StudentName = item.StudentName;
-        //var Course = item.Course;
-
-        //alert(RollNo + "\n" + StudentName + "\n" + Course);
+    componentDidMount() {
+        this.totalNumberofSalesperson();
+        this.totalNumberofWonLeads();
+        this.totalNumberofLeads();
+        this.totalNumberofLostLeads();
     }
 
-    //to implement changing between pages
-    _onPressButton() {
-        //alert('You tapped the button!')
+
+    totalNumberofSalesperson() {
+        var employeeData = db.collection("users").where("role", "==", "Salesperson").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+        employeeData.onSnapshot((querySnapShot) => {
+            this.setState({ sl: querySnapShot.docs.length });
+        });
+    }
+
+    totalNumberofWonLeads() {
+        var employeeData = db.collection("leads").where("result", "==", "Won").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+        employeeData.onSnapshot((querySnapShot) => {
+            this.setState({ won: querySnapShot.docs.length });
+        });
+    }
+
+    totalNumberofLeads(){
+        var employeeData = db.collection("leads").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+        employeeData.onSnapshot((querySnapShot) => {
+            this.setState({ leads: querySnapShot.docs.length });
+        });
+    }
+
+    totalNumberofLostLeads(){
+        var employeeData = db.collection("leads").where("result", "==", "Lose").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+        employeeData.onSnapshot((querySnapShot) => {
+            this.setState({ lose: querySnapShot.docs.length });
+        });
     }
 
     render() {
@@ -46,24 +72,20 @@ export default class ListofCompany extends Component {
                 <View style={styles.pieChartArea} />
                 <View style={{ marginLeft: 20 }}>
                     <View style={styles.Direction}>
-                        <Text style={styles.TextAdmin}>Total Number of Company Admin</Text>
-                        <Text style={styles.Admin}>80</Text>
-                    </View>
-                    <View style={styles.Direction}>
                         <Text style={styles.TextSalesperson}>Total Number of Salesperson</Text>
-                        <Text style={styles.Salesperson}>20</Text>
+                        <Text style={styles.Salesperson}>{this.state.sl}</Text>
                     </View>
                     <View style={styles.Direction}>
                         <Text style={styles.TextLeads}>Total Number of Leads</Text>
-                        <Text style={styles.Leads}>20</Text>
+                        <Text style={styles.Leads}>{this.state.leads}</Text>
                     </View>
                     <View style={styles.Direction}>
                         <Text style={styles.WonLeadNo}>Total Number of Won Leads</Text>
-                        <Text style={styles.Won}>80</Text>
+                        <Text style={styles.Won}>{this.state.won}</Text>
                     </View>
                     <View style={styles.Direction}>
                         <Text style={styles.LostLeadNo}>Total Number of Lost Leads</Text>
-                        <Text style={styles.Lost}>20</Text>
+                        <Text style={styles.Lost}>{this.state.lose}</Text>
                     </View>
                 </View>
 

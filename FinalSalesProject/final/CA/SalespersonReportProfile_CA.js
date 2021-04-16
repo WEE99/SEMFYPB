@@ -8,22 +8,43 @@ import {auth, db, storage} from "./firebase";
 
 
 export default class SalespersonReportProfile extends Component{
-  state = {Count: 0};
+  state = 
+  {
+    Count: 0,
+    won: 0,
+    lose:0
+  };
 
-  // componentDidMount() {
+  componentDidMount() {
+    this.getTotalNumberofLeadsAssigned();
+    this.TotalNumberofWonLeads();
+    this.TotalNumberofLostLeads();
+  }
 
-
-  // }
-
-
-  render(){
+  getTotalNumberofLeadsAssigned(){
+    
     var employeeData = db.collection("leads").where("adminID", "==", this.props.route.params.paramId);
     employeeData.onSnapshot((querySnapShot) => {
-      querySnapShot.forEach((doc) => {
-        console.log(this.state.Count)
-        // this.setState({Count:Count+1});
-      });
+      this.setState({Count:querySnapShot.docs.length});
     });
+  }
+
+  TotalNumberofWonLeads(){
+  
+    var employeeData = db.collection("leads").where("adminID", "==", this.props.route.params.paramId).where("result", "==", "Won");
+    employeeData.onSnapshot((querySnapShot) => {
+        this.setState({won:querySnapShot.docs.length});
+      });
+  }
+
+  TotalNumberofLostLeads(){
+    var employeeData = db.collection("leads").where("adminID", "==", this.props.route.params.paramId).where("result", "==", "Lose");
+    employeeData.onSnapshot((querySnapShot) => {
+        this.setState({lose:querySnapShot.docs.length});
+      });
+  }
+
+  render(){
     return (
       <View style={{ flex: 1, padding: "10%" }}>
 
@@ -73,11 +94,11 @@ export default class SalespersonReportProfile extends Component{
             </View>
             <View style={styles.Direction}>
               <Text style={styles.WonLeadNo}>Total Number of Won Leads</Text>
-              <Text style={styles.No}>80</Text>
+              <Text style={styles.No}>{this.state.won}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.LostLeadNo}>Total Number of Lost Leads</Text>
-              <Text style={styles.No}>20</Text>
+              <Text style={styles.No}>{this.state.lose}</Text>
             </View>
         </View>
       </View>
