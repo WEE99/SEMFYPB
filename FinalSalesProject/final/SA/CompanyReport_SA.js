@@ -3,24 +3,74 @@ import {
   Text,
   View,
   StyleSheet,
-  FlatList,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Card } from 'react-native-paper';
+import { auth, db, storage } from '../CA/firebase';
 
 export default class ListofCompany extends Component {
   constructor(props) {
     super(props);
+    this.state =
+    {
+      ca: 0,
+      sl: 0,
+      leads: 0,
+      won: 0,
+      lose: 0,
+    }
+  }
+
+  componentDidMount() {
+    this.totalNumberofCompanyAdmin();
+    this.totalNumberofSalesperson();
+    this.totalNumberofWonLeads();
+    this.totalNumberofLeads();
+    this.totalNumberofLostLeads();
+  }
+
+  totalNumberofCompanyAdmin() {
+    var employeeData = db.collection("users").where("role", "==", "Company Admin");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ ca: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofSalesperson() {
+    var employeeData = db.collection("users").where("role", "==", "Salesperson").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ sl: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofWonLeads() {
+    var employeeData = db.collection("leads").where("result", "==", "Won").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ won: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofLeads() {
+    var employeeData = db.collection("leads").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ leads: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofLostLeads() {
+    var employeeData = db.collection("leads").where("result", "==", "Lose").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ lose: querySnapShot.docs.length });
+    });
   }
 
   render() {
     return (
-      <View style={{ flex: 1, padding: '10%', marginTop: 20 }}>
-        <ScrollView>
+      <ScrollView style={{ flex: 1, padding: '5%', backgroundColor: 'white' }}>
+        <View style={{marginTop: 10}}>
           <Text style={styles.CompanyName}>ABC Company</Text>
 
-         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Company Details')}
               style={styles.nav}>
@@ -45,36 +95,36 @@ export default class ListofCompany extends Component {
           </View>
 
           <View style={styles.pieChartArea} />
-          <View style={{ marginLeft: 5 , height:600, width: '90%'}}>
+          <View style={{ marginLeft: 5, height: 600, width: '90%' }}>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Company Admin</Text>
-              <Text style={styles.Admin}>80</Text>
+              <Text style={styles.Admin}>{this.state.ca}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Salesperson </Text>
-              <Text style={styles.Salesperson}>20</Text>
+              <Text style={styles.Salesperson}>{this.state.sl}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Leads</Text>
-              <Text style={styles.Leads}>20</Text>
+              <Text style={styles.Leads}>{this.state.leads}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Won Leads</Text>
-              <Text style={styles.Won}>80</Text>
+              <Text style={styles.Won}>{this.state.won}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Lost Leads</Text>
-              <Text style={styles.Lost}>20</Text>
+              <Text style={styles.Lost}>{this.state.lose}</Text>
             </View>
           </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-    nav: {
+  nav: {
     margin: 5,
     backgroundColor: 'lightgrey',
     padding: 5,

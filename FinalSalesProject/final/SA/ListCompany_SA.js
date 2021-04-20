@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { Card } from 'react-native-paper';
+import { auth, db, storage } from '../CA/firebase';
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class ListofCompany extends Component {
@@ -15,13 +16,43 @@ export default class ListofCompany extends Component {
     super(props);
 
     this.state = {
-      CompanyList: [{ CompanyName: 'Facebook' }, { CompanyName: 'Facebook' }],
+      CompanyList: [],
+      oj: []
     };
   }
+
+  componentDidMount() { 
+    this.listofCompany();
+  }
+
+  listofCompany() {
+    let companyLeads = [];
+    let c = [];
+    var previousName = "";
+    var employeeData = db.collection("users")
+    employeeData.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        var data = doc.data();
+        var compName = data.companyName;
+        companyLeads.push(companyName);
+        // c.push(data.compName)
+        // c.forEach((name, index) => {
+        //   if(name == c.index)
+        // })
+
+      });
+      this.setState({ CompanyList: companyLeads });
+      this.setState({ oj: c });
+    });
+  }
+
   render() {
     return (
-      <View style={{ flex: 1, padding: '10%', marginTop: 20 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10 }}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+          horizontal={true}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Overall Report')}
             style={styles.nav}>
@@ -44,7 +75,7 @@ export default class ListofCompany extends Component {
             style={styles.nav}>
             <Text style={styles.navTitle} numberOfLine={3}>Leads Report</Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
 
         <ScrollView>
           <FlatList
@@ -55,9 +86,11 @@ export default class ListofCompany extends Component {
                 onPress={() =>
                   this.props.navigation.navigate('Company Details')
                 }>
-                <View style={{ flexDirection: 'row',    
-                justifyContent: 'center',alignItems: 'center' }}>
-                  <Text style={styles.CompanyName} numbrOfLine={3}>{item.CompanyName}</Text>
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center', alignItems: 'center'
+                }}>
+                  <Text style={styles.CompanyName} numberOfLine={3}>{item.companyName}</Text>
                   <View style={{ justifyContent: 'flex-end' }}>
                     <Icon name="right" size={15} style={styles.icon} />
                   </View>
@@ -65,8 +98,24 @@ export default class ListofCompany extends Component {
               </Card>
             )}
           />
+
+
+          <FlatList
+            data={this.state.oj}
+            renderItem={({ item }) => (
+                <View style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center', alignItems: 'center'
+                }}>
+                  <Text style={styles.CompanyName} numberOfLine={3}>{item.companyName}</Text>
+                  <View style={{ justifyContent: 'flex-end' }}>
+                    <Icon name="right" size={15} style={styles.icon} />
+                  </View>
+                </View>
+            )}
+          />
         </ScrollView>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -107,7 +156,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     margin: 5,
   },
-  icon:{
+  icon: {
     marginBottom: '20%'
   }
 });

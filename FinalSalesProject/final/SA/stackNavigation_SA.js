@@ -113,10 +113,10 @@ function HistoryStackNav() {
 function ReportStackNav() {
     return (
         <ReportStack.Navigator navigationOptions="">
-            <ReportStack.Screen name="Overall Report" component={Report} options={{ headerShown: false }} />
-            <ReportStack.Screen name="List of Company" component={ListCompany} options={{ headerShown: false }}/>
-            <ReportStack.Screen name="List of Salesperson" component={ListSalesperson} options={{ headerShown: false }}/>
-            <ReportStack.Screen name="List of Leads" component={ListLeads} options={{ headerShown: false }}/>
+            <ReportStack.Screen name="Overall Report" component={Report} options={{title: 'Report' }} />
+            <ReportStack.Screen name="List of Company" component={ListCompany} options={{ title: 'Report' }}/>
+            <ReportStack.Screen name="List of Salesperson" component={ListSalesperson} options={{ title: 'Report' }}/>
+            <ReportStack.Screen name="List of Leads" component={ListLeads} options={{ title: 'Report' }}/>
             <ReportStack.Screen name="Company Details" component={CompanyDetails} options={{title: 'Company Report'}}/>
             <ReportStack.Screen name="Company Report" component={CompanyReport} options={{title: 'Company Report'}}/>
             <ReportStack.Screen name="Company Leads" component={CompanyLeads} options={{title: 'Company Report'}}/>
@@ -125,7 +125,7 @@ function ReportStackNav() {
             <ReportStack.Screen name="Salesperson Leads" component={SalespersonLeads} />
             <ReportStack.Screen name="Lead Detail" component={AccountLead} />
             <ReportStack.Screen name="Salesperson Account Detail" component={AccountSale} />
-            <ReportStack.Screen name="Company Admin Account Detail" component={AccountCA} />
+            <ReportStack.Screen name="Company Admin Account Detail" component={AccountCA} options={{title: 'Profile'}}/>
         </ReportStack.Navigator>
     )
 }

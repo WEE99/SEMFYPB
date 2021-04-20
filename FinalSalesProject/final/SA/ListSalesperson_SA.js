@@ -5,27 +5,43 @@ import {
   StyleSheet,
   FlatList,
   ScrollView,
-  TouchableOpacity,Image
+  TouchableOpacity, Image
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { auth, db, storage } from '../CA/firebase';
 
 export default class ListofEmployee extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      EmployeeList: [
-        { Image: '', SalespersonName: 'John David', CompanyName: 'Facebook' },
-        { Image: '', SalespersonName: 'John David', CompanyName: 'Facebook' },
-      ],
+      EmployeeList: [],
     };
+  }
+
+  componentDidMount() {
+    this.listofSalesperson();
+  }
+
+  listofSalesperson() {
+    let listEmployee = [];
+    var employeeData = db.collection("users").where("role", "==", "Salesperson")
+    employeeData.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        listEmployee.push(doc.data());
+      });
+      this.setState({ EmployeeList: listEmployee });
+    });
   }
 
   render() {
     return (
-      <View style={{ flex: 1, padding: '10%', marginTop: 20 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10 }}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+          horizontal={true}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Overall Report')}
             style={styles.nav}>
@@ -56,8 +72,8 @@ export default class ListofEmployee extends Component {
               Leads Report
             </Text>
           </TouchableOpacity>
-        </View>
-        
+        </ScrollView>
+
         <ScrollView>
           <FlatList
             data={this.state.EmployeeList}
@@ -68,10 +84,10 @@ export default class ListofEmployee extends Component {
                   this.props.navigation.navigate('Salesperson Detail')
                 }>
                 <View style={styles.cardView}>
-                  <Image style={styles.profileImg} source={require('../img/sample.jpg')} />
+                  <Image style={styles.profileImg} source={require('./img/sample.jpg')} />
                   <View style={styles.texts}>
-                    <Text style={styles.Name} numberOfLine={3}>{item.SalespersonName}</Text>
-                    <Text style={styles.CompanyName} numberOfLine={3}>({item.CompanyName})</Text>
+                    <Text style={styles.Name} numberOfLine={3}>{item.nickname}</Text>
+                    <Text style={styles.CompanyName} numberOfLine={3}>({item.companyName})</Text>
                   </View>
                   <View style={{ justifyContent: 'flex-end' }}>
                     <Icon name="right" size={15} style={styles.icon} />
@@ -81,7 +97,7 @@ export default class ListofEmployee extends Component {
             )}
           />
         </ScrollView>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -149,7 +165,7 @@ const styles = StyleSheet.create({
   Designation: {
     fontSize: 12
   },
-  icon:{
-    marginBottom: 15  
+  icon: {
+    marginTop: 5
   }
 });

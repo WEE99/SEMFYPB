@@ -1,66 +1,116 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+import { auth, db, storage } from '../CA/firebase';
 
-const SalespersonAccountSuperAdmin = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        padding: '10%',
-        marginTop: 20,
-      }}>
-      <View style={styles.Icon}>
-        <Image style={styles.profileImg} source={require('../img/sample.jpg')} />
-        <View>
-          <Text style={styles.Username}>John David</Text>
-          <Text style={styles.designation}>Salesperson</Text>
+export default class Report extends Component {
+  constructor(props) {
+    super(props);
+    this.state =
+    {
+      leads: 0,
+      won: 0,
+      lose: 0,
+      salesInfo: [],
+    }
+  }
+
+  componentDidMount() {
+    let salesData = [];
+    var employeeData = db.collection("users").where("name", "==", "Joo")
+    employeeData.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        salesData.push(doc.data());
+      });
+      this.setState({ salesInfo: salesData });
+    });
+    this.totalNumberofWonLeads();
+    this.totalNumberofLeads();
+    this.totalNumberofLostLeads();
+  }
+
+  totalNumberofWonLeads() {
+    var employeeData = db.collection("leads").where("userId", "==", "Hu4WdS4HH4ugYVFmZexa").where("result", "==", "Won");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ won: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofLeads() {
+    var employeeData = db.collection("leads").where("userId", "==", "Hu4WdS4HH4ugYVFmZexa");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ leads: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofLostLeads() {
+    var employeeData = db.collection("leads").where("userId", "==", "Hu4WdS4HH4ugYVFmZexa").where("result", "==", "Lose");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ lose: querySnapShot.docs.length });
+    });
+  }
+
+  render() {
+    return (
+      <ScrollView
+        style={{
+          flex: 1,
+          padding: '5%',
+          marginTop: 10,
+          backgroundColor: 'white'
+        }}>
+        
+        <FlatList
+          data={this.state.salesInfo}
+          renderItem={({ item }) => (
+            <View style={styles.Icon}>
+              <Image style={styles.profileImg} source={require('./img/sample.jpg')} />
+              <View>
+                <Text style={styles.Username}>{item.nickname}</Text>
+                <Text style={styles.designation}>{item.role}</Text>
+              </View>
+            </View>
+          )}
+        />
+
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Salesperson Detail')}
+            style={styles.nav}>
+            <Text style={styles.navTitle}>Detail</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Salesperson Report')}
+            style={styles.cardActive}>
+            <Text style={styles.activeTitle}>Report</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Salesperson Leads')}
+            style={styles.nav}>
+            <Text style={styles.navTitle}>Leads</Text>
+          </TouchableOpacity>
         </View>
-      </View>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Detail')}
-          style={styles.nav}>
-          <Text style={styles.navTitle}>Detail</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Report')}
-          style={styles.cardActive}>
-          <Text style={styles.activeTitle}>Report</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Leads')}
-          style={styles.nav}>
-          <Text style={styles.navTitle}>Leads</Text>
-        </TouchableOpacity>
-      </View>
-
-<View style={styles.pieChartArea} />
-          <View style={{ marginLeft: 5 , height:600, width: '90%'}}>
-            <View style={styles.Direction}>
-              <Text style={styles.Text} numberOfLine={2}>Total Number of Salesperson </Text>
-              <Text style={styles.Salesperson}>20</Text>
-            </View>
-            <View style={styles.Direction}>
-              <Text style={styles.Text} numberOfLine={2}>Total Number of Leads</Text>
-              <Text style={styles.Leads}>20</Text>
-            </View>
-            <View style={styles.Direction}>
-              <Text style={styles.Text} numberOfLine={2}>Total Number of Won Leads</Text>
-              <Text style={styles.Won}>80</Text>
-            </View>
-            <View style={styles.Direction}>
-              <Text style={styles.Text} numberOfLine={2}>Total Number of Lost Leads</Text>
-              <Text style={styles.Lost}>20</Text>
-            </View>
+        <View style={styles.pieChartArea} />
+        <View style={{ marginLeft: 5, height: 600, width: '90%' }}>
+          <View style={styles.Direction}>
+            <Text style={styles.Text} numberOfLine={2}>Total Number of Leads</Text>
+            <Text style={styles.Leads}>{this.state.leads}</Text>
           </View>
+          <View style={styles.Direction}>
+            <Text style={styles.Text} numberOfLine={2}>Total Number of Won Leads</Text>
+            <Text style={styles.Won}>{this.state.won}</Text>
+          </View>
+          <View style={styles.Direction}>
+            <Text style={styles.Text} numberOfLine={2}>Total Number of Lost Leads</Text>
+            <Text style={styles.Lost}>{this.state.lose}</Text>
+          </View>
+        </View>
 
-    </View>
-  );
+      </ScrollView>
+    );
+  }
 };
 
-export default SalespersonAccountSuperAdmin;
 
 const styles = StyleSheet.create({
   profileImg: {
@@ -84,7 +134,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
   },
-   nav: {
+  nav: {
     margin: 5,
     backgroundColor: 'lightgrey',
     padding: 5,
@@ -127,17 +177,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
     width: '65%',
-  },
-  Salesperson: {
-    marginTop: 2.5,
-    fontSize: 24,
-    fontWeight: 'bold',
-    backgroundColor: '#f4a460',
-    width: '15%',
-    textAlign: 'center',
-    borderRadius: 5,
-    padding: 5,
-    marginLeft: '15%'
   },
   Leads: {
     marginTop: 2.5,

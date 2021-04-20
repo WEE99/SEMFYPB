@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
+import { auth, db, storage } from '../CA/firebase';
 
 export default class ListofCompany extends Component {
   constructor(props) {
@@ -27,23 +28,11 @@ export default class ListofCompany extends Component {
     };
   }
 
-  //to be further implemented by onPress function to go to company's detail page
-  getAdminData = (item) => {
-    //var RollNo = item.RollNo;
-    //var StudentName = item.StudentName;
-    //var Course = item.Course;
-    //alert(RollNo + "\n" + StudentName + "\n" + Course);
-  };
-
-  //to implement changing between pages
-  _onPressButton() {
-    //alert('You tapped the button!')
-  }
 
   render() {
     return (
-      <ScrollView>
-        <View style={{ flex: 1, padding: '10%', marginTop: 20 }}>
+      <ScrollView style={{ flex: 1, padding: '5%', backgroundColor: 'white' }}>
+        <View style={{marginTop: 10}}>
           <Text style={styles.CompanyName}>ABC Company</Text>
 
           <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
@@ -102,7 +91,7 @@ export default class ListofCompany extends Component {
                 <View style={styles.cardView2}>
                   <Image
                     style={styles.profileImg}
-                    source={require('../img/sample.jpg')}
+                    source={require('./img/sample.jpg')}
                   />
                   <View style={styles.texts}>
                     <Text style={styles.AdminName}>{item.AdminName}</Text>
@@ -128,7 +117,7 @@ export default class ListofCompany extends Component {
                 <View style={styles.cardView2}>
                   <Image
                     style={styles.profileImg}
-                    source={require('../img/sample.jpg')}
+                    source={require('./img/sample.jpg')}
                   />
                   <View style={styles.texts}>
                     <Text style={styles.AdminName}>{item.EmployeeName}</Text>

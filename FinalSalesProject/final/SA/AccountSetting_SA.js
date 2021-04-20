@@ -12,7 +12,7 @@ export default class Touchables extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
+        <View>xF
           <TouchableOpacity
             style={styles.AccButton}
             onPress={()=> this.props.navigation.navigate('Profile Settings')}

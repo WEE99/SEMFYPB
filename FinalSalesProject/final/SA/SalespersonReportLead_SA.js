@@ -1,72 +1,101 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { auth, db, storage } from '../CA/firebase';
 
-const SalespersonAccountSuperAdmin = () => {
-
+export default class ListofCompany extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      LeadList: [
-        { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Won' },
-        { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Lost' },
-      ],
+      LeadList: [],
+      salesInfo: [],
     };
-  return (
-    <View
-      style={{
-        flex: 1,
-        padding: '10%',
-        marginTop: 20,
-      }}>
-      <View style={styles.Icon}>
-        <Image style={styles.profileImg} source={require('../img/sample.jpg')} />
-        <View>
-          <Text style={styles.Username}>John David</Text>
-          <Text style={styles.designation}>Salesperson</Text>
+  }
+
+  componentDidMount() {
+    let salesData = [];
+    let leadData = []; 
+
+    var employeeData = db.collection("users").where("name", "==", "Joo")
+    employeeData.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        salesData.push(doc.data());
+      });
+      this.setState({ salesInfo: salesData });
+    });
+
+    var leadList = db.collection("leads").where("userId", "==", "Hu4WdS4HH4ugYVFmZexa")
+    leadList.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        leadData.push(doc.data());
+      });
+      this.setState({ LeadList: leadData });
+    });
+  }
+
+  render() {
+    return (
+      <ScrollView
+        style={{
+          flex: 1,
+          padding: '5%',
+          marginTop: 10,
+          backgroundColor: 'white'
+        }}>
+        <FlatList
+          data={this.state.salesInfo}
+          renderItem={({ item }) => (
+            <View style={styles.Icon}>
+              <Image style={styles.profileImg} source={require('./img/sample.jpg')} />
+              <View>
+                <Text style={styles.Username}>{item.nickname}</Text>
+                <Text style={styles.designation}>{item.role}</Text>
+              </View>
+            </View>
+          )}
+        />
+
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Salesperson Detail')}
+            style={styles.nav}>
+            <Text style={styles.navTitle}>Detail</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Salesperson Report')}
+            style={styles.nav}>
+            <Text style={styles.navTitle}>Report</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Salesperson Leads')}
+            style={styles.cardActive}>
+            <Text style={styles.activeTitle}>Leads</Text>
+          </TouchableOpacity>
         </View>
-      </View>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Detail')}
-          style={styles.nav}>
-          <Text style={styles.navTitle}>Detail</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Report')}
-          style={styles.nav}>
-          <Text style={styles.navTitle}>Report</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Leads')}
-          style={styles.cardActive}>
-          <Text style={styles.activeTitle}>Leads</Text>
-        </TouchableOpacity>
-      </View>
-      
-     <View style={styles.header}>
-            <Text style={styles.firstCol}>Leads</Text>
-            <Text style={styles.SecCol}>Remarks</Text>
-          </View>
-          <FlatList
-            data={this.state.LeadList}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Lead Detail')}>
-                <View style={styles.cardView}>
-                  <Text style={styles.firstCol} numberOfLine={5}>
-                    {item.Leads} ({item.Company}) 
+        <View style={styles.header}>
+          <Text style={styles.firstCol}>Leads</Text>
+          <Text style={styles.SecCol}>Remarks</Text>
+        </View>
+        <FlatList
+          data={this.state.LeadList}
+          renderItem={({ item }) => (
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Lead Detail')}>
+              <View style={styles.cardView}>
+                <Text style={styles.firstCol} numberOfLine={5}>
+                  {item.name} ({item.company})
                   </Text>
-                  <Text style={styles.SecCol}>{item.Status}</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
+                <Text style={styles.SecCol}>{item.result}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
 
-    </View>
-  );
+      </ScrollView>
+    );
+  }
 };
-
-export default SalespersonAccountSuperAdmin;
 
 const styles = StyleSheet.create({
   profileImg: {
@@ -90,7 +119,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
   },
-   nav: {
+  nav: {
     margin: 5,
     backgroundColor: 'lightgrey',
     padding: 5,
@@ -115,7 +144,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
   },
-   header: {
+  header: {
     width: '96.5%',
     marginLeft: 5,
     marginRight: 5,
@@ -142,7 +171,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     paddingLeft: 15,
   },
-    CompanyName: {
+  CompanyName: {
     fontFamily: 'Roboto',
     fontWeight: 'bold',
     fontSize: 18,

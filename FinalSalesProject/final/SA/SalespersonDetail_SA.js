@@ -1,70 +1,96 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { auth, db, storage } from '../CA/firebase';
 
-const SalespersonAccountSuperAdmin = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        padding: '10%',
-        marginTop: 20,
-      }}>
-      <View style={styles.Icon}>
-        <Image style={styles.profileImg} source={require('../img/sample.jpg')} />
-        <View>
-          <Text style={styles.Username}>John David</Text>
-          <Text style={styles.designation}>Salesperson</Text>
-        </View>
+export default class a extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      salesInfo: [],
+    };
+  }
+
+  componentDidMount() {
+    let salesData = [];
+    var employeeData = db.collection("users").where("name", "==", "Joo")
+    employeeData.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        salesData.push(doc.data());
+      });
+      this.setState({ salesInfo: salesData });
+    });
+  }
+
+  render() {
+    return (
+      <View
+        style={{
+          flex: 1, padding: '5%', marginTop: 10, backgroundColor: 'white'
+        }}>
+        <FlatList
+          data={this.state.salesInfo}
+          renderItem={({ item }) => (
+            <View>
+              <View style={styles.Icon}>
+                <Image style={styles.profileImg} source={require('./img/sample.jpg')} />
+                <View>
+                  <Text style={styles.Username}>{item.nickname}</Text>
+                  <Text style={styles.designation}>{item.role}</Text>
+                </View>
+              </View>
+
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Salesperson Detail')}
+                  style={styles.cardActive}>
+                  <Text style={styles.activeTitle}>Detail</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Salesperson Report')}
+                  style={styles.nav}>
+                  <Text style={styles.navTitle}>Report</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Salesperson Leads')}
+                  style={styles.nav}>
+                  <Text style={styles.navTitle}>Leads</Text>
+                </TouchableOpacity>
+              </View>
+
+
+              <View>
+                <View style={styles.Direction}>
+                  <Text style={styles.Text}>Company</Text>
+                  <Text style={styles.Info}>{item.companyName}</Text>
+                </View>
+
+                <View style={styles.Address}>
+                  <Text style={[styles.Text, { marginEnd: 10 }]}>Address</Text>
+                  <Text style={styles.Info} numberOfLines={5}>
+                    {item.address}
+                  </Text>
+                </View>
+
+                <View style={styles.Direction}>
+                  <Text style={[styles.Text, { marginEnd: 25 }]}>Email</Text>
+                  <Text style={styles.Info} numberOfLine={3}>
+                    {item.email}
+                  </Text>
+                </View>
+                <View style={styles.Direction}>
+                  <Text style={[styles.Text, { marginEnd: 8 }]}>Contact</Text>
+                  <Text style={styles.Info}>{item.phoneNumber}</Text>
+                </View>
+              </View>
+            </View>
+          )}
+        />
       </View>
-
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Detail')}
-          style={styles.cardActive}>
-          <Text style={styles.activeTitle}>Detail</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Report')}
-          style={styles.nav}>
-          <Text style={styles.navTitle}>Report</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Leads')}
-          style={styles.nav}>
-          <Text style={styles.navTitle}>Leads</Text>
-        </TouchableOpacity>
-      </View>
-
-      <View>
-        <View style={styles.Direction}>
-          <Text style={styles.Text}>Company</Text>
-          <Text style={styles.Info}>ABC Company</Text>
-        </View>
-
-        <View style={styles.Address}>
-          <Text style={[styles.Text, { marginEnd: 10 }]}>Address</Text>
-          <Text style={styles.Info} numberOfLines={5}>
-            123, Lot 1234, Lorong ABC, Jalan ABC, 93350 Kuching, Sarawak
-          </Text>
-        </View>
-
-        <View style={styles.Direction}>
-          <Text style={[styles.Text, { marginEnd: 25 }]}>Email</Text>
-          <Text style={styles.Info} numberOfLine={3}>
-            abc@gmail.com
-          </Text>
-        </View>
-        <View style={styles.Direction}>
-          <Text style={[styles.Text, { marginEnd: 8 }]}>Contact</Text>
-          <Text style={styles.Info}>+6 012 345 6789</Text>
-        </View>
-      </View>
-    </View>
-  );
+    );
+  }
 };
 
-export default SalespersonAccountSuperAdmin;
 
 const styles = StyleSheet.create({
   profileImg: {
@@ -109,7 +135,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
   },
-   nav: {
+  nav: {
     margin: 5,
     backgroundColor: 'lightgrey',
     padding: 5,

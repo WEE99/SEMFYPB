@@ -6,23 +6,39 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
+import { auth, db, storage } from '../CA/firebase';
 import { FlatList } from 'react-native-gesture-handler';
 
 export default class ExampleTwo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      LeadList: [
-        { Leads: 'Facebook', CompanyName: 'Facebook Co', Status: 'Won' },
-        { Leads: 'Facebook', CompanyName: 'Facebook Co', Status: 'Lost' },
-      ],
+      LeadList: [],
     };
+  }
+
+  componentDidMount() {
+    this.listofLeads();
+  }
+
+  listofLeads() {
+    let listLeads = [];
+    var employeeData = db.collection("leads").where("companyID", "==", "V4d1aKlbbQa9HXMPX6A1")
+    employeeData.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        listLeads.push(doc.data());
+      });
+      this.setState({ LeadList: listLeads });
+    });
   }
 
   render() {
     return (
-      <View style={{ flex: 1, padding: '10%', marginTop: 20 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10 }}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+          horizontal={true}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Overall Report')}
             style={styles.nav}>
@@ -53,7 +69,7 @@ export default class ExampleTwo extends Component {
               Leads Report
             </Text>
           </TouchableOpacity>
-        </View>
+        </ScrollView>
 
         <ScrollView>
           <View style={styles.header}>
@@ -68,18 +84,18 @@ export default class ExampleTwo extends Component {
                   style={styles.firstCol}
                   onPress={() => this.props.navigation.navigate('Lead Detail')}
                   numberOfLine={5}>
-                  {item.Leads} ({item.CompanyName})
+                  {item.name} ({item.company})
                 </Text>
                 <Text
                   style={styles.SecThirdCol}
                   onPress={() => this.props.navigation.navigate('Lead Detail')}>
-                  {item.Status}
+                  {item.result}
                 </Text>
               </View>
             )}
           />
         </ScrollView>
-      </View>
+      </ScrollView>
     );
   }
 }
