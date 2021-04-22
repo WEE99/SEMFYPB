@@ -2,29 +2,33 @@ import React, { Component } from 'react';
 import { Button, StyleSheet, View, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-export default class ButtonBasics extends Component {
-    constructor(props){
-        super(props);
-    }
+export default ({navigation, route}) => {
 
-    render() {
+    const presswonleads=()=>{
+        navigation.navigate("Won Leads Report");
+      }
+      
+      const pressloseleads=()=>{
+        navigation.navigate("Lost Leads Report");
+      }
+    
         return (
             <View style={styles.allview}>
                 <Text style={styles.title}>
                     Click one of these options:
                 </Text>
                 <View style={styles.LayoutButtonContainer}>
-                    <TouchableOpacity style={styles.ButtonWon} onPress={() => this.props.navigation.navigate('Won Leads Report')}>
+                    <TouchableOpacity style={styles.ButtonWon} onPress={presswonleads}>
                         <Text style={{ color: "#ffffff", textAlign: 'center', fontSize: 16 }}>WON LEADS</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.ButtonLost} onPress={() => this.props.navigation.navigate('Lost Leads Report')}>
+                    <TouchableOpacity style={styles.ButtonLost} onPress={pressloseleads}>
                         <Text style={{ color: "#ffffff", textAlign: 'center', fontSize: 16 }}>LOST LEADS</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         );
-    }
 }
+
 
 const styles = StyleSheet.create({
     title: {

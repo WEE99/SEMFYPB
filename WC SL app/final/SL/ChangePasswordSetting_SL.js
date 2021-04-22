@@ -1,98 +1,127 @@
 import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import { StackNavigator, } from 'react-navigation';
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import React, {useEffect, useState, Component} from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
+export default ({navigation, route}) => {
 //export default function App() {
-export default class Touchables extends Component {
+// export default class Touchables extends Component {
 
-  static navigationOptions = {
-    title: 'resset psw',
-  };
+//   static navigationOptions = {
+//     title: 'resset psw',
+//   };
 
-  _onPressChangePswButton() {
-    const { newpsw } = this.state;
-    const { retypepsw } = this.state
-    const { p1 } = 'John David';
+//   _onPressChangePswButton() {
+//     const { newpsw } = this.state;
+//     const { retypepsw } = this.state
+//     const { p1 } = 'John David';
 
-    if (newpsw == retypepsw && newpsw != "") {
-      const url = 'https://poggersfyp.mooo.com/Backend/ressetpsw.php';
-      fetch(url,
-        {
-          method: 'POST',
-          headers:
-          {
-            'Origin': '*',
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(
-            {
-              newpsw: this.state.newpsw,
-              retypepsw: this.state.retypepsw,
-              user: 'John David',
-            })
+//     if (newpsw == retypepsw && newpsw != "") {
+//       const url = 'https://poggersfyp.mooo.com/Backend/ressetpsw.php';
+//       fetch(url,
+//         {
+//           method: 'POST',
+//           headers:
+//           {
+//             'Origin': '*',
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json'
+//           },
+//           body: JSON.stringify(
+//             {
+//               newpsw: this.state.newpsw,
+//               retypepsw: this.state.retypepsw,
+//               user: 'John David',
+//             })
 
-        }).then((response) => response.json()).then((responseJsonFromServer) => {
+//         }).then((response) => response.json()).then((responseJsonFromServer) => {
 
-        }).catch((error) => {
-          console.log(error);
-        });
+//         }).catch((error) => {
+//           console.log(error);
+//         });
 
-      alert("Password Change Successfully")
-      this.props.navigation.goBack();
-    }
-    else {
-      alert('Pasword not Match or no input')
-      //alert(p1)
-    }
-  }
+//       alert("Password Change Successfully")
+//       this.props.navigation.goBack();
+//     }
+//     else {
+//       alert('Pasword not Match or no input')
+//       //alert(p1)
+//     }
+//   }
   
-  _onPressCancelChangePswButton() {
-    alert('Password Remains');
-    this.props.navigation.goBack();
+//   _onPressCancelChangePswButton() {
+//     alert('Password Remains');
+//     this.props.navigation.goBack();
+//   }
+
+//   constructor(props) {
+//     super(props)
+//     this.state = {
+//       newpsw: '',
+//       retypepsw: '',
+//       p1: 'John David',
+//     }
+//   }
+  // render() {
+  //   var p1 = 'John David';
+  //   const { navigate } = this.props.navigation;
+
+  const pressCancel =()=>{
+    alert("Cancel")
+    navigation.goBack();
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      newpsw: '',
-      retypepsw: '',
-      p1: 'John David',
+  const pressSave =()=>{
+    // alert("Save")
+    if(Newpsw==Retypepsw && Newpsw!="" && Oldpsw!="" && Newpsw!="")
+    {
+    alert("Resset Succesful nav to ProfileSetting .js")
+    navigation.goBack()
     }
-  }
-  render() {
-    var p1 = 'John David';
-    const { navigate } = this.props.navigation;
+    else
+    {alert('Pasword not Match or Empty Field Detected')}
+  };
+  
+
+  const [Oldpsw, setOldpsw]=useState("");
+  const [Newpsw, setNewpsw]=useState("");
+  const [Retypepsw, setRetypepsw]=useState("");
+
     return (
       <View style={styles.container}>
 
         <View style={styles.SetpswC}>
+        <Text style={styles.intructionpsw}>Old Password</Text>
+          <TextInput
+            secureTextEntry={true}
+            style={styles.inputpsw}
+            onChangeText={(val) => setOldpsw(val)}
+          />
           <Text style={styles.intructionpsw}>New Password</Text>
           <TextInput
             secureTextEntry={true}
             style={styles.inputpsw}
-            onChangeText={text => this.setState({ newpsw: text })}
+            onChangeText={(val) => setNewpsw(val)}
           />
           <Text style={styles.intructionpsw}>Retype  Password</Text>
           <TextInput
             //secureTextEntry={true} 
             style={styles.inputpsw}
-            onChangeText={text => this.setState({ retypepsw: text })}
+            onChangeText={(val) => setRetypepsw(val)}
           />
         </View>
 
         <View style={styles.ButtonView}>
           <TouchableOpacity
             style={styles.Button}
-            onPress={() => this.props.navigation.goBack()}
+            onPress={pressCancel}
           >
             <Text style={styles.ButtonContent}>Cancel</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.Button}
-            onPress={() => this._onPressChangePswButton()}
+            onPress={pressSave}
           >
             <Text style={styles.ButtonContent}>Save</Text>
           </TouchableOpacity>
@@ -103,7 +132,7 @@ export default class Touchables extends Component {
       </View>
     );
   }
-}
+//}
 
 const styles = StyleSheet.create({
   container: {

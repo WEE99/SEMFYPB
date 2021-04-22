@@ -1,101 +1,86 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { Component } from 'react';
+import React, { useEffect, useState, Component} from 'react';
 import { Card } from 'react-native-paper';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, 
-  FlatList, TouchableOpacity } from 'react-native';
+  FlatList, TouchableOpacity,LogBox } from 'react-native';
+import {auth, db, storage} from "../CA/firebase";
+import {orange, TableRowDashboard, TableRowTask, TableHistoryTask} from "./TablesandTimeFormat";
+  
+export default ({navigation, route}) => {
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sales_username: ''
-    }
+  var data = db.collection("users");
+  
+  const [username, setUsername]=useState("");
+  const [TaskHistory,setTaskHistory]=useState([]);
+
+  const formatAMPM = (date) => {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
   }
+  const monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
+  useEffect(() => {
+    db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
+    .get()
+    .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+    db.collection("tasks").where("status", "==", "Completed").where("userId", "==",doc.id).orderBy("date", "desc")
+    .onSnapshot((querySnapshot) => {
+      let TaskHistoryArr= [];
+        querySnapshot.forEach((docTasks) => {
+            let tasks = docTasks.data();
+            tasks.id = docTasks.id;
+            tasks.time = formatAMPM(tasks.date.toDate());
+  
+            var m = tasks.date.toDate().getMonth()
+            tasks.date = monthArr[m] + " "+ tasks.date.toDate().getDate() + ", " + tasks.date.toDate().getFullYear();
 
-  componentDidMount() {
-    this._retrieveLeadsTaskList();
-    this.FocusSubscription = this.props.navigation.addListener(
-      'focus', () => {
-        this._retrieveLeadsTaskList();
-      }
-    )
-  }
-
-  _retrieveLeadsTaskList() {
-    const encodedValue = {
-      encodedSalesName: this.props.sales_username
-    }
-    return fetch(`https://poggersfyp.mooo.com/Backend/retrieveCompletedTask.php?sales_username=${encodeURIComponent(this.state.sales_username)}`)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          isLoading: false,
-          TaskList: responseJson,
+  
+            TaskHistoryArr.push(tasks);
+            // doc.data() is never undefined for query doc snapshots
+            console.log(docTasks.id, " => ", docTasks.data());
         });
-      }).catch((error) => {
-        console.log(error);
-      });
-  }
+        setTaskHistory(TaskHistoryArr);
+        console.log(TaskHistoryArr);
+    })
+    // .catch((error) => {
+    //     console.log("Error getting documents: ", error);
+    // });
+  });
+})
+.catch((error) => {
+    console.log("Error getting documents: ", error);
+});
 
-  redirectTaskDetailPage(taskType, taskId) {
-    if (taskType == "Call") {
-      this.props.navigation.navigate('Call Task Detail',
-        {
-          leads_name: this.state.leads_name,
-          sales_username: this.state.sales_username,
-          task_Id: taskId
-        })
-    } else if (taskType == "Appointment") {
-      this.props.navigation.navigate('Appointment Task Detail',
-        {
-          leads_name: this.state.leads_name,
-          sales_username: this.state.sales_username,
-          task_Id: taskId
-        })
-    } else {
-      this.props.navigation.navigate('Other Task Detail',
-        {
-          leads_name: this.state.leads_name,
-          sales_username: this.state.sales_username,
-          task_Id: taskId
-        })
-    }
-  }
+LogBox.ignoreLogs(['Setting a timer']);
+  },[]);
 
-  render() {
     return (
       <ScrollView style={{backgroundColor:'white'}}>
         <View style={styles.container}>
           <Text style={styles.title}>TASK HISTORY</Text>
-          <SafeAreaView>
-            <FlatList
-              data={this.state.TaskList}
-              renderItem={({ item }) => {
-                return (
-                  <Card style={styles.card}>
-                    <View style={styles.Task}>
-                      <TouchableOpacity style={{ flex: 1 }} onPress={() => {
-                        this.redirectTaskDetailPage(item.task_title, item.task_id)
-                      }}>
-                        <View style={styles.TaskCompleted}>
-                          <Text style={styles.Type}>{item.task_title}</Text>
-                          <Text style={styles.Date}> | </Text>
-                          <Text style={styles.Date}>{item.task_date}</Text>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
-                  </Card>
-                )
-              }
-              }
-            />
+           <SafeAreaView>
+
+           <View>
+                {TaskHistory.map((info) =>
+                      <TableHistoryTask key={info.id} data={info} navigation={navigation}/>
+                  )}
+          </View>
+         
           </SafeAreaView>
+
           <StatusBar style="auto" />
         </View>
       </ScrollView>
     );
   }
-}
+//}
 
 const styles = StyleSheet.create({
   container: {

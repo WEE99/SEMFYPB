@@ -1,79 +1,131 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { Component } from 'react';
+import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, ScrollView, Text, View, TextInput, TouchableOpacity } from 'react-native';
-
+import {auth, db, storage} from "../CA/firebase";
 
 //export default function App() {
-export default class EditRemarks extends Component {
+  export default ({navigation, route}) => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      lead_id: '',
-      remarks: '',
-      remarksDescription: '',
-    }
-  }
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     lead_id: '',
+  //     remarks: '',
+  //     remarksDescription: '',
+  //   }
+  // }
 
-  componentDidMount() {
-    this.setState({
-      lead_id: this.props.route.params.lead_id,
-      remarks: this.props.route.params.remarks
-    })
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     lead_id: this.props.route.params.lead_id,
+  //     remarks: this.props.route.params.remarks
+  //   })
+  // }
 
-  _Insert_Data_Into_MySQL() {
-    const url = 'https://poggersfyp.mooo.com/Backend/saveRemarks.php';
-    fetch(url,
-      {
-        method: 'POST',
-        headers:
-        {
-          'Origin': '*',
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(
-          {
-            LD: this.state.lead_id,
-            remarks: this.state.remarks,
-          })
+  // _Insert_Data_Into_MySQL() {
+  //   const url = 'https://poggersfyp.mooo.com/Backend/saveRemarks.php';
+  //   fetch(url,
+  //     {
+  //       method: 'POST',
+  //       headers:
+  //       {
+  //         'Origin': '*',
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify(
+  //         {
+  //           LD: this.state.lead_id,
+  //           remarks: this.state.remarks,
+  //         })
 
-      }).then((response) => response.json()).then((responseJsonFromServer) => {
-        alert(responseJsonFromServer);
+  //     }).then((response) => response.json()).then((responseJsonFromServer) => {
+  //       alert(responseJsonFromServer);
 
-      }).catch((error) => {
-        console.log(error);
+  //     }).catch((error) => {
+  //       console.log(error);
+  //     });
+  //   this.props.navigation.navigate('Dashboard');
+  // }
+
+  const {comment,company,contactNumber,contacted,date,email,interest,name,quote,quoteSent,quoteAgreed,result,userId,id,Remarks} = route.params;
+  const [remarksReceived,setRemarksReceived]=useState(Remarks)
+  const [remarksUpdated,setRemarksUpdated]=useState("")
+
+  const pressCancel =()=>{
+    alert("Cancel")
+    navigation.goBack()
+  };
+
+  const pressSave =()=>{
+    if (remarksUpdated!="")
+    {
+    console.log("confirm: "+ id)
+    var LeadRef = db.collection("leads").doc(id);
+    // Set the "capital" field of the city 'DC'
+    return LeadRef.update({
+      Remarks: remarksUpdated
+      })
+      .then(() => {
+      console.log("Document successfully updated!");
+      alert("Remarks updated successfully")
+      navigation.goBack()
+      })
+      .catch((error) => {
+      // The document probably doesn't exist.
+      console.error("Error updating document: ", error);
       });
-    this.props.navigation.navigate('Dashboard');
-  }
+    }
+    else
+    {alert("No new remarks or remarks is not fill")}            
+    // navigation.goBack()
+  };
+
+  useEffect(() => {
+    console.log("id: " +id +", "+name+" ,"+Remarks)
+    console.log("set Remarks data: "+Remarks+","+ remarksReceived)
+    
+  },[]);
 
 
-  render() {
+  // render() {
     return (
       <ScrollView style={{backgroundColor: 'white'}}>
         <View style={styles.container}>
           <View style={styles.RemarksC}>
             <Text style={styles.Remarks}>Remarks</Text>
+            {remarksReceived?
             <TextInput
               style={styles.inputR}
-              placeholder='Write down your justification here'
+              placeholder={remarksReceived}
+              placeholderTextColor="grey"
               multiline={true}
               autoFocus={true}
               editable={true}
-              onChangeText={text => this.setState({ remarks: text })}
+              onChangeText={(val) => setRemarksUpdated(val)}
+              />
+              :
+             <TextInput
+              style={styles.inputR}
+              placeholder='Write down your justification here'
+              placeholderTextColor="grey"
+              multiline={true}
+              autoFocus={true}
+              editable={true}
+              onChangeText={(val) => setRemarksUpdated(val)}
             />
+            }
           </View>
           <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
             <TouchableOpacity
               style={styles.SubmitButtonR}
-              onPress={() => { this._Insert_Data_Into_MySQL() }}
+              onPress={pressSave}
             >
               <Text style={styles.SubmitR} >Save</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.SubmitButtonR}
-              onPress={() => { this.props.navigation.goBack() }}
+              onPress={pressCancel}
             >
               <Text style={styles.SubmitR} >Cancel</Text>
             </TouchableOpacity>
@@ -82,7 +134,7 @@ export default class EditRemarks extends Component {
         </View>
       </ScrollView>
     );
-  }
+  // }
 }
 
 const styles = StyleSheet.create({

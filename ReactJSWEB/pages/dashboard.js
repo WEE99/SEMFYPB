@@ -86,7 +86,7 @@ export default function Dashboard() {
             console.log("Error getting documents: ", error);
         });
 
-        db.collection("leads").where("result", "==", "Lost")
+        db.collection("leads").where("result", "==", "Lose")
         .get()
         .then((querySnapshot) => {
           let LOSTArr= [];

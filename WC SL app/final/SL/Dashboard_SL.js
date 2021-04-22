@@ -353,13 +353,11 @@ export default ({navigation, route}) => {
       // console.log(user.uid)
       // db.collection("users").where("UID", "==",user.uid)
       db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
-      .get()
-      .then((querySnapshot) => {
+      .onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => {
               // doc.data() is never undefined for query doc snapshots
               db.collection("leads").where("userId", "==", doc.id)
-              .get()
-              .then((querySnapshot) => {
+              .onSnapshot((querySnapshot) => {
                 let leadsArr= [];
                   querySnapshot.forEach((docLeads) => {
                       let leads = docLeads.data();
@@ -371,17 +369,17 @@ export default ({navigation, route}) => {
                   setLeads(leadsArr)
                   console.log("LeadsArr:"+ JSON.stringify(leadsArr));
               })
-              .catch((error) => {
-                  console.log("Error getting documents: ", error);
-              });
+              // .catch((error) => {
+              //     console.log("Error getting documents: ", error);
+              // });
               
               console.log(doc.id, " => ", doc.data());
               setUsername(doc.data().name)
           });
-      })
-      .catch((error) => {
-          console.log("Error getting documents: ", error);
-      });
+       })
+      // .catch((error) => {
+      //     console.log("Error getting documents: ", error);
+      // });
 
       LogBox.ignoreLogs(['Setting a timer']);
   // }
@@ -389,8 +387,8 @@ export default ({navigation, route}) => {
 },[]);
   
     const pressWon=()=>{
-      alert("Won nav Remarks. js")
-      navigation.navigate("Quotation");
+      alert("Set Quotation Agreed. js")
+      navigation.navigate("Set Quotation Agreed");
     }
   
     const pressLost=()=>{

@@ -33,7 +33,7 @@ import CreateAppointmentTask from './CreateAppointmentTask_SL.js';
 import CreateOtherTask from './CreateOtherTask_SL.js';
 
 //Task Detail pages for Salesperson
-import CallTaskDetaill from './CallTaskDetails_SL.js';
+import TaskDetaill from './TaskDetails_SL.js';
 import OtherTaskDetail from './OtherTaskDetails_SL.js';
 import AppointmentTaskDetail from './AppointmentTaskDetails_SL.js';
 
@@ -116,7 +116,7 @@ function HomeStackNav() {
       <HomeStack.Screen name="Create Call Task" component={CreateCallTask} />
       <HomeStack.Screen name="Create Appointment Task" component={CreateAppointmentTask} />
       <HomeStack.Screen name="Create Other Task" component={CreateOtherTask} />
-      <HomeStack.Screen name="Call Task Detail" component={CallTaskDetaill}/>
+      
       <HomeStack.Screen name="Other Task Detail" component={OtherTaskDetail}/>
       <HomeStack.Screen name="Appointment Task Detail" component={AppointmentTaskDetail}/>
       <HomeStack.Screen name="Edit Call Task" component={EditCallTask}/>
@@ -131,6 +131,7 @@ function HistoryStackNav() {
   return (
     <HistoryStack.Navigator>
       <HistoryStack.Screen name="History" component={History} options={{headerShown: false}}/>
+      <HistoryStack.Screen name="Task Detail" component={TaskDetaill}/>
     </HistoryStack.Navigator>
   )
 }

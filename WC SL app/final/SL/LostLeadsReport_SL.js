@@ -1,53 +1,112 @@
 
 import AlertIcon from 'react-native-vector-icons/AntDesign';
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import React, {useEffect, useState, Component} from 'react';
+import { StyleSheet, Text, View, ScrollView,LogBox} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import {auth, db, storage} from "../CA/firebase";
+import {orange, TableRowDashboard, TableRowLost} from "./TablesandTimeFormat";
 
-export default class ExampleTwo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    }
-  }
 
-  componentDidMount() {
-    return fetch('https://poggersfyp.mooo.com/Backend/LostLeads.php')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      this.setState({
-        dataSource: responseJson
+
+export default ({navigation, route}) => {
+
+  const [leads,setLeads]=useState([]);
+  
+
+  useEffect(() => {
+      
+    var user=auth.currentUser
+    console.log(user)
+    // if(user){
+      // console.log(user.uid)
+      // db.collection("users").where("UID", "==",user.uid)
+      db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
+      .get()
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              db.collection("leads").where("userId", "==", doc.id).where("result", "==", "Lose")
+              .onSnapshot((querySnapshot) => {
+                let leadsArr= [];
+                  querySnapshot.forEach((docLeads) => {
+                      let leads = docLeads.data();
+                      leads.id = docLeads.id;
+                      leadsArr.push(leads);
+                      // doc.data() is never undefined for query doc snapshots
+                      console.log(docLeads.id, " => ", docLeads.data());
+                  });
+                  setLeads(leadsArr)
+                  console.log("LeadsArr:"+ JSON.stringify(leadsArr));
+              })
+              // .catch((error) => {
+              //     console.log("Error getting documents: ", error);
+              // });
+              
+              console.log(doc.id, " => ", doc.data());
+              setUsername(doc.data().name)
+          });
       })
-    }).catch((error) =>{
-      console.error(error);
-    });
-  }
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
 
-  render() {
+      LogBox.ignoreLogs(['Setting a timer']);
+  // }
+  // },[leads]);
+},[]);
+    // useEffect(() => {
+    //   db.collection("leads").where("result", "==", "Lose").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
+    //   .get()
+    //   .then((querySnapshot) => {
+    //     let TaskHistoryArr= [];
+    //       querySnapshot.forEach((docTasks) => {
+    //           let tasks = docTasks.data();
+    //           tasks.id = docTasks.id;
+    //           tasks.time = formatAMPM(tasks.date.toDate());
+    
+    //           var m = tasks.date.toDate().getMonth()
+    //           tasks.date = monthArr[m] + " "+ tasks.date.toDate().getDate() + ", " + tasks.date.toDate().getFullYear();
+  
+    
+    //           TaskHistoryArr.push(tasks);
+    //           // doc.data() is never undefined for query doc snapshots
+    //           console.log(docTasks.id, " => ", docTasks.data());
+    //       });
+    //       setTaskHistory(TaskHistoryArr);
+    //       console.log(TaskHistoryArr);
+    //   })
+    //   .catch((error) => {
+    //       console.log("Error getting documents: ", error);
+    //   });
+    // },[]);
+  
     return (
-      <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.firstCol}>Leads</Text>
-          <Text style={styles.SecCol}>Remarks</Text>
-        </View>
-        <FlatList
-          data={this.state.dataSource}
-          renderItem={({ item }) =>
-            <View style={styles.cardView}>
-              <Text style={styles.firstCol}>{item.lead_name}   ({item.lead_company})</Text>
-              {item.remarks != "" ?
-                <Text style={styles.SecCol}>RM{item.remarks}</Text>
-                :
-                <View style={styles.SecColEmpty}>
-                  <AlertIcon name="exclamationcircleo" size={15} color="red" style={styles.icon} />
-                </View>
-              }
+    <ScrollView style={styles.container}>
+    
+    <View style={{paddingBottom:40, paddingTop:10}}>
+        <View style={{ backgroundColor:"#fff",  marginHorizontal:15, borderWidth:1, borderColor:"black", elevation: 2, borderTopWidth:1}}>
+
+            <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"black", backgroundColor:"lightgrey", paddingHorizontal:10,height:40}}>
+                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",borderRightWidth:1,paddingTop:10}}>
+                    Leads
+                </Text>
+                <Text style={{flex:0.5,fontSize: 13, paddingVertical: 2,paddingHorizontal:10, color:"black", fontWeight:"bold",paddingTop:10}}>
+                    Remarks
+                </Text>
             </View>
-          }
-        />
-      </ScrollView>
+
+            
+            {leads.map((info) =>
+                <TableRowLost key={info.id} data={info} />
+            )}
+
+
+            </View>
+      {/* <StatusBar style="auto" /> */}
+    </View>
+  </ScrollView>
     )
-  }
+  
 }
 
 const styles = StyleSheet.create({

@@ -565,7 +565,7 @@ import { Octicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';  
 import { Ionicons } from '@expo/vector-icons'; 
 import ModalSelector from 'react-native-modal-selector';
-import {auth, db, storage} from "../CA/firebase";
+import {auth, db, storage,firebase} from "../CA/firebase";
 import { orange, TableRowTask } from './TablesandTimeFormat';
 //LeadsDetails
 
@@ -602,8 +602,7 @@ export default ({navigation, route}) => {
     console.log("id: " +id +", "+name+" ,"+quoteAgreed)
     // db.collection("tasks").where("status", "==", "Not completed").where("leadId", "==", id).orderBy("date", "desc")
     db.collection("tasks").where("leadId", "==", id).orderBy("date", "desc")
-    .get()
-    .then((querySnapshot) => {
+    .onSnapshot((querySnapshot) => {
       let TaskArr= [];
         querySnapshot.forEach((docTasks) => {
             let task = docTasks.data();
@@ -621,12 +620,18 @@ export default ({navigation, route}) => {
         setTasks(TaskArr);
         console.log("TaskArr: "+JSON.stringify(TaskArr));
     })
-    .catch((error) => {
-        console.log("Error getting documents: ", error);
-    });
+    // .catch((error) => {
+    //     console.log("Error getting documents: ", error);
+    // });
   },[]);
   
   const pressWon= ()=>{
+
+                  var today = new Date();
+                  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+                  var time = today.getHours() + ":" + today.getMinutes();
+                  var dateTime = date+' '+time;
+                 
                   var wonstatus = db.collection("leads").doc(id);
 
                   // Set the "capital" field of the city 'DC'
@@ -636,15 +641,39 @@ export default ({navigation, route}) => {
                   .then(() => {
                   console.log("Document successfully updated!");
                   alert("Won status updated")
+
+                        db.collection("Tracking").add({
+                            Status: "Won",
+                            leadsid: id,
+                            leadsname: name,
+                            date: dateTime,
+                            edited:firebase.firestore.FieldValue.serverTimestamp()
+                        })
+                        .then((docRef) => {
+                            console.log("Document written with ID: ", docRef.id);
+                        })
+                        .catch((error) => {
+                            console.error("Error adding document: ", error);
+                        });
                   })
                   .catch((error) => {
                   // The document probably doesn't exist.
                   console.error("Error updating document: ", error);
                   });
+
+               
+                  
+
             }
 
 
   const pressLose= ()=>{
+
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+' '+time;
+
     var losestatus = db.collection("leads").doc(id);
 
     // Set the "capital" field of the city 'DC'
@@ -654,6 +683,22 @@ export default ({navigation, route}) => {
     .then(() => {
     console.log("Document successfully updated!");
     alert("Lose status updated")
+
+    db.collection("Tracking").add({
+      Status: "Lose",
+      leadsid: id,
+      leadsname: name,
+      date:dateTime,
+      edited:firebase.firestore.FieldValue.serverTimestamp()
+
+  })
+  .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+  })
+  .catch((error) => {
+      console.error("Error adding document: ", error);
+  });
+
     })
     .catch((error) => {
     // The document probably doesn't exist.
@@ -662,6 +707,12 @@ export default ({navigation, route}) => {
   };
 
   const pressOpen= ()=>{
+
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+' '+time;
+
     var openstatus = db.collection("leads").doc(id);
 
     // Set the "capital" field of the city 'DC'
@@ -671,6 +722,20 @@ export default ({navigation, route}) => {
     .then(() => {
     console.log("Document successfully updated!");
     alert("Reset status updated")
+
+    db.collection("Tracking").add({
+      Status: "Open",
+      leadsid: id,
+      leadsname: name,
+      date:dateTime,
+      edited:firebase.firestore.FieldValue.serverTimestamp()
+  })
+  .then((docRef) => {
+      console.log("Document written with ID: ", docRef.id);
+  })
+  .catch((error) => {
+      console.error("Error adding document: ", error);
+  });
     })
     .catch((error) => {
     // The document probably doesn't exist.

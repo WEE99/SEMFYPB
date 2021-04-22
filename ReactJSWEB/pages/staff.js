@@ -4,7 +4,8 @@ import AdminLayout from "../components/AdminLayout";
 import Typography from "@material-ui/core/Typography";
 import {MyModal, MySnackBar, MyTable, pinkM} from "../helpers/mainHelpers";
 import Edit from "@material-ui/icons/Edit";
-import {auth, db, secondFirebase} from "../helpers/firebase";
+import {auth, db,secondFirebase} from "../helpers/firebase";
+//import {auth, db} from "../helpers/firebase";
 import Grid from "@material-ui/core/Grid";
 import {Paper, TextField} from "@material-ui/core";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
@@ -165,6 +166,7 @@ export default function Staff() {
             
         }else{
             secondFirebase.auth().createUserWithEmailAndPassword(email, "1234567890").then(result => {
+             //auth.createUserWithEmailAndPassword(email, "1234567890").then(result => {
                 db.collection('users').doc(result.user.uid).set({
                     UID:result.user.uid,
                     name: name,
@@ -187,6 +189,7 @@ export default function Staff() {
                     setSnackbar(true);
                     setModal(false);
                     secondFirebase.auth().signOut();
+                    //auth.signOut();
                 });
             });
 

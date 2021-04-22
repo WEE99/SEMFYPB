@@ -1,48 +1,61 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import React, {useEffect, useState, Component} from 'react';
 import { FlatList } from 'react-native-gesture-handler';
+import { StyleSheet, Text, View, ScrollView,LogBox} from 'react-native';
 import AlertIcon from 'react-native-vector-icons/AntDesign';
+import {auth, db, storage} from "../CA/firebase";
+import {orange, TableRowDashboard, TableRowLost,TableRowWon} from "./TablesandTimeFormat";
 
-export default class ExampleTwo extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-    }
-  }
 
-  componentDidMount() {
-    this._retrieveList();
-    this.FocusSubscription = this.props.navigation.addListener(
-      'focus', () => {
-        this._retrieveList();
-      }
-    );
+export default ({navigation, route}) => {
 
-  }
+  const [leads,setLeads]=useState([]);
+  
 
-  _retrieveList() {
-    return fetch('https://poggersfyp.mooo.com/Backend/WonLeads.php')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          dataSource: responseJson
-        })
-      }).catch((error) => {
-        console.error(error);
-      });
-  }
-
-  redirectPage(LD, SN) {
-    this.props.navigation.navigate('Lead Detail',
-      {
-        leadName: LD, SalesName: SN
+  useEffect(() => {
+      
+    var user=auth.currentUser
+    console.log(user)
+    // if(user){
+      // console.log(user.uid)
+      // db.collection("users").where("UID", "==",user.uid)
+      db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
+      .get()
+      .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              // doc.data() is never undefined for query doc snapshots
+              db.collection("leads").where("userId", "==", doc.id).where("result", "==", "Won")
+              .onSnapshot((querySnapshot) => {
+                let leadsArr= [];
+                  querySnapshot.forEach((docLeads) => {
+                      let leads = docLeads.data();
+                      leads.id = docLeads.id;
+                      leadsArr.push(leads);
+                      // doc.data() is never undefined for query doc snapshots
+                      console.log(docLeads.id, " => ", docLeads.data());
+                  });
+                  setLeads(leadsArr)
+                  console.log("LeadsArr:"+ JSON.stringify(leadsArr));
+              })
+              // .catch((error) => {
+              //     console.log("Error getting documents: ", error);
+              // });
+              
+              console.log(doc.id, " => ", doc.data());
+              setUsername(doc.data().name)
+          });
       })
-  }
+      .catch((error) => {
+          console.log("Error getting documents: ", error);
+      });
 
-  render() {
+      LogBox.ignoreLogs(['Setting a timer']);
+  // }
+  // },[leads]);
+},[]);
+
     return (
       <ScrollView style={styles.container}>
-        <View style={styles.header}>
+        {/* <View style={styles.header}>
           <Text style={styles.firstCol}>Leads</Text>
           <Text style={styles.SecThirdCol}>Quotation Sent</Text>
           <Text style={styles.SecThirdCol}>Quotation Agreed</Text>
@@ -62,10 +75,37 @@ export default class ExampleTwo extends Component {
               }
             </View>
           }
-        />
+        /> */}
+
+<View style={{paddingBottom:40, paddingTop:10}}>
+        <View style={{ backgroundColor:"#fff",  marginHorizontal:15, borderWidth:1, borderColor:"black", elevation: 2, borderTopWidth:1}}>
+
+            <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"black", backgroundColor:"lightgrey", paddingHorizontal:1,height:40}}>
+                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",borderRightWidth:1,paddingTop:10}}>
+                    Leads
+                </Text>
+                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",borderRightWidth:1,paddingTop:10}}>
+                    Quotation Send
+                </Text>
+                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",paddingTop:10}}>
+                    Quotation Agreed
+                </Text>
+            </View>
+
+            
+            {leads.map((info) =>
+                <TableRowWon key={info.id} data={info} />
+            )}
+
+
+            </View>
+      {/* <StatusBar style="auto" /> */}
+    </View>
+
+
       </ScrollView>
     )
-  }
+  
 }
 
 const styles = StyleSheet.create({

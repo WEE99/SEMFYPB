@@ -3,58 +3,73 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, BackHandler } from 'react-native';
 
-//export default function App() {
-export default class Touchables extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      username: '',
-      designation: '',
-      sales_name: '',
-      sales_email: '',
-      sales_contact: '',
-    }
-  }
 
-  componentDidMount() {
-    this.setState({
-      username: this.props.route.params.username,
-      designation: this.props.route.params.designation,
-      sales_name: this.props.route.params.sales_name,
-      sales_email: this.props.route.params.sales_email,
-      sales_contact: this.props.route.params.sales_contact
-    });
-  }
+export default ({navigation, route}) => {
+  //export default function App() {
+//export default class Touchables extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     username: '',
+  //     designation: '',
+  //     sales_name: '',
+  //     sales_email: '',
+  //     sales_contact: '',
+  //   }
+  // }
 
-  exit(){
-    Alert.alert(
-      "Exit App",
-      "Do you want to exit?",
-      [
-        {
-          text: "No",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
-        { text: "Yes", onPress: () => BackHandler.exitApp() }
-      ],
-      { cancelable: false }
-      );
-  }
+  // componentDidMount() {
+  //   this.setState({
+  //     username: this.props.route.params.username,
+  //     designation: this.props.route.params.designation,
+  //     sales_name: this.props.route.params.sales_name,
+  //     sales_email: this.props.route.params.sales_email,
+  //     sales_contact: this.props.route.params.sales_contact
+  //   });
+  // }
 
-  render() {
+  // exit(){
+  //   Alert.alert(
+  //     "Exit App",
+  //     "Do you want to exit?",
+  //     [
+  //       {
+  //         text: "No",
+  //         onPress: () => console.log("Cancel Pressed"),
+  //         style: "cancel"
+  //       },
+  //       { text: "Yes", onPress: () => BackHandler.exitApp() }
+  //     ],
+  //     { cancelable: false }
+  //     );
+  // }
+
+const pressProfile =()=>{
+  Alert.alert('navigation.navigate("Profile Settings")',"pressed")
+    navigation.navigate("Profile Settings");  
+}
+
+const pressChangepsw =()=>{
+  Alert.alert('navigation.navigate("ChangePassword")',"pressed")
+  navigation.navigate("ChangePassword");  
+}
+
+const pressNotify =()=>{
+  Alert.alert('navigation.navigate("Notification Settings")',"pressed")
+  navigation.navigate("Notification Settings"); 
+}
+
+const pressLogout =()=>{
+  Alert.alert('LOgout',"pressed")
+}
+
+  
     return (
       <View style={styles.container}>
         <View>
           <TouchableOpacity
             style={styles.AccButton}
-            onPress={() => this.props.navigation.navigate('Profile Settings', {
-              username: this.state.username,
-              designation: this.state.designation,
-              sales_name: this.state.sales_name,
-              sales_email: this.state.sales_email,
-              sales_contact: this.state.sales_contact
-            })}
+            onPress={pressProfile}
           >
             <Text style={styles.buttoncontent}>PROFILE SETTING</Text>
           </TouchableOpacity>
@@ -62,7 +77,7 @@ export default class Touchables extends Component {
         <View>
           <TouchableOpacity
             style={styles.AccButton}
-            onPress={() => this.props.navigation.navigate('Notification Settings')}
+            onPress={pressNotify}
           >
             <Text style={styles.buttoncontent}>NOTIFICATION</Text>
           </TouchableOpacity>
@@ -70,7 +85,7 @@ export default class Touchables extends Component {
         <View>
           <TouchableOpacity
             style={styles.AccButton}
-            onPress={() => this.props.navigation.navigate('ChangePassword')}
+            onPress={pressChangepsw}
           >
             <Text style={styles.buttoncontent}>CHANGE PASSWORD</Text>
           </TouchableOpacity>
@@ -78,7 +93,7 @@ export default class Touchables extends Component {
         <View>
           <TouchableOpacity
             style={styles.AccButton}
-            onPress={() => this.exit()}
+            onPress={pressLogout}
           >
             <Text style={styles.buttoncontent}>LOGOUT</Text>
           </TouchableOpacity>
@@ -86,7 +101,7 @@ export default class Touchables extends Component {
       </View>
     );
   }
-}
+
 
 const styles = StyleSheet.create({
   container: {

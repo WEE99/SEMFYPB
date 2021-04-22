@@ -18,6 +18,7 @@ import FaceIcon from '@material-ui/icons/Face';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import ThumbsUpDownIcon from '@material-ui/icons/ThumbsUpDown';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import HistoryIcon from '@material-ui/icons/History';
 import Link from 'next/link'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import IconButton from "@material-ui/core/IconButton";
@@ -300,19 +301,21 @@ const AdminLayout = (props) => {
                                 </ListItem>
                             }
                         </Link>
-                        {/* <Link href="/requests">
+
+                        <Link href="/history">
                             {nightMode?
-                                <ListItem button key="Requests" selected={path === "/requests" ? true : false}>
-                                    <ListItemIcon><ChatBubbleIcon style={{color: greyFont}}/></ListItemIcon>
-                                    <ListItemText primary="Requests" style={{color: greyFont}}/>
+                                <ListItem button key="History" selected={path === "/history" ? true : false}>
+                                    <ListItemIcon><HistoryIcon style={{color: greyFont}}/></ListItemIcon>
+                                    <ListItemText primary="History" style={{color: greyFont}}/>
                                 </ListItem>
                             :
-                                <ListItem button key="Requests" selected={path === "/requests" ? true : false}>
-                                    <ListItemIcon><ChatBubbleIcon /></ListItemIcon>
-                                    <ListItemText primary="Requests" />
+                                <ListItem button key="History" selected={path === "/history" ? true : false}>
+                                    <ListItemIcon><HistoryIcon /></ListItemIcon>
+                                    <ListItemText primary="History" />
                                 </ListItem>
                             }
-                        </Link> */}
+                        </Link>
+
                         <Link href="/profile">
                             {nightMode?
                                 <ListItem button key="Profile" selected={path === "/profile" ? true : false}>
