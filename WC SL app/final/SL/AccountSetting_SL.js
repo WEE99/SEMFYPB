@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, BackHandler } from 'react-native';
+import {auth, db, storage} from "../CA/firebase";
 
 
 export default ({navigation, route}) => {
@@ -60,7 +61,12 @@ const pressNotify =()=>{
 }
 
 const pressLogout =()=>{
-  Alert.alert('LOgout',"pressed")
+  auth.signOut().then(() => {
+    // Sign-out successful.
+    Alert.alert('Logout',"pressed")
+  }).catch((error) => {
+    // An error happened.
+  });
 }
 
   

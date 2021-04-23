@@ -352,7 +352,7 @@ export default ({navigation, route}) => {
     // if(user){
       // console.log(user.uid)
       // db.collection("users").where("UID", "==",user.uid)
-      db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
+      db.collection("users").where("UID", "==",user.uid)
       .onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => {
               // doc.data() is never undefined for query doc snapshots

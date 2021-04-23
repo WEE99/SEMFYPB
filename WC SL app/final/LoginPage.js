@@ -32,7 +32,7 @@ export default ({navigation, route}) => {
 
   const pressForgotpassword =()=>{
     alert("nav to ForgotPassword .js");
-    navigation.navigate("Forgot Password");
+    navigation.navigate("Forgot");
   };
 
   const [LoginEmail, setLoginEmail]=useState("");

@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import { StackNavigator, } from 'react-navigation';
+import {auth, db, firebase} from "../CA/firebase";
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
@@ -67,6 +68,48 @@ export default ({navigation, route}) => {
   //   var p1 = 'John David';
   //   const { navigate } = this.props.navigation;
 
+  const [Oldpsw, setOldpsw]=useState("");
+  const [Newpsw, setNewpsw]=useState("");
+  const [Retypepsw, setRetypepsw]=useState("");
+  const [email, setemail]=useState("");
+
+  useEffect(() => {
+    let user = auth.currentUser;
+      if(user)
+      {
+        setemail(user.email)
+        console.log("This user is: "+user.email)
+      }
+      
+          
+    },[]);
+
+  const changepassword= ()=>{
+    // auth.createUserWithEmailAndPassword(email, password)
+    // .then((userCredential) => {
+    //   // Signed in 
+    //   var user = userCredential.user;
+    //   // ...
+    // })
+    // .catch((error) => {
+    //   var errorCode = error.code;
+    //   var errorMessage = error.message;
+    //   // ..
+    // });
+    const emailCred  = firebase.auth.EmailAuthProvider.credential(
+      auth.currentUser, Oldpsw);
+      auth.currentUser.reauthenticateWithCredential(emailCred)
+      .then(() => {
+        console.log("PSW Updated")
+        // User successfully reauthenticated.
+        // const newPass = window.prompt('Please enter new password');
+        return auth.currentUser.updatePassword(Newpsw);
+      })
+      .catch(error => {
+        console.log("This error occured: "+error)
+      });
+    }
+
   const pressCancel =()=>{
     alert("Cancel")
     navigation.goBack();
@@ -74,19 +117,37 @@ export default ({navigation, route}) => {
 
   const pressSave =()=>{
     // alert("Save")
-    if(Newpsw==Retypepsw && Newpsw!="" && Oldpsw!="" && Newpsw!="")
+    if(Newpsw==Retypepsw && Newpsw!="" && Oldpsw!="" && Newpsw!="" && Newpsw.length>=6)
     {
-    alert("Resset Succesful nav to ProfileSetting .js")
-    navigation.goBack()
+      const emailCred  = firebase.auth.EmailAuthProvider.credential(
+        email, Oldpsw);
+        auth.currentUser.reauthenticateWithCredential(emailCred)
+        .then(() => {
+          // User successfully reauthenticated.
+          auth.currentUser.updatePassword(Newpsw).then(function() {
+            // Update successful.
+            console.log("PSW Updated")
+            alert("Resset Succesful nav to ProfileSetting .js")
+            navigation.goBack()
+          })
+        })
+        .catch(error => {
+          console.log("This error occured: "+error)
+        });
+    
     }
     else
-    {alert('Pasword not Match or Empty Field Detected')}
+    {
+      if(Newpsw.length<6){alert('Pasword need 6 letters')}
+      else
+      { 
+        alert('Password not Match or Empty Field Detected')
+      }
+    }
   };
   
 
-  const [Oldpsw, setOldpsw]=useState("");
-  const [Newpsw, setNewpsw]=useState("");
-  const [Retypepsw, setRetypepsw]=useState("");
+
 
     return (
       <View style={styles.container}>
