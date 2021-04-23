@@ -41,7 +41,7 @@ var config = {
     appId: "1:332970386270:web:e96fb4bc28437ef0f1a5cf",
     measurementId: "G-7R6D1CBVXM"
 };
-export const secondFirebase = firebase.initializeApp(config, "Secondary");
+// export const secondFirebase = firebase.initializeApp(config, "Secondary");
 
 export const auth = firebase.auth();
 export const db = firebase.firestore();

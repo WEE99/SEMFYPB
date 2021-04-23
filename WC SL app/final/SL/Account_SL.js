@@ -45,8 +45,9 @@ useEffect(() => {
       // console.log(user.uid)
       // db.collection("users").where("UID", "==",user.uid)
       db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
-                    .get()
-                    .then(function(querySnapshot) {
+                    // .get()
+                    // .then(function(querySnapshot) {
+                        .onSnapshot((querySnapshot) => {
                         querySnapshot.forEach(function(doc) {
                             // doc.data() is never undefined for query doc snapshots
                             console.log(doc.id, " => ", doc.data());
@@ -85,9 +86,9 @@ useEffect(() => {
 
                         });
                     })
-                    .catch(function(error) {
-                        console.log("Error getting documents: ", error);
-                    });
+                    // .catch(function(error) {
+                    //     console.log("Error getting documents: ", error);
+                    // });
 
                     // "Hu4WdS4HH4ugYVFmZexa"
     // db.collection("tasks").where("userId", "==",datafor2).where("status", "==","Not completed" ).orderBy("date", "desc")
