@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import {auth, db, storage} from "../CA/firebase";
+import {auth, db, storage} from "../components/firebase";
 
 //export default function App() {
 export default class Touchables extends Component {

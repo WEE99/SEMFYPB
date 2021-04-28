@@ -3,7 +3,7 @@ import React, { useEffect, useState, Component} from 'react';
 import { Card } from 'react-native-paper';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, 
   FlatList, TouchableOpacity,LogBox } from 'react-native';
-import {auth, db, storage} from "../CA/firebase";
+import {auth, db, storage} from "../components/firebase";
 import {orange, TableRowDashboard, TableRowTask, TableHistoryTask} from "./TablesandTimeFormat";
   
 export default ({navigation, route}) => {
@@ -26,7 +26,10 @@ export default ({navigation, route}) => {
   const monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   
   useEffect(() => {
-    db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
+    var user=auth.currentUser
+    console.log(user)
+    
+    db.collection("users").where("UID", "==",user.uid)
     .get()
     .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {

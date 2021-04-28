@@ -5,7 +5,7 @@ import { Card } from 'react-native-paper';
 import Settings from 'react-native-vector-icons/AntDesign';
 import { ScrollView } from 'react-native-gesture-handler';
 import {orange, TableRowDashboard,TableRowTaskProfile} from "./TablesandTimeFormat";
-import {auth, db, storage} from "../CA/firebase";
+import {auth, db, storage} from "../components/firebase";
 import moment from 'moment';
 import Icon2 from 'react-native-vector-icons/MaterialIcons'
 import Icon3 from 'react-native-vector-icons/Feather'
@@ -41,10 +41,8 @@ useEffect(() => {
       
     var user=auth.currentUser
     console.log(user)
-    // if(user){
-      // console.log(user.uid)
-      // db.collection("users").where("UID", "==",user.uid)
-      db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
+    
+    db.collection("users").where("UID", "==",user.uid)
                     // .get()
                     // .then(function(querySnapshot) {
                         .onSnapshot((querySnapshot) => {
@@ -86,257 +84,17 @@ useEffect(() => {
 
                         });
                     })
-                    // .catch(function(error) {
-                    //     console.log("Error getting documents: ", error);
-                    // });
-
-                    // "Hu4WdS4HH4ugYVFmZexa"
-    // db.collection("tasks").where("userId", "==",datafor2).where("status", "==","Not completed" ).orderBy("date", "desc")
-    //                 .get()
-    //                 .then((querySnapshot) => {
-    //                   let TaskArr= [];
-    //                     querySnapshot.forEach((docTasks) => {
-    //                         let task = docTasks.data();
-    //                         task.id = docTasks.id;
-    //                         task.time = formatAMPM(task.date.toDate());
-    //                         console.log("Tname: "+task.title)
-                  
-    //                         var m = task.date.toDate().getMonth()
-    //                         task.date = monthArr[m] + " "+ task.date.toDate().getDate() + ", " + task.date.toDate().getFullYear();
-                  
-    //                         TaskArr.push(task);
-    //                         // doc.data() is never undefined for query doc snapshots
-    //                         console.log(docTasks.id, " => ", docTasks.data());
-    //                     });
-    //                     setTasks(TaskArr);
-    //                     console.log("TaskArr: "+JSON.stringify(TaskArr));
-    //                 })
-    //                 .catch((error) => {
-    //                     console.log("Error getting documents: ", error);
-    //                 });
-
-
-    // db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
-    // .get()
-    // .then((querySnapshot) => {
-    //     querySnapshot.forEach((doc) => {
-    //         // doc.data() is never undefined for query doc snapshots
-    //         db.collection("tasks").where("userid", "==",doc.data().id ).where("status", "==","Not Completed" ).orderBy("date", "desc")
-    //         .get()
-    //                         .then((querySnapshot) => {
-    //                           let TaskArr= [];
-    //                             querySnapshot.forEach((docTasks) => {
-    //                                 let task = docTasks.data();
-    //                                 task.id = docTasks.id;
-    //                                 task.time = formatAMPM(task.date.toDate());
-    //                                 console.log("Tname: "+task.title)
-                          
-    //                                 var m = task.date.toDate().getMonth()
-    //                                 task.date = monthArr[m] + " "+ task.date.toDate().getDate() + ", " + task.date.toDate().getFullYear();
-                          
-    //                                 TaskArr.push(task);
-    //                                 // doc.data() is never undefined for query doc snapshots
-    //                                 console.log(docTasks.id, " => ", docTasks.data());
-    //                             });
-    //                             setTasks(TaskArr);
-    //                             console.log("TaskArr: "+JSON.stringify(TaskArr));
-    //                         })
-    //                         .catch((error) => {
-    //                             console.log("Error getting documents: ", error);
-    //                         });
-    //     });
-    // })
-    // .catch((error) => {
-    //     console.log("Error getting documents: ", error);
-    // });
+                    
 
 
                     
       LogBox.ignoreLogs(['Setting a timer']);
-  // }
-  // },[leads]);
+
 },[]);
   
 
-    
-
-// export default class SalesPersonAccount extends Component {
-
-//     constructor(props) {
-//         super(props);
-//         this.state = {
-//             username: '',
-//             designation: '',
-//             sales_name: '',
-//             sales_email: '',
-//             sales_contact: '',
-//             diffDate: '',
-//             CurrentYear: moment().format("YYYY"),
-//             CurrentMonth: moment().format("MM"),
-//             currentDay: moment().format("DD"),
-//             lastRefresh: Date(Date.now()).toString(),
-//         }
-//         this.refreshScreen = this.refreshScreen.bind(this)
-//     }
-
-//     refreshScreen() {
-//         this.setState({ lastRefresh: Date(Date.now()).toString() })
-//     }
-
-//     componentDidMount() {
-//         this._TaskList();
-//         this._AccountDetails();
-//         this.FocusSubscription = this.props.navigation.addListener(
-//             'focus', () => {
-//                 this._AccountDetails();
-//                 this._TaskList();
-//                 this.refreshScreen();
-//             }
-//         )
-//     }
-
-//     _AccountDetails() {
-//         return fetch('https://poggersfyp.mooo.com/Backend/retrieveAccountInfo.php')
-//             .then((response) => response.json())
-//             .then((responseJson) => {
-//                 this.setState({
-//                     dataSource: responseJson
-//                 });
-//             })
-//             .catch((error) => {
-//                 console.error(error);
-//             });
-//     }
-
-//     _TaskList() {
-//         return fetch('https://poggersfyp.mooo.com/Backend/retrieveOverallTaskList.php')
-//             .then((response) => response.json())
-//             .then((responseJson) => {
-//                 this.setState({
-//                     dataSource2: responseJson
-//                 });
-//             })
-//             .catch((error) => {
-//                 console.error(error);
-//             });
-//     }
-
-//     createDeleteAlert(task_id) {
-//         Alert.alert(
-//             "Confirmation",
-//             "Are you sure you want to delete this task?",
-//             [
-//                 {
-//                     text: "Cancel",
-//                     onPress: () => console.log("Cancel Pressed"),
-//                     style: "cancel"
-//                 },
-//                 { text: 'Delete', onPress: () => this._deleteTask(task_id) }
-//             ],
-//             { cancelable: false }
-//         );
-//     }
-
-//     createCompletionAlert(task_id) {
-//         Alert.alert(
-//             "Confirmation",
-//             "Confirmation for completion of task",
-//             [
-//                 {
-//                     text: "Cancel",
-//                     onPress: () => console.log("Cancel Pressed"),
-//                     style: "cancel"
-//                 },
-//                 { text: 'Confirm', onPress: () => this._updateTask(task_id) }
-//             ],
-//             { cancelable: false }
-//         );
-//     }
-
-//     _updateTask(task_id) {
-//         const url = 'https://poggersfyp.mooo.com/Backend/updateTaskStatus.php';
-//         fetch(url,
-//             {
-//                 method: 'POST',
-//                 headers:
-//                 {
-//                     'Origin': '*',
-//                     'Accept': 'application/json',
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify(
-//                     {
-//                         id: task_id
-//                     })
-
-//             }).then((response) => response.json()).then((responseJsonFromServer) => {
-//                 alert(responseJsonFromServer);
-//                 this.refreshScreen();
-//                 this._TaskList();
-//             }).catch((error) => {
-//                 console.log(error)
-//             });
-//     }
-
-//     _deleteTask(task_id) {
-//         const url = 'https://poggersfyp.mooo.com/Backend/deleteTask.php';
-//         fetch(url,
-//             {
-//                 method: 'POST',
-//                 headers:
-//                 {
-//                     'Origin': '*',
-//                     'Accept': 'application/json',
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify(
-//                     {
-//                         id: task_id
-//                     })
-
-//             }).then((response) => response.json()).then((responseJsonFromServer) => {
-//                 alert(responseJsonFromServer);
-//                 this.refreshScreen();
-//                 this._TaskList();
-//             }).catch((error) => {
-//                 console.log(error)
-//             });
-//     }
-
-//     redirectTaskDetailPage(taskType, taskId) {
-//         if (taskType == "Call") {
-//           this.props.navigation.navigate('Call Task Detail',
-//             {
-//               sales_username: this.state.username,
-//               task_Id: taskId
-//             })
-//         } else if (taskType == "Appointment") {
-//           this.props.navigation.navigate('Appointment Task Detail',
-//             {
-//               sales_username: this.state.username,
-//               task_Id: taskId
-//             })
-//         } else {
-//           this.props.navigation.navigate('Other Task Detail',
-//             {
-//               sales_username: this.state.username,
-//               task_Id: taskId
-//             })
-//         }
-//       }
-
-//     validateDate(taskDate) {
-//         var day = taskDate.substr(0, 2);
-//         var Month = taskDate.substr(3, 2);
-//         var Year = taskDate.substr(6, 9);
-//         var dateOne = moment([this.state.CurrentYear, this.state.CurrentMonth, this.state.currentDay]);
-//         var dateTwo = moment([Year, Month, day]);
-//         var result = dateTwo.diff(dateOne, 'days');
-//         this.state.diffDate = result;
-//     }
-
 const pressSetting =()=>{
-    Alert.alert('Setting Button pressed',"pressed")
+    // Alert.alert('Setting Button pressed',"pressed")
     navigation.navigate("Account Settings");
 }
 
@@ -392,58 +150,6 @@ const pressSetting =()=>{
 
 
                     </View>
-
-                    {/* {this.state.dataSource2 == "No upcoming task!" ?
-                        <View>
-                            <Text style={{margin: 5, padding : 5}}>No Upcoming Task!</Text>
-                        </View> :
-                        <FlatList
-                            data={this.state.dataSource2}
-                            renderItem={({ item }) => {
-                                this.validateDate(item.task_date);
-                                if (this.state.diffDate > 0) {
-                                    return (
-                                        <Card style={styles.card}>
-                                            <View style={styles.Task2}>
-                                                <TouchableOpacity style={{ flex: 1 }} onPress={() => {
-                                                    this.redirectTaskDetailPage(item.task_title, item.task_id)
-                                                }}>
-                                                    <View style={styles.Task}>
-                                                        <Text style={styles.Type}>{item.task_title}</Text>
-                                                        <Text style={styles.Date}> | </Text>
-                                                        <Text style={styles.Date}>{item.task_date}</Text>
-                                                    </View>
-                                                </TouchableOpacity>
-                                                <Icon3 name="trash-2" size={20} color={'black'} style={styles.icon} onPress={() => this.createDeleteAlert(item.task_id)} />
-                                                <Icon2 name="done" size={20} color={'green'} style={styles.icon} onPress={() => { this.createCompletionAlert(item.task_id) }} />
-                                            </View>
-                                        </Card>
-                                    )
-                                }
-                                else if (this.state.diffDate < 0) {
-                                    return (
-                                        <Card style={styles.card}>
-                                            <View style={styles.Task2}>
-                                                <TouchableOpacity style={{ flex: 1 }} onPress={() => {
-                                                    this.redirectTaskDetailPage(item.task_title, item.task_id)
-                                                }}>
-                                                    <View style={styles.TaskOverdue}>
-                                                        <Text style={styles.TypeOverdue}>{item.task_title}</Text>
-                                                        <Text style={styles.DateOverdue}> | </Text>
-                                                        <Text style={styles.DateOverdue}>{item.task_date}</Text>
-                                                    </View>
-                                                </TouchableOpacity> */}
-                                                {/* <Text style={styles.icon}>Overdue!</Text> */}
-                                                {/* <Icon3 name="trash-2" size={20} color={'black'} style={styles.icon} onPress={() => this.createDeleteAlert(item.task_id)} />
-                                                <Icon2 name="done" size={20} color={'green'} style={styles.icon} onPress={() => { this.createCompletionAlert(item.task_id) }} />
-                                            </View>
-                                        </Card>
-                                    )
-                                }
-
-                            }}
-                        />
-                    } */}
                 </View>
             </ScrollView>
         )

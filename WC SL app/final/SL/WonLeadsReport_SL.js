@@ -2,7 +2,7 @@ import React, {useEffect, useState, Component} from 'react';
 import { FlatList } from 'react-native-gesture-handler';
 import { StyleSheet, Text, View, ScrollView,LogBox} from 'react-native';
 import AlertIcon from 'react-native-vector-icons/AntDesign';
-import {auth, db, storage} from "../CA/firebase";
+import {auth, db, storage} from "../components/firebase";
 import {orange, TableRowDashboard, TableRowLost,TableRowWon} from "./TablesandTimeFormat";
 
 
@@ -12,13 +12,11 @@ export default ({navigation, route}) => {
   
 
   useEffect(() => {
+  
+      var user=auth.currentUser
+      console.log(user)
       
-    var user=auth.currentUser
-    console.log(user)
-    // if(user){
-      // console.log(user.uid)
-      // db.collection("users").where("UID", "==",user.uid)
-      db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
+      db.collection("users").where("UID", "==",user.uid)
       .get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -55,27 +53,7 @@ export default ({navigation, route}) => {
 
     return (
       <ScrollView style={styles.container}>
-        {/* <View style={styles.header}>
-          <Text style={styles.firstCol}>Leads</Text>
-          <Text style={styles.SecThirdCol}>Quotation Sent</Text>
-          <Text style={styles.SecThirdCol}>Quotation Agreed</Text>
-        </View>
-        <FlatList
-          data={this.state.dataSource}
-          renderItem={({ item }) =>
-            <View style={styles.cardView}>
-              <Text style={styles.firstCol}>{item.lead_name}   ({item.lead_company})</Text>
-              <Text style={styles.SecThirdCol} >RM{item.Quote_Sent}</Text>
-              {item.Quote_Agreed != "" ?
-                <Text style={styles.SecThirdCol}>RM{item.Quote_Agreed}</Text>
-                :
-                <View style={styles.SecThirdColEmpty}>
-                  <AlertIcon name="exclamationcircleo" size={15} color="red" style={styles.icon} />
-                </View>
-              }
-            </View>
-          }
-        /> */}
+    
 
 <View style={{paddingBottom:40, paddingTop:10}}>
         <View style={{ backgroundColor:"#fff",  marginHorizontal:15, borderWidth:1, borderColor:"black", elevation: 2, borderTopWidth:1}}>

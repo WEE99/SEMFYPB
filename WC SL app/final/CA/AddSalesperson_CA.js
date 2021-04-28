@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 //import { ScrollView } from 'react-native-gesture-handler';
-import {firebase} from './firebase.js';
+import {firebase} from "../components/firebase"
 export default class App extends Component {
 
     constructor() {

@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, ScrollView, TouchableNativeFeedbackComponent } 
 import { FlatList, TouchableNativeFeedback } from 'react-native-gesture-handler';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {auth, db, storage} from "./firebase";
+import {auth, db, storage} from "../components/firebase";
 export default class ExampleTwo extends Component {
     state = {
       LeadList: [],

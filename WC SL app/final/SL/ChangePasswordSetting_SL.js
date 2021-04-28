@@ -1,72 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import { StackNavigator, } from 'react-navigation';
-import {auth, db, firebase} from "../CA/firebase";
+import {auth, db, storage,firebase} from "../components/firebase";
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
 export default ({navigation, route}) => {
-//export default function App() {
-// export default class Touchables extends Component {
-
-//   static navigationOptions = {
-//     title: 'resset psw',
-//   };
-
-//   _onPressChangePswButton() {
-//     const { newpsw } = this.state;
-//     const { retypepsw } = this.state
-//     const { p1 } = 'John David';
-
-//     if (newpsw == retypepsw && newpsw != "") {
-//       const url = 'https://poggersfyp.mooo.com/Backend/ressetpsw.php';
-//       fetch(url,
-//         {
-//           method: 'POST',
-//           headers:
-//           {
-//             'Origin': '*',
-//             'Accept': 'application/json',
-//             'Content-Type': 'application/json'
-//           },
-//           body: JSON.stringify(
-//             {
-//               newpsw: this.state.newpsw,
-//               retypepsw: this.state.retypepsw,
-//               user: 'John David',
-//             })
-
-//         }).then((response) => response.json()).then((responseJsonFromServer) => {
-
-//         }).catch((error) => {
-//           console.log(error);
-//         });
-
-//       alert("Password Change Successfully")
-//       this.props.navigation.goBack();
-//     }
-//     else {
-//       alert('Pasword not Match or no input')
-//       //alert(p1)
-//     }
-//   }
-  
-//   _onPressCancelChangePswButton() {
-//     alert('Password Remains');
-//     this.props.navigation.goBack();
-//   }
-
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       newpsw: '',
-//       retypepsw: '',
-//       p1: 'John David',
-//     }
-//   }
-  // render() {
-  //   var p1 = 'John David';
-  //   const { navigate } = this.props.navigation;
 
   const [Oldpsw, setOldpsw]=useState("");
   const [Newpsw, setNewpsw]=useState("");
@@ -84,34 +23,8 @@ export default ({navigation, route}) => {
           
     },[]);
 
-  const changepassword= ()=>{
-    // auth.createUserWithEmailAndPassword(email, password)
-    // .then((userCredential) => {
-    //   // Signed in 
-    //   var user = userCredential.user;
-    //   // ...
-    // })
-    // .catch((error) => {
-    //   var errorCode = error.code;
-    //   var errorMessage = error.message;
-    //   // ..
-    // });
-    const emailCred  = firebase.auth.EmailAuthProvider.credential(
-      auth.currentUser, Oldpsw);
-      auth.currentUser.reauthenticateWithCredential(emailCred)
-      .then(() => {
-        console.log("PSW Updated")
-        // User successfully reauthenticated.
-        // const newPass = window.prompt('Please enter new password');
-        return auth.currentUser.updatePassword(Newpsw);
-      })
-      .catch(error => {
-        console.log("This error occured: "+error)
-      });
-    }
-
   const pressCancel =()=>{
-    alert("Cancel")
+    // alert("Cancel")
     navigation.goBack();
   }
 
@@ -167,7 +80,7 @@ export default ({navigation, route}) => {
           />
           <Text style={styles.intructionpsw}>Retype  Password</Text>
           <TextInput
-            //secureTextEntry={true} 
+            secureTextEntry={true} 
             style={styles.inputpsw}
             onChangeText={(val) => setRetypepsw(val)}
           />

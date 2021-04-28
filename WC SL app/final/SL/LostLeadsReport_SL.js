@@ -3,7 +3,7 @@ import AlertIcon from 'react-native-vector-icons/AntDesign';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, ScrollView,LogBox} from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import {auth, db, storage} from "../CA/firebase";
+import {auth, db, storage} from "../components/firebase";
 import {orange, TableRowDashboard, TableRowLost} from "./TablesandTimeFormat";
 
 
@@ -16,11 +16,9 @@ export default ({navigation, route}) => {
   useEffect(() => {
       
     var user=auth.currentUser
-    console.log(user)
-    // if(user){
-      // console.log(user.uid)
-      // db.collection("users").where("UID", "==",user.uid)
-      db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
+      console.log(user)
+      
+      db.collection("users").where("UID", "==",user.uid)
       .get()
       .then((querySnapshot) => {
           querySnapshot.forEach((doc) => {
@@ -54,31 +52,7 @@ export default ({navigation, route}) => {
   // }
   // },[leads]);
 },[]);
-    // useEffect(() => {
-    //   db.collection("leads").where("result", "==", "Lose").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
-    //   .get()
-    //   .then((querySnapshot) => {
-    //     let TaskHistoryArr= [];
-    //       querySnapshot.forEach((docTasks) => {
-    //           let tasks = docTasks.data();
-    //           tasks.id = docTasks.id;
-    //           tasks.time = formatAMPM(tasks.date.toDate());
     
-    //           var m = tasks.date.toDate().getMonth()
-    //           tasks.date = monthArr[m] + " "+ tasks.date.toDate().getDate() + ", " + tasks.date.toDate().getFullYear();
-  
-    
-    //           TaskHistoryArr.push(tasks);
-    //           // doc.data() is never undefined for query doc snapshots
-    //           console.log(docTasks.id, " => ", docTasks.data());
-    //       });
-    //       setTaskHistory(TaskHistoryArr);
-    //       console.log(TaskHistoryArr);
-    //   })
-    //   .catch((error) => {
-    //       console.log("Error getting documents: ", error);
-    //   });
-    // },[]);
   
     return (
     <ScrollView style={styles.container}>

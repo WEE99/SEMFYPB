@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, Button, TouchableOpacity, TextInput, ScrollView, Platform, ImageBackground } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import {auth, db, storage} from "../CA/firebase";
+import {auth, db, storage} from "../components/firebase";
 import firebase from 'firebase/app'
 //import DatePicker from "react-datepicker";
 // import {MaterialCommunityIcons} from 'react-native-vector-icons';
@@ -215,19 +215,6 @@ export default ({navigation, route}) => {
         
 
         <View style={{ flexDirection: 'row', justifyContent: 'space-around' }}>
-            <TouchableOpacity onPress={pressCreate} >
-            <Text style={{borderWidth: 1,
-                            padding: 15,
-                            margin: 10,
-                            borderRadius: 5,
-                            borderColor: 'black',
-                            backgroundColor: 'black',
-                            color: 'white',
-                            textAlign: 'center',
-                            width: 100}}>
-                Done
-            </Text>
-            </TouchableOpacity>
             <TouchableOpacity onPress={pressCancel} >
               <Text style={{borderWidth: 1,
                             padding: 15,
@@ -239,6 +226,19 @@ export default ({navigation, route}) => {
                             textAlign: 'center',
                             width: 100}}>
                 Cancel
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={pressCreate} >
+            <Text style={{borderWidth: 1,
+                            padding: 15,
+                            margin: 10,
+                            borderRadius: 5,
+                            borderColor: 'black',
+                            backgroundColor: 'black',
+                            color: 'white',
+                            textAlign: 'center',
+                            width: 100}}>
+                Done
             </Text>
             </TouchableOpacity>
           </View>

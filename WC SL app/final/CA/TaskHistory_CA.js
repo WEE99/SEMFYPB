@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { auth, db, storage } from "./firebase";
+import { auth, db, storage } from "../components/firebase";
 
 export default class TaskHistory_CA extends Component {
   state = {

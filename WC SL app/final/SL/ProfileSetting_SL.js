@@ -3,74 +3,10 @@ import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 // import ImagePicker from '../imagePicker.js';
 import * as ImagePicker from 'expo-image-picker';
-import {auth, db, storage} from "../CA/firebase";
+import {auth, db, storage} from "../components/firebase";
 
 export default ({navigation, route}) => {
-  // export default class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     username: '',
-  //     designation: '',
-  //     sales_name: '',
-  //     sales_email: '',
-  //     sales_contact: '',
-  //     image: '',
-  //   }
-  //   global.imageUpload = ''
-  // }
 
-  // componentDidMount() {
-  //   this.setState({
-  //     username: this.props.route.params.username,
-  //     designation: this.props.route.params.designation,
-  //     sales_name: this.props.route.params.sales_name,
-  //     sales_email: this.props.route.params.sales_email,
-  //     sales_contact: this.props.route.params.sales_contact,
-  //   });
-  // }
-
-  // _uploadImage() {
-  //   RNFetchBlob.fetch('POST', 'https://poggersfyp.mooo.com/Backend/uploadImage.php', {
-  //     Authorization: "Bearer access-token",
-  //     otherHeader: "foo",
-  //     'Content-Type': 'multipart/form-data',
-  //   }, [
-  //     { name: 'image', filename: 'image.png', type: 'image/png', data: imageUpload }
-  //   ]).then((resp) => {
-  //   }).catch((err) => {
-  //   })
-  // }
-
-  // _Insert_Data_Into_MySQL() {
-  //   const url = 'https://poggersfyp.mooo.com/Backend/saveDetails_SL.php';
-  //   fetch(url,
-  //     {
-  //       method: 'POST',
-  //       headers:
-  //       {
-  //         'Origin': '*',
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify(
-  //         {
-  //           image: imageUpload,
-  //           username: this.state.username,
-  //           Designation: this.state.designation,
-  //           sales_name: this.state.sales_name,
-  //           sales_email: this.state.sales_email,
-  //           sales_contact: this.state.sales_contact
-  //         })
-
-  //     }).then((response) => response.json()).then((responseJsonFromServer) => {
-  //       alert(responseJsonFromServer);
-  //     }).catch((error) => {
-  //       json_last_error();
-  //     });
-
-  //   this.props.navigation.navigate("Account");
-  // }
   const [name,setname]=useState("");
   const [nickname,setnickname]=useState("");
   const [email,setemail]=useState("");
@@ -87,7 +23,7 @@ export default ({navigation, route}) => {
   
 
   const pressCancel =()=>{
-    alert("Cancel")
+    // alert("Cancel")
     navigation.goBack()
   };
 
@@ -98,16 +34,16 @@ export default ({navigation, route}) => {
       db.collection("users").doc(datafor2).update({
          nickname:editnickname });
     }
-    if (editrole!="")
-    {
-      if(editrole==="Salesperson"||editrole==="Company Admin")
-      {
-      db.collection("users").doc(datafor2).update({
-         role:editrole });
-      }
-      else
-      {alert('Input for Role must be "Salesperson" or "Company Admin"' )}
-    }
+    // if (editrole!="")
+    // {
+    //   if(editrole==="Salesperson"||editrole==="Company Admin")
+    //   {
+    //   db.collection("users").doc(datafor2).update({
+    //      role:editrole });
+    //   }
+    //   else
+    //   {alert('Input for Role must be "Salesperson" or "Company Admin"' )}
+    // }
     if (editemail!="")
     {
       db.collection("users").doc(datafor2).update({
@@ -118,7 +54,7 @@ export default ({navigation, route}) => {
       db.collection("users").doc(datafor2).update({
          phoneNumber:contact });
     }
-    if(editnickname=="" && editrole=="" && editemail=="" && editcontact=="" )
+    if(editnickname=="" && editemail=="" && editcontact=="" )
     {
       alert("Nothing to UPDATE!");
     }
@@ -171,10 +107,8 @@ export default ({navigation, route}) => {
       
     var user=auth.currentUser
     console.log(user)
-    // if(user){
-      // console.log(user.uid)
-      // db.collection("users").where("UID", "==",user.uid)
-      db.collection("users").where("UID", "==","HiVB7rApJqMSbGfLTPEbtVVdvXc2")
+    
+    db.collection("users").where("UID", "==",user.uid)
                         .onSnapshot((querySnapshot) => {
                         querySnapshot.forEach(function(doc) {
                             // doc.data() is never undefined for query doc snapshots
@@ -199,7 +133,7 @@ export default ({navigation, route}) => {
     },[]);
       
 
-  // render() {
+
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -215,10 +149,16 @@ export default ({navigation, route}) => {
       
           </TouchableOpacity>
             {/* <ImagePicker style={styles.imagepicker} /> */}
+            
           </View>
           <Text style={styles.instruction}>Username</Text>
           <TouchableOpacity >
             <Text>{name}</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.instruction}>Role</Text>
+          <TouchableOpacity >
+            <Text>{role}</Text>
           </TouchableOpacity>
 
           <Text style={styles.instruction}>Nickname</Text>
@@ -229,13 +169,13 @@ export default ({navigation, route}) => {
             onChangeText={(val) => seteditnickname(val)}
           />
 
-          <Text style={styles.instruction}>Role</Text>
+          {/* <Text style={styles.instruction}>Role</Text>
           <TextInput
             style={styles.input}
             placeholder={role}
             placeholderTextColor="black"
             onChangeText={(val) => seteditrole(val)}
-          />
+          /> */}
 
           <Text style={styles.instruction}>Email</Text>
           <TextInput
@@ -274,7 +214,7 @@ export default ({navigation, route}) => {
         </View>
       </ScrollView>
     );
-  // }
+  
 }
 
 const styles = StyleSheet.create({
@@ -287,7 +227,7 @@ const styles = StyleSheet.create({
   instruction: {
     fontWeight: "bold",
     marginBottom: 10,
-    marginTop: 10,
+    marginTop: 20,
     fontSize: 16
   },
 
@@ -295,10 +235,21 @@ const styles = StyleSheet.create({
     backgroundColor: "lightgrey",
     padding: 10,
     borderRadius: 5,
-    marginBottom: 20,
+    marginBottom: 5,
   },
 
+  input2: {
+    // backgroundColor: "lightgrey",
+    // borderWidth:1,
+    padding: 10,
+    // paddingStart:0,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+
+
   row: {
+    marginTop:20,
     flexDirection: "row",
     justifyContent: 'space-around',
   },

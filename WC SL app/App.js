@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import firebase from 'firebase/app'
 import React, {useEffect, useState, Component} from 'react';
 import {Text, View,TouchableOpacity} from 'react-native';
-import {auth, db, storage} from "./final/CA/firebase";
+import {auth, db, storage} from "./final/components/firebase";
 import Login from './final/LoginPage';
 import Forgot from './final/ForgotPassword';
 import CAPage from './final/CA/stackNavigation_CA.js';

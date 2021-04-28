@@ -2,7 +2,7 @@ import React, { useEffect, useState, Component, useCallback } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Settings from 'react-native-vector-icons/AntDesign';
-import { auth, db, storage } from './firebase';
+import { auth, db, storage } from "../components/firebase";
 import { FlatList } from 'react-native-gesture-handler';
 import { InteractionManager } from 'react-native';
 import { render } from 'react-dom';
