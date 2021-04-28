@@ -26,7 +26,7 @@ const pressNotify =()=>{
 const pressLogout =()=>{
   auth.signOut().then(() => {
     // Sign-out successful.
-    Alert.alert('Logout',"pressed")
+    Alert.alert('Logout',"You had been Logged Out")
   }).catch((error) => {
     // An error happened.
   });

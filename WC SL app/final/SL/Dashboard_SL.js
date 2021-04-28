@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackg
 import {orange, TableRowDashboard} from "./TablesandTimeFormat";
 import {auth, db, storage} from "../components/firebase";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+// import {Tooltip} from'react-native-elements';
 
 
 export default ({navigation, route}) => {
@@ -81,11 +82,13 @@ export default ({navigation, route}) => {
          
     
     <ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, margin:"5%"}}>
-    <Text style={styles.title}>DASHBOARD</Text>
     
+    <Text style={styles.title}>DASHBOARD</Text>
+    <Text style={{color:"grey", fontSize:15, fontStyle: 'italic',alignSelf:"center"}}>*Select the table cells for more actions*</Text>
+   
         <View style={{paddingBottom:40, paddingTop:10}}>
             <View style={{ backgroundColor:"#fff",  marginHorizontal:15, borderWidth:1, borderColor:"black", elevation: 2, borderTopWidth:1}}>
-    
+     
                 <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"black", backgroundColor:"lightgrey", paddingHorizontal:10,height:40}}>
                     <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",justifyContent:"center",alignItems:"center",textAlign:"center",borderRightWidth:1,paddingTop:10}}>
                         Name
@@ -100,12 +103,12 @@ export default ({navigation, route}) => {
                         Status
                     </Text>
                 </View>
-    
-                
-    
+  
+     
                 {leads.map((info) =>
                     <TableRowDashboard key={info.id} data={info} navigation={navigation} handlePressLead={pressLead} handlePressQuote={pressQuote} handlePressLost={pressLost} handlePressWon={pressWon}/>
                 )}
+                 
     
     
                 </View>
