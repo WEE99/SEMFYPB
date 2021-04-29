@@ -84,11 +84,11 @@ export default ({navigation, route}) => {
     <ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, margin:"5%"}}>
     
     <Text style={styles.title}>DASHBOARD</Text>
-    <Text style={{color:"grey", fontSize:15, fontStyle: 'italic',alignSelf:"center"}}>*Select the table cells for more actions*</Text>
-   
+    <View style={{marginHorizontal:15}}>
+    <Text style={{color:"grey", fontSize:10, fontStyle: 'italic'}}>*Tap the table cells for more actions</Text>
+   </View>
         <View style={{paddingBottom:40, paddingTop:10}}>
             <View style={{ backgroundColor:"#fff",  marginHorizontal:15, borderWidth:1, borderColor:"black", elevation: 2, borderTopWidth:1}}>
-     
                 <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"black", backgroundColor:"lightgrey", paddingHorizontal:10,height:40}}>
                     <Text style={{flex:0.25,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",justifyContent:"center",alignItems:"center",textAlign:"center",borderRightWidth:1,paddingTop:10}}>
                         Name
