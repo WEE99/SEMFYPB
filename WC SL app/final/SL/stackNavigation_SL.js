@@ -21,7 +21,7 @@ import LostLeadReport from './LostLeadsReport_SL.js';
 
 //Lead related pages for Salesperson
 import LeadsDetail from './LeadsDetailWithTask_SL.js';
-import Remarks from './Remarks_SL.js';
+// import Remarks from './Remarks_SL.js';
 import EditRemarks from './EditRemarks_SL.js';
 import setQuote from './setQuotationSent.js';
 import setQuoteAgreed from './setQuotationAgreed.js';
@@ -34,13 +34,13 @@ import CreateOtherTask from './CreateOtherTask_SL.js';
 
 //Task Detail pages for Salesperson
 import TaskDetaill from './TaskDetails_SL.js';
-import OtherTaskDetail from './OtherTaskDetails_SL.js';
-import AppointmentTaskDetail from './AppointmentTaskDetails_SL.js';
+// import OtherTaskDetail from './OtherTaskDetails_SL.js';
+// import AppointmentTaskDetail from './AppointmentTaskDetails_SL.js';
 
 //Edit Task Detail for Salesperson
-import EditCallTask from './EditCallTask_SL.js';
-import EditOtherTask from './EditOtherTask_SL.js';
-import EditAppointmentTask from './EditAppointmentTask_SL.js';
+// import EditCallTask from './EditCallTask_SL.js';
+// import EditOtherTask from './EditOtherTask_SL.js';
+// import EditAppointmentTask from './EditAppointmentTask_SL.js';
 import EditTask from './EditTask_SL.js';
 
 const Tab = createBottomTabNavigator();
@@ -108,7 +108,7 @@ function HomeStackNav() {
   return (
     <HomeStack.Navigator>
       <HomeStack.Screen name="Dashboard" component={DashBoardSales} options={{headerShown: false}}/>
-      <HomeStack.Screen name="Remarks" component={Remarks} />
+      {/* <HomeStack.Screen name="Remarks" component={Remarks} /> */}
       <HomeStack.Screen name="Edit Remarks" component={EditRemarks}/>
       <HomeStack.Screen name="Set Quotation Sent" component={setQuote}/>
       <HomeStack.Screen name="Set Quotation Agreed" component={setQuoteAgreed}/>
@@ -117,11 +117,11 @@ function HomeStackNav() {
       <HomeStack.Screen name="Create Appointment Task" component={CreateAppointmentTask} />
       <HomeStack.Screen name="Create Other Task" component={CreateOtherTask} />
       
-      <HomeStack.Screen name="Other Task Detail" component={OtherTaskDetail}/>
-      <HomeStack.Screen name="Appointment Task Detail" component={AppointmentTaskDetail}/>
-      <HomeStack.Screen name="Edit Call Task" component={EditCallTask}/>
-      <HomeStack.Screen name="Edit Other Task" component={EditOtherTask}/>
-      <HomeStack.Screen name="Edit Appointment Task" component={EditAppointmentTask}/>
+      {/* <HomeStack.Screen name="Other Task Detail" component={OtherTaskDetail}/> */}
+      {/* <HomeStack.Screen name="Appointment Task Detail" component={AppointmentTaskDetail}/> */}
+      {/* <HomeStack.Screen name="Edit Call Task" component={EditCallTask}/> */}
+      {/* <HomeStack.Screen name="Edit Other Task" component={EditOtherTask}/> */}
+      {/* <HomeStack.Screen name="Edit Appointment Task" component={EditAppointmentTask}/> */}
       <HomeStack.Screen name="Edit Task" component={EditTask}/>
     </HomeStack.Navigator>
   )
