@@ -5,12 +5,16 @@ import { FlatList } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-vector-icons/FontAwesome5';
 export default class Account_CA extends Component {
   state = {
-    AccountData: []
+    AccountData: [],
+    UID: ''
   }
 
   componentDidMount() {
+    let UID = this.props.route.params.companyAdminID;
+    this.setState({UID: UID})
+
     let accountData = [];
-    var dashboardData = db.collection("users").where("UID", "==", "aaa")
+    var dashboardData = db.collection("users").where("UID", "==", UID)
     dashboardData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         accountData.push(doc.data());
@@ -22,7 +26,7 @@ export default class Account_CA extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, padding: "10%", backgroundColor: 'white' }}>
+      <View style={{ flex: 1, padding: "5%", backgroundColor: 'white',paddingTop:10 }}>
 
         <FlatList
           data={this.state.AccountData}

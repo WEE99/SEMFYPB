@@ -37,7 +37,7 @@ export default class Touchables extends Component {
           <TextInput
             secureTextEntry={true}
             style={styles.inputpsw}
-            onChangeText={(text) => this.setState({ retepsw: text })}
+            onChangeText={(text) => this.setState({ retypepsw: text })}
           />
         </View>
 
@@ -64,7 +64,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     //alignItems: 'Left',
-    padding: '10%',
+    padding: '5%',
+    paddingTop: 10
   },
 
   SetpswC: {

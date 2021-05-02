@@ -5,6 +5,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   ScrollView,
+  FlatList,
+  ActivityIndicator
 } from 'react-native';
 import { auth, db, storage } from '../CA/firebase';
 
@@ -18,47 +20,64 @@ export default class ListofCompany extends Component {
       leads: 0,
       won: 0,
       lose: 0,
+      companyId: "",
+      isLoading: true,
     }
   }
 
   componentDidMount() {
+    this.setState({ companyId: this.props.route.params.compId })
+    let ID = this.props.route.params.compId;
+    ID = ID.toString();
+
+    let compData = [];
+    var Data = db.collection("users").where("companyID", "==", ID).where("role", "==", "Company Admin")
+    Data.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        var data = doc.data();
+        compData.push(data);
+      });
+      this.setState({ CompanyData: compData });
+    });
+
     this.totalNumberofCompanyAdmin();
     this.totalNumberofSalesperson();
     this.totalNumberofWonLeads();
     this.totalNumberofLeads();
     this.totalNumberofLostLeads();
+    this.setState({ isLoading: false })
   }
 
   totalNumberofCompanyAdmin() {
-    var employeeData = db.collection("users").where("role", "==", "Company Admin");
+    var employeeData = db.collection("users").where("companyID", "==", this.props.route.params.compId).where("role", "==", "Company Admin");
     employeeData.onSnapshot((querySnapShot) => {
       this.setState({ ca: querySnapShot.docs.length });
     });
   }
 
   totalNumberofSalesperson() {
-    var employeeData = db.collection("users").where("role", "==", "Salesperson").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+    var employeeData = db.collection("users").where("role", "==", "Salesperson").where("companyID", "==", this.props.route.params.compId);
     employeeData.onSnapshot((querySnapShot) => {
       this.setState({ sl: querySnapShot.docs.length });
     });
   }
 
   totalNumberofWonLeads() {
-    var employeeData = db.collection("leads").where("result", "==", "Won").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+    var employeeData = db.collection("leads").where("result", "==", "Won").where("companyID", "==", this.props.route.params.compId);
     employeeData.onSnapshot((querySnapShot) => {
       this.setState({ won: querySnapShot.docs.length });
     });
   }
 
   totalNumberofLeads() {
-    var employeeData = db.collection("leads").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+    var employeeData = db.collection("leads").where("companyID", "==", this.props.route.params.compId);
     employeeData.onSnapshot((querySnapShot) => {
       this.setState({ leads: querySnapShot.docs.length });
     });
   }
 
   totalNumberofLostLeads() {
-    var employeeData = db.collection("leads").where("result", "==", "Lose").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1");
+    var employeeData = db.collection("leads").where("result", "==", "Lose").where("companyID", "==", this.props.route.params.compId);
     employeeData.onSnapshot((querySnapShot) => {
       this.setState({ lose: querySnapShot.docs.length });
     });
@@ -66,27 +85,38 @@ export default class ListofCompany extends Component {
 
   render() {
     return (
-      <ScrollView style={{ flex: 1, padding: '5%', backgroundColor: 'white' }}>
-        <View style={{marginTop: 10}}>
-          <Text style={styles.CompanyName}>ABC Company</Text>
+      <ScrollView style={{ flex: 1, padding: '5%', backgroundColor: 'white', paddingTop: 10 }}>
+        <View style={{ marginTop: 10 }}>
+          <FlatList
+            data={this.state.CompanyData}
+            renderItem={({ item }) => (
+              <Text style={styles.CompanyName}>{item.companyName}</Text>
+            )}
+          />
 
           <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Details')}
+              onPress={() => this.props.navigation.navigate('Company Details', {
+                compId: this.state.companyId
+              })}
               style={styles.nav}>
               <Text style={styles.navTitle} numberOfLine={2}>
                 Company Detail
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Report')}
+              onPress={() => this.props.navigation.navigate('Company Report', {
+                compId: this.state.companyId
+              })}
               style={styles.cardActive}>
               <Text style={styles.activeTitle} numberOfLine={2}>
                 Company Report
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Leads')}
+              onPress={() => this.props.navigation.navigate('Company Leads', {
+                compId: this.state.companyId
+              })}
               style={styles.nav}>
               <Text style={styles.navTitle} numberOfLine={2}>
                 Company Leads
@@ -94,11 +124,18 @@ export default class ListofCompany extends Component {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.pieChartArea} />
+          {/* <View style={styles.pieChartArea} /> */}
           <View style={{ marginLeft: 5, height: 600, width: '90%' }}>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Company Admin</Text>
-              <Text style={styles.Admin}>{this.state.ca}</Text>
+
+              {this.state.isLoading ?
+                <ActivityIndicator />
+                :
+                <Text style={styles.Admin}>{this.state.ca}</Text>
+              }
+
+              {/* <Text style={styles.Admin}>{this.state.ca}</Text> */}
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Salesperson </Text>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { auth, db, storage } from '../CA/firebase';
 
@@ -8,35 +8,38 @@ export default class a extends Component {
     super(props);
     this.state = {
       salesInfo: [],
+      UID: ''
     };
   }
 
   componentDidMount() {
-    this.info();
+    let UID = this.props.route.params.salesID;
+    this.setState({UID: UID})
+    let accountData = []
+
+    var dashboardData = db.collection("users").where("UID", "==", UID)
+    dashboardData.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        accountData.push(doc.data());
+      });
+      this.setState({ salesInfo: accountData });
+    });
   }
 
-  info() {
-    db.collection("users").doc("Hu4WdS4HH4ugYVFmZexa").get()
-      .then((doc) => {
-        if (!doc.exists) return;
-        console.log("Document data:", doc.data());
-        salesData.push(doc.data());
-      });
-    this.setState({ salesInfo: salesData });
-  }
 
   render() {
     return (
-      <ScrollView style={{ flex: 1, padding: '10%', marginTop: 20 }}>
+      <ScrollView style={{ flex: 1, padding: '5%', paddingTop: 10, backgroundColor: 'white' }}>
         <FlatList
           data={this.state.salesInfo}
           renderItem={({ item }) => (
             <View>
               <View style={styles.Icon}>
-                <Image
-                  style={styles.profileImg}
-                  source={require('./img/sample.jpg')}
-                />
+                {item.photoURL != null ?
+                  <Image style={styles.profileImg} source={item.photoURL} />
+                  :
+                  <Icon name="user" size={10} style={styles.profileImg} />
+                }
                 <View>
                   <Text style={styles.Username}>{item.nickname}</Text>
                   <Text style={styles.designation}>{item.name}</Text>

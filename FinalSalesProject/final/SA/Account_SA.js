@@ -1,65 +1,89 @@
 import React, { useEffect, useState, Component, useCallback } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import Settings from 'react-native-vector-icons/AntDesign';
 import { auth, db, storage } from '../CA/firebase';
-import { FlatList } from 'react-native-gesture-handler';
+
 export default class Account_CA extends Component {
   state = {
-    AccountData: []
+    AccountData: [],
+    photo: '',
+    username: '',
+    role: '',
+    address: '',
+    companyname: '',
+    contactNo: '',
+    email: '',
+    isLoading: true,
   }
 
   componentDidMount() {
-    let accountData = [];
-    var dashboardData = db.collection("users").where("UID", "==", "molZQJeaw7SZPoGJsqlJuVpsZAR2")
+    let a, b, c, d, e, f, g = "";
+    var dashboardData = db.collection("users").where("UID", "==", "molZQJeaw7SZPoGJsqlJuVpsZAR2").where("role", "==", "Super Admin")
     dashboardData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
-        accountData.push(doc.data());
+        a = doc.data().photoURL;
+        b = doc.data().nickname;
+        c = doc.data().role;
+        d = doc.data().address;
+        e = doc.data().companyName;
+        f = doc.data().email;
+        g = doc.data().phoneNumber;
       });
-      this.setState({ AccountData: accountData });
+      this.setState({ photo: a });
+      this.setState({ username: b });
+      this.setState({ role: c });
+      this.setState({ address: d });
+      this.setState({ companyname: e });
+      this.setState({ contactNo: g });
+      this.setState({ email: f });
+      this.setState({ isLoading: false })
     });
   }
 
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={{ flex: 1, paddingTop: 20 }}>
+          <ActivityIndicator />
+          <Text style={{alignSelf:'center', margin: 10}}>Fetching data...</Text>
+        </View>
+      )
+    }
     return (
-      <View style={{ flex: 1, padding: "10%", }}>
+      <View style={{ flex: 1, padding: "5%", paddingTop: 10, backgroundColor: 'white' }}>
+        <Settings name='setting' size={25} style={{ alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate('Account Settings')} />
 
-        <Settings name='setting' size={25} style={{ alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate('Account Setting')} />
-        <FlatList
-          data={this.state.AccountData}
-          renderItem={({ item }) => (
+        <View>
+          <View style={styles.Icon}>
+            <Image style={styles.profileImg} source={this.state.photo} />
             <View>
-              <View style={styles.Icon}>
-                <Image style={styles.profileImg} source={item.photoURL} />
-                <View>
-                  <Text style={styles.Username}>{item.name}</Text>
-                  <Text style={styles.designation}>{item.role}</Text>
-                </View>
-              </View>
-
-              <View>
-                <View style={styles.Direction}>
-                  <Text style={styles.Text}>Company</Text>
-                  <Text style={styles.Info}>{item.companyName}</Text>
-                </View>
-
-                <View style={styles.Address}>
-                  <Text style={[styles.Text, { marginEnd: 10 }]}>Address</Text>
-                  <Text style={styles.Info}>{item.address}</Text>
-                </View>
-
-                <View style={styles.Direction}>
-                  <Text style={[styles.Text, { marginEnd: 25 }]}>Email</Text>
-                  <Text style={styles.Info}>{item.email}</Text>
-                </View>
-                <View style={styles.Direction}>
-                  <Text style={[styles.Text, { marginEnd: 8 }]}>Contact</Text>
-                  <Text style={styles.Info}>{item.phoneNumber}</Text>
-                </View>
-              </View>
+              <Text style={styles.Username} numberOfLines={2}>{this.state.username}</Text>
+              <Text style={styles.designation}>{this.state.role}</Text>
             </View>
-          )}
-        />
+          </View>
+
+          <View>
+            <View style={styles.Direction}>
+              <Text style={styles.Text}>Company</Text>
+              <Text style={styles.Info} numberOfLines={2}>{this.state.companyname}</Text>
+            </View>
+
+            <View style={styles.Address}>
+              <Text style={[styles.Text, { marginEnd: 7 }]}>Address</Text>
+              <Text style={styles.Info} numberOfLines={5}>{this.state.address}</Text>
+            </View>
+
+            <View style={styles.Direction}>
+              <Text style={[styles.Text, { marginEnd: 25 }]}>Email</Text>
+              <Text style={styles.Info} numberOfLines={2}>{this.state.email}</Text>
+            </View>
+            <View style={styles.Direction}>
+              <Text style={[styles.Text, { marginEnd: 8 }]}>Contact</Text>
+              <Text style={styles.Info}>{this.state.contactNo}</Text>
+            </View>
+          </View>
+        </View>
       </View>
 
     )
@@ -70,14 +94,14 @@ export default class Account_CA extends Component {
 const styles = StyleSheet.create({
   profileImg: {
     borderRadius: 50,
-    marginStart: 10,
-    marginTop: 2.5,
+    marginStart: 8,
+    marginTop: 2,
     height: 70,
     width: 70,
     overflow: 'hidden',
     borderColor: 'black',
     borderWidth: 1,
-    paddingStart: 13,
+    paddingStart: 11,
     paddingTop: 5
   },
   Username: {
@@ -96,7 +120,6 @@ const styles = StyleSheet.create({
   Direction: {
     flexDirection: 'row',
     marginTop: 10,
-    alignItems: 'baseline'
   },
   Text: {
     marginTop: 2.5,
@@ -105,7 +128,6 @@ const styles = StyleSheet.create({
     marginBottom: 5
   },
   Info: {
-    width: 200,
     marginTop: 2.5,
     marginStart: 35,
     fontSize: 14,

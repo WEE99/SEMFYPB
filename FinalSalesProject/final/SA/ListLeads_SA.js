@@ -4,7 +4,7 @@ import {
   Text,
   View,
   ScrollView,
-  TouchableOpacity,
+  TouchableOpacity, ActivityIndicator
 } from 'react-native';
 import { auth, db, storage } from '../CA/firebase';
 import { FlatList } from 'react-native-gesture-handler';
@@ -14,6 +14,7 @@ export default class ExampleTwo extends Component {
     super(props);
     this.state = {
       LeadList: [],
+      isLoading: true,
     };
   }
 
@@ -23,18 +24,64 @@ export default class ExampleTwo extends Component {
 
   listofLeads() {
     let listLeads = [];
-    var employeeData = db.collection("leads").where("companyID", "==", "V4d1aKlbbQa9HXMPX6A1")
+    var employeeData = db.collection("leads")
     employeeData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         listLeads.push(doc.data());
       });
       this.setState({ LeadList: listLeads });
+      this.setState({ isLoading: false })
     });
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10, backgroundColor: 'white' }}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+            horizontal={true}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Overall Report')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Overall Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('List of Company')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Company Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('List of Salesperson')
+              }
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Salesperson Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('List of Leads')}
+              style={styles.cardActive}>
+              <Text style={styles.activeTitle} numberOfLine={3}>
+                Leads Report
+            </Text>
+            </TouchableOpacity>
+          </ScrollView>
+
+          <ActivityIndicator />
+          <Text style={{ alignSelf: 'center', margin: 10 }}>Fetching data...</Text>
+
+        </ScrollView>
+      )
+    }
     return (
-      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10 }}>
+      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10, backgroundColor: 'white' }}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -82,13 +129,19 @@ export default class ExampleTwo extends Component {
               <View style={styles.cardView}>
                 <Text
                   style={styles.firstCol}
-                  onPress={() => this.props.navigation.navigate('Lead Detail')}
+                  onPress={() => this.props.navigation.navigate('Lead Detail',
+                  {
+                    leadID : item.name
+                  })}
                   numberOfLine={5}>
                   {item.name} ({item.company})
                 </Text>
                 <Text
                   style={styles.SecThirdCol}
-                  onPress={() => this.props.navigation.navigate('Lead Detail')}>
+                  onPress={() => this.props.navigation.navigate('Lead Detail',
+                  {
+                    leadID : item.name
+                  })}>
                   {item.result}
                 </Text>
               </View>

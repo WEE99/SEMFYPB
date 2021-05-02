@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-  TouchableOpacity, Image
+  Text, View, StyleSheet, FlatList, ActivityIndicator,ScrollView, TouchableOpacity, Image
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -17,6 +12,7 @@ export default class ListofEmployee extends Component {
 
     this.state = {
       EmployeeList: [],
+      isLoading: true,
     };
   }
 
@@ -32,12 +28,58 @@ export default class ListofEmployee extends Component {
         listEmployee.push(doc.data());
       });
       this.setState({ EmployeeList: listEmployee });
+      this.setState({ isLoading: false })
     });
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10, backgroundColor: 'white' }}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+            horizontal={true}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Overall Report')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Overall Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('List of Company')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Company Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('List of Salesperson')
+              }
+              style={styles.cardActive}>
+              <Text style={styles.activeTitle} numberOfLine={3}>
+                Salesperson Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('List of Leads')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Leads Report
+            </Text>
+            </TouchableOpacity>
+          </ScrollView>
+
+          <ActivityIndicator />
+          <Text style={{ alignSelf: 'center', margin: 10 }}>Fetching data...</Text>
+
+        </ScrollView>
+      )
+    }
     return (
-      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10 }}>
+      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10, backgroundColor: 'white' }}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -81,12 +123,15 @@ export default class ListofEmployee extends Component {
               <Card
                 style={styles.card}
                 onPress={() =>
-                  this.props.navigation.navigate('Salesperson Detail')
+                  this.props.navigation.navigate('Salesperson Detail', {
+                    salesId: item.UID
+                  })
+                  
                 }>
                 <View style={styles.cardView}>
-                  <Image style={styles.profileImg} source={require('./img/sample.jpg')} />
+                  <Image style={styles.profileImg} source={item.photoURL} />
                   <View style={styles.texts}>
-                    <Text style={styles.Name} numberOfLine={3}>{item.nickname}</Text>
+                    <Text style={styles.Name} numberOfLine={3}>{item.username}</Text>
                     <Text style={styles.CompanyName} numberOfLine={3}>({item.companyName})</Text>
                   </View>
                   <View style={{ justifyContent: 'flex-end' }}>

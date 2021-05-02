@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
+import { auth, db, storage } from '../CA/firebase';
 import {
   StyleSheet,
   Text,
@@ -12,21 +13,44 @@ import {
 //import { ScrollView } from 'react-native-gesture-handler';
 
 export default class App extends Component {
-  _onPressCancel() {
-    alert('Cancel');
-  }
-
-  _onPressSave() {
-    alert('Save');
-  }
-
-  state = {
-    username: '',
-    companyName: '',
-    address: '',
-    email: '',
-    contact: '',
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: '',
+      company: '',
+      address: '',
+      email: '',
+      contact: '',
+    }
   };
+
+  inputValueUpdate = (val, prop) => {
+    const state = this.state;
+    state[prop] = val;
+    this.setState(state);
+  }
+
+  updateUser() {
+    db.collection("users").doc("lNPM0knPOKln9gIO9oqV")
+      .update({
+        name: this.state.name,
+        companyName: this.state.company,
+        address: this.state.address,
+        email: this.state.email,
+        phoneNumber: this.state.contact,
+      })
+      .then(() => {
+        console.log("Profile Updated");
+        alert("Profile Updated");
+      })
+    this.setState({
+      name: "",
+      company: "",
+      address: "",
+      email: "",
+      contact: ""
+    })
+  }
 
   render() {
     return (
@@ -35,31 +59,31 @@ export default class App extends Component {
           <Text style={styles.instruction}>Username</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => this.setState({ username: text })}
+            onChangeText={(val) => this.inputValueUpdate(val, 'name')}
           />
 
           <Text style={styles.instruction}>Company Name</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => this.setState({ companyName: text })}
+            onChangeText={(val) => this.inputValueUpdate(val, 'company')}
           />
 
           <Text style={styles.instruction}>Address</Text>
           <TextInput
             style={styles.AddressInput}
-            onChangeText={(text) => this.setState({ address: text })}
+            onChangeText={(val) => this.inputValueUpdate(val, 'address')}
           />
 
           <Text style={styles.instruction}>Email</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => this.setState({ email: text })}
+            onChangeText={(val) => this.inputValueUpdate(val, 'email')}
           />
 
           <Text style={styles.instruction}>Contact</Text>
           <TextInput
             style={styles.input}
-            onChangeText={(text) => this.setState({ contact: text })}
+            onChangeText={(val) => this.inputValueUpdate(val, 'contact')}
           />
 
           <View style={styles.row}>
@@ -70,7 +94,7 @@ export default class App extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.Button}
-              onPress={() => this.props.navigation.goBack()}>
+              onPress={() => this.updateUser()}>
               <Text style={styles.ButtonContent}>Save</Text>
             </TouchableOpacity>
           </View>
@@ -112,7 +136,8 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 130,
     borderRadius: 5,
-    marginTop: 10 },
+    marginTop: 10
+  },
 
   ButtonContent: {
     textAlign: 'center',

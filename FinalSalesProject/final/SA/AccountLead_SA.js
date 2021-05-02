@@ -6,48 +6,41 @@ export default class LeadsAccountInSuperAdmin extends Component {
   state = {
     AccountData: [],
     SalesData: [],
-    salesID: ""
+    leadsID: '',
+    salesName: '',
+    salesCompany: ''
   }
 
   componentDidMount() {
     let accountData = [];
-    let salesData = [];
-    var salesId = "";
-    let test = [];
 
-    var dashboardData = db.collection("leads").where("name", "==", "Walson")
-    dashboardData.onSnapshot((querySnapShot) => {
-      querySnapShot.forEach((doc) => {
-        accountData.push(doc.data());
-        var data = doc.data();
-        salesId = data.userId;
-      });
-      this.setState({ AccountData: accountData });
-      this.setState({ salesID: salesId });
-    });
+    this.setState({
+      leadsID: this.props.route.params.leadID
+    })
 
-    var dashboardData = db.collection("users").where("name", "==", "Joo")
-    dashboardData.onSnapshot((querySnapShot) => {
-      querySnapShot.forEach((doc) => {
-        test.push(doc.data());
-      });
-      this.setState({ SalesData: test });
-    });
-    
-    // db.collection("users").doc("Hu4WdS4HH4ugYVFmZexa").get()
-    //   .then((doc) => {
-    //     if (!doc.exists) return;
-    //     console.log("Document data:", doc.data());
-    //     salesData.push(doc.data());
-    //   });
-    // this.setState({ SalesData: salesData });
+    let sales = ''
+    db.collection("leads").where("name", "==", this.props.route.params.leadID)
+      .onSnapshot((querySnapShot) => {
+        querySnapShot.forEach((doc) => {
+          accountData.push(doc.data());
+          sales = doc.data().userId;
+
+          db.collection("users").doc(sales).get()
+            .then((doc) => {
+              this.setState({
+                salesName: doc.data().username,
+                salesCompany: doc.data().companyName,
+              })
+            })
+        })
+        this.setState({ AccountData: accountData });
+      })
 
   }
 
   render() {
     return (
-      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10, backgroundColor: '#fff', }}>
-        {/* <Text>{this.state.salesID}</Text> */}
+      <ScrollView style={{ flex: 1, padding: '5%', paddingTop: 10, backgroundColor: '#fff', }}>
         <FlatList
           data={this.state.AccountData}
           renderItem={({ item }) => (
@@ -96,22 +89,17 @@ export default class LeadsAccountInSuperAdmin extends Component {
               </View>
 
               <Text style={styles.Name}>Assigned Salesperson</Text>
-              <FlatList
-                data={this.state.SalesData}
-                renderItem={({ item }) => (
-                  <View>
-                    <View style={styles.Direction}>
-                      <Text style={[styles.Text, { marginEnd: 23 }]}>Name</Text>
-                      <Text style={styles.Info}>{item.name}</Text>
-                    </View>
+              <View>
+                <View style={styles.Direction}>
+                  <Text style={[styles.Text, { marginEnd: 23 }]}>Name</Text>
+                  <Text style={styles.Info}>{this.state.salesName}</Text>
+                </View>
 
-                    <View style={styles.Direction}>
-                      <Text style={[styles.Text, { marginEnd: 3 }]}>Company</Text>
-                      <Text style={styles.Info}>{item.companyName}</Text>
-                    </View>
-                  </View>
-                )}
-              />
+                <View style={styles.Direction}>
+                  <Text style={[styles.Text, { marginEnd: 3 }]}>Company</Text>
+                  <Text style={styles.Info}>{this.state.salesCompany}</Text>
+                </View>
+              </View>
             </View>
           )}
         />

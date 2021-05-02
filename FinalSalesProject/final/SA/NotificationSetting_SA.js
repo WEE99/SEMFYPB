@@ -32,45 +32,16 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.row}>
-          <View style={styles.textV}>
-            <Text style={styles.text}>Mute Appointment Reminder</Text>
-          </View>
-          <Switch
-          //value={isSwitchEnabled}
-          //onValueChange={(value)=> setSwitch(value)}
-          />
-        </View>
 
         <View style={styles.row2}>
           <View style={styles.textV}>
             <Text style={styles.text}>
-              Mute Newly Assigned Lead Notification
+              Mute Notification
             </Text>
           </View>
           <Switch
           //value={isSwitchEnabled}
           //onValueChange={(value)=> setSwitch(value)}
-          />
-        </View>
-
-        <View style={{flexDirection: 'row'}}>
-          <Text style={styles.reminder}>Reminder Time</Text>
-
-          <View style={Timestyles.container}>
-            <Text style={Timestyles.text}> {this.state.time}</Text>
-            <TouchableOpacity
-              onPress={() => this.TimePicker.open()}
-              style={Timestyles.button}>
-              <Icon name="clock" size={20} color="black" />
-            </TouchableOpacity>
-          </View>
-          <TimePicker
-            ref={(ref) => {
-              this.TimePicker = ref;
-            }}
-            onCancel={() => this.onCancel()}
-            onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
           />
         </View>
 

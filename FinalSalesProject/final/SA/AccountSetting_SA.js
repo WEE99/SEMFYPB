@@ -12,7 +12,7 @@ export default class Touchables extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>xF
+        <View>
           <TouchableOpacity
             style={styles.AccButton}
             onPress={()=> this.props.navigation.navigate('Profile Settings')}
@@ -56,7 +56,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: "10%",
+    padding: "5%",
+    paddingTop: 10,
   },
 
   AccButton: {

@@ -11,12 +11,17 @@ export default class Report extends Component {
       won: 0,
       lose: 0,
       salesInfo: [],
+      salesId: ''
     }
   }
 
   componentDidMount() {
     let salesData = [];
-    var employeeData = db.collection("users").where("name", "==", "Joo")
+    this.setState({ salesId: this.props.route.params.salesId })
+    let salesID = this.props.route.params.salesId;
+    salesID = salesID.toString();
+
+    var employeeData = db.collection("users").where("UID", "==", salesID)
     employeeData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         salesData.push(doc.data());
@@ -29,24 +34,39 @@ export default class Report extends Component {
   }
 
   totalNumberofWonLeads() {
-    var employeeData = db.collection("leads").where("userId", "==", "Hu4WdS4HH4ugYVFmZexa").where("result", "==", "Won");
-    employeeData.onSnapshot((querySnapShot) => {
-      this.setState({ won: querySnapShot.docs.length });
-    });
+    db.collection("users").where("UID", "==", this.props.route.params.salesId)
+      .onSnapshot((querySnapShot) => {
+        querySnapShot.forEach((doc) => {
+          db.collection("leads").where("userId", "==", doc.id).where("result", "==", "Won")
+            .onSnapshot((querySnapShot) => {
+              this.setState({ won: querySnapShot.docs.length });
+            })
+        })
+      })
   }
 
   totalNumberofLeads() {
-    var employeeData = db.collection("leads").where("userId", "==", "Hu4WdS4HH4ugYVFmZexa");
-    employeeData.onSnapshot((querySnapShot) => {
-      this.setState({ leads: querySnapShot.docs.length });
-    });
+    db.collection("users").where("UID", "==", this.props.route.params.salesId)
+      .onSnapshot((querySnapShot) => {
+        querySnapShot.forEach((doc) => {
+          db.collection("leads").where("userId", "==", doc.id)
+            .onSnapshot((querySnapShot) => {
+              this.setState({ leads: querySnapShot.docs.length });
+            })
+        })
+      })
   }
 
   totalNumberofLostLeads() {
-    var employeeData = db.collection("leads").where("userId", "==", "Hu4WdS4HH4ugYVFmZexa").where("result", "==", "Lose");
-    employeeData.onSnapshot((querySnapShot) => {
-      this.setState({ lose: querySnapShot.docs.length });
-    });
+    db.collection("users").where("UID", "==", this.props.route.params.salesId)
+      .onSnapshot((querySnapShot) => {
+        querySnapShot.forEach((doc) => {
+          db.collection("leads").where("userId", "==", doc.id).where("result", "==", "Lose")
+            .onSnapshot((querySnapShot) => {
+              this.setState({ lose: querySnapShot.docs.length });
+            })
+        })
+      })
   }
 
   render() {
@@ -58,12 +78,12 @@ export default class Report extends Component {
           marginTop: 10,
           backgroundColor: 'white'
         }}>
-        
+
         <FlatList
           data={this.state.salesInfo}
           renderItem={({ item }) => (
             <View style={styles.Icon}>
-              <Image style={styles.profileImg} source={require('./img/sample.jpg')} />
+              <Image style={styles.profileImg} source={item.photoURL} />
               <View>
                 <Text style={styles.Username}>{item.nickname}</Text>
                 <Text style={styles.designation}>{item.role}</Text>
@@ -74,23 +94,29 @@ export default class Report extends Component {
 
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Salesperson Detail')}
+            onPress={() => this.props.navigation.navigate('Salesperson Detail', {
+              salesId: this.state.salesId
+            })}
             style={styles.nav}>
             <Text style={styles.navTitle}>Detail</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Salesperson Report')}
+            onPress={() => this.props.navigation.navigate('Salesperson Report', {
+              salesId: this.state.salesId
+            })}
             style={styles.cardActive}>
             <Text style={styles.activeTitle}>Report</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Salesperson Leads')}
+            onPress={() => this.props.navigation.navigate('Salesperson Leads', {
+              salesId: this.state.salesId
+            })}
             style={styles.nav}>
             <Text style={styles.navTitle}>Leads</Text>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.pieChartArea} />
+        {/* <View style={styles.pieChartArea} /> */}
         <View style={{ marginLeft: 5, height: 600, width: '90%' }}>
           <View style={styles.Direction}>
             <Text style={styles.Text} numberOfLine={2}>Total Number of Leads</Text>

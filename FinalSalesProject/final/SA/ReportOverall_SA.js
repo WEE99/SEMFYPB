@@ -3,7 +3,7 @@ import {
   Text,
   View,
   StyleSheet,
-  FlatList,
+  ActivityIndicator,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
@@ -20,6 +20,7 @@ export default class ListofCompany extends Component {
       leads: 0,
       won: 0,
       lose: 0,
+      isLoading: true
     }
   }
 
@@ -30,6 +31,7 @@ export default class ListofCompany extends Component {
     this.totalNumberofWonLeads();
     this.totalNumberofLeads();
     this.totalNumberofLostLeads();
+    this.setState({ isLoading: false })
   }
 
   totalNumberUser(){
@@ -75,8 +77,54 @@ export default class ListofCompany extends Component {
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <ScrollView style={{flex: 1, padding: '5%', marginTop: 10, backgroundColor: 'white' }}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+            horizontal={true}>
+            <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Overall Report')}
+            style={styles.cardActive}>
+            <Text style={styles.activeTitle} numberOfLine={3}>
+              Overall Report
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('List of Company')}
+            style={styles.nav}>
+            <Text style={styles.navTitle} numberOfLine={3}>
+              Company Report
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() =>
+              this.props.navigation.navigate('List of Salesperson')
+            }
+            style={styles.nav}>
+            <Text style={styles.navTitle} numberOfLine={3}>
+              Salesperson Report
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('List of Leads')}
+            style={styles.nav}>
+            <Text style={styles.navTitle} numberOfLine={3}>
+              Leads Report
+            </Text>
+          </TouchableOpacity>
+          </ScrollView>
+
+          <ActivityIndicator />
+          <Text style={{ alignSelf: 'center', margin: 10, paddingTop: 10 }}>Fetching data...</Text>
+
+        </ScrollView>
+      )
+    }
+    
     return (
-      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10}}>
+      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10, backgroundColor: 'white'}}>
         <ScrollView 
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{justifyContent: 'flex-start', flexDirection: 'row'}}
@@ -113,8 +161,9 @@ export default class ListofCompany extends Component {
           </TouchableOpacity>
         </ScrollView>
 
+
         <ScrollView>
-          <View style={styles.pieChartArea} />
+          {/* <View style={styles.pieChartArea} /> */}
           <View style={{ marginLeft: 5, height: 600, width: '90%' }}>
             <View style={styles.Direction}>
               <Text style={styles.Text}>Total Number of User</Text>

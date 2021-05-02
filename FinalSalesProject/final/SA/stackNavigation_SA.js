@@ -24,6 +24,7 @@ import SalespersonLeads from './SalespersonReportLead_SA.js';
 import AccountLead from './AccountLead_SA.js';
 import AccountSale from './AccountSale_SA.js';
 import AccountCA from './AccountCA_SA.js';
+import AddAccount from './AddNewAccount.js';
 
 //Account related pages for Super Admin
 import Account from './Account_SA.js';
@@ -58,7 +59,7 @@ const MyTabs = () => {
                     ),
                 }}
             />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="History"
                 component={HistoryStackNav}
                 options={{
@@ -67,7 +68,7 @@ const MyTabs = () => {
                         <MaterialCommunityIcons name="history" color={color} size={size} />
                     ),
                 }}
-            />
+            /> */}
             <Tab.Screen
                 name="Report"
                 component={ReportStackNav}
@@ -126,6 +127,7 @@ function ReportStackNav() {
             <ReportStack.Screen name="Lead Detail" component={AccountLead} />
             <ReportStack.Screen name="Salesperson Account Detail" component={AccountSale} />
             <ReportStack.Screen name="Company Admin Account Detail" component={AccountCA} options={{title: 'Profile'}}/>
+            <ReportStack.Screen name="Add Account" component={AddAccount}/>
         </ReportStack.Navigator>
     )
 }

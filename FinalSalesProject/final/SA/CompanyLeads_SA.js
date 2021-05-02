@@ -15,16 +15,31 @@ export default class ListofCompany extends Component {
 
     this.state = {
       LeadList: [],
+      companyId: "",
     };
   }
 
   componentDidMount() {
+    this.setState({ companyId: this.props.route.params.compId })
+    let ID = this.props.route.params.compId;
+    ID = ID.toString();
+
+    let compData = [];
+    var Data = db.collection("users").where("companyID", "==", ID).where("role", "==", "Company Admin")
+    Data.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        var data = doc.data();
+        compData.push(data);
+      });
+      this.setState({ CompanyData: compData });
+    });
+
     this.listofLeads();
   }
 
   listofLeads() {
     let listLeads = [];
-    var employeeData = db.collection("leads").where("companyID", "==", " V4d1aKlbbQa9HXMPX6A1")
+    var employeeData = db.collection("leads").where("companyID", "==", this.props.route.params.compId)
     employeeData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         listLeads.push(doc.data());
@@ -35,27 +50,38 @@ export default class ListofCompany extends Component {
 
   render() {
     return (
-      <ScrollView style={{ flex: 1, padding: '5%', backgroundColor: 'white'}}>
-        <View style={{marginTop: 10}}>
-          <Text style={styles.CompanyName}>ABC Company</Text>
+      <ScrollView style={{ flex: 1, padding: '5%', backgroundColor: 'white' }}>
+        <View style={{ marginTop: 10 }}>
+          <FlatList
+            data={this.state.CompanyData}
+            renderItem={({ item }) => (
+              <Text style={styles.CompanyName}>{item.companyName}</Text>
+            )}
+          />
 
           <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Details')}
+              onPress={() => this.props.navigation.navigate('Company Details', {
+                compId: this.state.companyId
+              })}
               style={styles.nav}>
               <Text style={styles.navTitle} numberOfLine={2}>
                 Company Detail
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Report')}
+              onPress={() => this.props.navigation.navigate('Company Report', {
+                compId: this.state.companyId
+              })}
               style={styles.nav}>
               <Text style={styles.navTitle} numberOfLine={2}>
                 Company Report
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Leads')}
+              onPress={() => this.props.navigation.navigate('Company Leads', {
+                compId: this.state.companyId
+              })}
               style={styles.cardActive}>
               <Text style={styles.activeTitle} numberOfLine={2}>
                 Company Leads
@@ -63,24 +89,33 @@ export default class ListofCompany extends Component {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.header}>
-            <Text style={styles.firstCol}>Leads</Text>
-            <Text style={styles.SecCol}>Remarks</Text>
-          </View>
-          <FlatList
-            data={this.state.LeadList}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Lead Detail')}>
-                <View style={styles.cardView}>
-                  <Text style={styles.firstCol} numberOfLine={5}>
-                  {item.name} ({item.company})
+          {this.state.LeadList.length == 0 ?
+            <Text style={{ alignSelf: 'center', fontStyle: 'italic', padding: '3%', color: 'grey' }}>No leads yet!</Text>
+            :
+            <View>
+              <View style={styles.header}>
+                <Text style={styles.firstCol}>Leads</Text>
+                <Text style={styles.SecCol}>Remarks</Text>
+              </View>
+              <FlatList
+                data={this.state.LeadList}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Lead Detail',
+                    {
+                      leadID : item.name
+                    })}>
+                    <View style={styles.cardView}>
+                      <Text style={styles.firstCol} numberOfLine={5}>
+                        {item.name} ({item.company})
                   </Text>
-                  <Text style={styles.SecCol}>{item.result}</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
+                      <Text style={styles.SecCol}>{item.result}</Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          }
         </View>
       </ScrollView>
     );

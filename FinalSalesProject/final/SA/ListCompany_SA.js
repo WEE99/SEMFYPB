@@ -5,7 +5,7 @@ import {
   StyleSheet,
   FlatList,
   TouchableOpacity,
-  ScrollView,
+  ScrollView, ActivityIndicator
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import { auth, db, storage } from '../CA/firebase';
@@ -17,38 +17,69 @@ export default class ListofCompany extends Component {
 
     this.state = {
       CompanyList: [],
-      oj: []
+      length: 0,
+      isLoading: true,
     };
   }
 
-  componentDidMount() { 
+  componentDidMount() {
     this.listofCompany();
   }
 
   listofCompany() {
-    let companyLeads = [];
-    let c = [];
-    var previousName = "";
-    var employeeData = db.collection("users")
+    let companyName = [];
+    var employeeData = db.collection("company")
     employeeData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         var data = doc.data();
-        var compName = data.companyName;
-        companyLeads.push(companyName);
-        // c.push(data.compName)
-        // c.forEach((name, index) => {
-        //   if(name == c.index)
-        // })
-
+        companyName.push(data);
       });
-      this.setState({ CompanyList: companyLeads });
-      this.setState({ oj: c });
+      this.setState({ CompanyList: companyName });
+      this.setState({ isLoading: false })
     });
+
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <ScrollView style={{flex: 1, padding: '5%', marginTop: 10, backgroundColor: 'white' }}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+            horizontal={true}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Overall Report')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>Overall Report</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('List of Company')}
+              style={styles.cardActive}>
+              <Text style={styles.activeTitle} numberOfLine={3}>Company Report</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('List of Salesperson')
+              }
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>Salesperson Report</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('List of Leads')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>Leads Report</Text>
+            </TouchableOpacity>
+          </ScrollView>
+
+          <ActivityIndicator />
+          <Text style={{ alignSelf: 'center', margin: 10, paddingTop: 10 }}>Fetching data...</Text>
+
+        </ScrollView>
+      )
+    }
     return (
-      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10 }}>
+      <ScrollView style={{ flex: 1, padding: '5%', marginTop: 10, backgroundColor: 'white' }}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -84,7 +115,9 @@ export default class ListofCompany extends Component {
               <Card
                 style={styles.card}
                 onPress={() =>
-                  this.props.navigation.navigate('Company Details')
+                  this.props.navigation.navigate('Company Details', {
+                    compId: item.companyID
+                  })
                 }>
                 <View style={{
                   flexDirection: 'row',
@@ -96,22 +129,6 @@ export default class ListofCompany extends Component {
                   </View>
                 </View>
               </Card>
-            )}
-          />
-
-
-          <FlatList
-            data={this.state.oj}
-            renderItem={({ item }) => (
-                <View style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center', alignItems: 'center'
-                }}>
-                  <Text style={styles.CompanyName} numberOfLine={3}>{item.companyName}</Text>
-                  <View style={{ justifyContent: 'flex-end' }}>
-                    <Icon name="right" size={15} style={styles.icon} />
-                  </View>
-                </View>
             )}
           />
         </ScrollView>

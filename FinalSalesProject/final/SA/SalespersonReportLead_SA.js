@@ -9,27 +9,37 @@ export default class ListofCompany extends Component {
     this.state = {
       LeadList: [],
       salesInfo: [],
+      salesId: ''
     };
   }
 
   componentDidMount() {
     let salesData = [];
-    let leadData = []; 
+    let leadData = [];
 
-    var employeeData = db.collection("users").where("name", "==", "Joo")
+    this.setState({ salesId: this.props.route.params.salesId })
+    let salesID = this.props.route.params.salesId;
+    salesID = salesID.toString();
+
+    db.collection("users").where("UID", "==", salesID)
+      .onSnapshot((querySnapShot) => {
+        querySnapShot.forEach((doc) => {
+          db.collection("leads").where("userId", "==", doc.id)
+            .onSnapshot((querySnapShot) => {
+              querySnapShot.forEach((document) => {
+                leadData.push(document.data());
+              })
+              this.setState({ LeadList: leadData });
+            })
+        })
+      })
+
+    var employeeData = db.collection("users").where("UID", "==", salesID)
     employeeData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         salesData.push(doc.data());
       });
       this.setState({ salesInfo: salesData });
-    });
-
-    var leadList = db.collection("leads").where("userId", "==", "Hu4WdS4HH4ugYVFmZexa")
-    leadList.onSnapshot((querySnapShot) => {
-      querySnapShot.forEach((doc) => {
-        leadData.push(doc.data());
-      });
-      this.setState({ LeadList: leadData });
     });
   }
 
@@ -46,7 +56,7 @@ export default class ListofCompany extends Component {
           data={this.state.salesInfo}
           renderItem={({ item }) => (
             <View style={styles.Icon}>
-              <Image style={styles.profileImg} source={require('./img/sample.jpg')} />
+              <Image style={styles.profileImg} source={item.photoURL} />
               <View>
                 <Text style={styles.Username}>{item.nickname}</Text>
                 <Text style={styles.designation}>{item.role}</Text>
@@ -57,41 +67,62 @@ export default class ListofCompany extends Component {
 
         <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Salesperson Detail')}
+            onPress={() => this.props.navigation.navigate('Salesperson Detail', {
+              salesId: this.state.salesId
+            })}
             style={styles.nav}>
             <Text style={styles.navTitle}>Detail</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Salesperson Report')}
+            onPress={() => this.props.navigation.navigate('Salesperson Report', {
+              salesId: this.state.salesId
+            })}
             style={styles.nav}>
             <Text style={styles.navTitle}>Report</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Salesperson Leads')}
+            onPress={() => this.props.navigation.navigate('Salesperson Leads', {
+              salesId: this.state.salesId
+            })}
             style={styles.cardActive}>
             <Text style={styles.activeTitle}>Leads</Text>
           </TouchableOpacity>
         </View>
 
-        <View style={styles.header}>
-          <Text style={styles.firstCol}>Leads</Text>
-          <Text style={styles.SecCol}>Remarks</Text>
-        </View>
-        <FlatList
-          data={this.state.LeadList}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Lead Detail')}>
-              <View style={styles.cardView}>
-                <Text style={styles.firstCol} numberOfLine={5}>
-                  {item.name} ({item.company})
-                  </Text>
-                <Text style={styles.SecCol}>{item.result}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
 
+
+        {this.state.LeadList.length == 0 ?
+          <View>
+            <Text style={{ alignSelf: 'center', fontStyle: 'italic', padding: '3%', color: 'grey' }}>No leads yet!</Text>
+          </View>
+          :
+          <View>
+            <View style={styles.header}>
+              <Text style={styles.firstCol}>Leads</Text>
+              <Text style={styles.SecCol}>Remarks</Text>
+            </View>
+
+            <View>
+              <FlatList
+                data={this.state.LeadList}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Lead Detail',
+                    {
+                      leadID : item.name
+                    })}>
+                    <View style={styles.cardView}>
+                      <Text style={styles.firstCol} numberOfLine={5}>
+                        {item.name} ({item.company})
+                  </Text>
+                      <Text style={styles.SecCol}>{item.result}</Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          </View>
+        }
       </ScrollView>
     );
   }

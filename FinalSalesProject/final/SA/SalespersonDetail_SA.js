@@ -8,12 +8,17 @@ export default class a extends Component {
     super(props);
     this.state = {
       salesInfo: [],
+      salesId: ''
     };
   }
 
   componentDidMount() {
     let salesData = [];
-    var employeeData = db.collection("users").where("name", "==", "Joo")
+    this.setState({ salesId: this.props.route.params.salesId })
+    let salesID = this.props.route.params.salesId;
+    salesID = salesID.toString();
+
+    var employeeData = db.collection("users").where("UID", "==", salesID)
     employeeData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         salesData.push(doc.data());
@@ -33,7 +38,7 @@ export default class a extends Component {
           renderItem={({ item }) => (
             <View>
               <View style={styles.Icon}>
-                <Image style={styles.profileImg} source={require('./img/sample.jpg')} />
+                <Image style={styles.profileImg} source={item.photoURL} />
                 <View>
                   <Text style={styles.Username}>{item.nickname}</Text>
                   <Text style={styles.designation}>{item.role}</Text>
@@ -42,17 +47,23 @@ export default class a extends Component {
 
               <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Salesperson Detail')}
+                  onPress={() => this.props.navigation.navigate('Salesperson Detail', {
+                    salesId: this.state.salesId
+                  })}
                   style={styles.cardActive}>
                   <Text style={styles.activeTitle}>Detail</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Salesperson Report')}
+                  onPress={() => this.props.navigation.navigate('Salesperson Report', {
+                    salesId: this.state.salesId
+                  })}
                   style={styles.nav}>
                   <Text style={styles.navTitle}>Report</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress={() => this.props.navigation.navigate('Salesperson Leads')}
+                  onPress={() => this.props.navigation.navigate('Salesperson Leads', {
+                    salesId: this.state.salesId
+                  })}
                   style={styles.nav}>
                   <Text style={styles.navTitle}>Leads</Text>
                 </TouchableOpacity>
