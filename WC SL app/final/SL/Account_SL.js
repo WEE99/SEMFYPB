@@ -1,160 +1,160 @@
-import React, { useEffect, useState, Component } from 'react';
+import React, {useEffect, useState, Component} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Alert, ImageBackground, Image, LogBox } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, Alert, ImageBackground, Image, LogBox} from 'react-native';
 import { Card } from 'react-native-paper';
 import Settings from 'react-native-vector-icons/AntDesign';
 import { ScrollView } from 'react-native-gesture-handler';
-import { orange, TableRowDashboard, TableRowTaskProfile } from "./TablesandTimeFormat";
-import { auth, db, storage } from "../components/firebase";
+import {orange, TableRowDashboard,TableRowTaskProfile} from "./TablesandTimeFormat";
+import {auth, db, storage} from "../components/firebase";
 import moment from 'moment';
 import Icon2 from 'react-native-vector-icons/MaterialIcons'
 import Icon3 from 'react-native-vector-icons/Feather'
 
 
 
-export default ({ navigation, route }) => {
+export default ({navigation, route}) => {
 
-    const [name, setname] = useState("");
-    const [email, setemail] = useState("");
-    const [phone, setphone] = useState("");
-    const [role, setrole] = useState("");
-    const [profileimage, setprofileImage] = useState("");
-    // https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcbiZWccEy7BaDQdfouPsE-0-9JUiDyTxMQg&usqp=CAU
-    const [tasks, setTasks] = useState([]);
-    const [datafor2, setdatafor2] = useState("");
+const [name,setname]=useState("");
+const [email,setemail]=useState("");
+const [phone,setphone]=useState("");
+const [role,setrole]=useState("");
+const [profileimage,setprofileImage]=useState("");
+// https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTcbiZWccEy7BaDQdfouPsE-0-9JUiDyTxMQg&usqp=CAU
+const [tasks,setTasks]=useState([]);
+const [datafor2,setdatafor2]=useState("");
 
-    const formatAMPM = (date) => {
-        var hours = date.getHours();
-        var minutes = date.getMinutes();
-        var ampm = hours >= 12 ? 'pm' : 'am';
-        hours = hours % 12;
-        hours = hours ? hours : 12; // the hour '0' should be '12'
-        minutes = minutes < 10 ? '0' + minutes : minutes;
-        var strTime = hours + ':' + minutes + ' ' + ampm;
-        return strTime;
-    }
-    const monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const formatAMPM = (date) => {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+  }
+  const monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
 
 
-
-    useEffect(() => {
-
-        var user = auth.currentUser
-        console.log(user)
-
-        db.collection("users").where("UID", "==", user.uid)
-            // .get()
-            // .then(function(querySnapshot) {
-            .onSnapshot((querySnapshot) => {
-                querySnapshot.forEach(function (doc) {
-                    // doc.data() is never undefined for query doc snapshots
-                    console.log(doc.id, " => ", doc.data());
-                    var data = doc.data();
-                    var data2 = doc.id;
-                    var name = setname(data.name);
-                    var email = setemail(data.email);
-                    var contactnumber = setphone(data.phoneNumber);
-                    var photoURL = setprofileImage(data.photoURL);
-                    var role = setrole(data.role);
-                    console.log("datafor2 : " + datafor2)
-
-                    // "Hu4WdS4HH4ugYVFmZexa"
-                    db.collection("tasks").where("userId", "==", data2).where("status", "==", "Not completed").orderBy("date", "desc")
+useEffect(() => {
+      
+    var user=auth.currentUser
+    console.log(user)
+    
+    db.collection("users").where("UID", "==",user.uid)
+                    // .get()
+                    // .then(function(querySnapshot) {
                         .onSnapshot((querySnapshot) => {
-                            let TaskArr = [];
+                        querySnapshot.forEach(function(doc) {
+                            // doc.data() is never undefined for query doc snapshots
+                            console.log(doc.id, " => ", doc.data());
+                            var data=doc.data();
+                            var data2=doc.id;
+                            var name = setname(data.name);
+                            var email = setemail(data.email);
+                            var contactnumber = setphone(data.phoneNumber);
+                            var photoURL = setprofileImage(data.photoURL);
+                            var role = setrole(data.role);
+                            console.log("datafor2 : "+datafor2)
+
+                            // "Hu4WdS4HH4ugYVFmZexa"
+                            db.collection("tasks").where("userId", "==",data2).where("status", "==","Not completed" ).orderBy("date", "desc")
+                            .onSnapshot((querySnapshot) => {
+                            let TaskArr= [];
                             querySnapshot.forEach((docTasks) => {
-                                let task = docTasks.data();
-                                task.id = docTasks.id;
-                                task.time = formatAMPM(task.date.toDate());
-                                console.log("Tname: " + task.title)
+                            let task = docTasks.data();
+                            task.id = docTasks.id;
+                            task.time = formatAMPM(task.date.toDate());
+                            console.log("Tname: "+task.title)
 
-                                var m = task.date.toDate().getMonth()
-                                task.date = monthArr[m] + " " + task.date.toDate().getDate() + ", " + task.date.toDate().getFullYear();
+                            var m = task.date.toDate().getMonth()
+                            task.date = monthArr[m] + " "+ task.date.toDate().getDate() + ", " + task.date.toDate().getFullYear();
 
-                                TaskArr.push(task);
-                                // doc.data() is never undefined for query doc snapshots
-                                console.log(docTasks.id, " => ", docTasks.data());
+                            TaskArr.push(task);
+                            // doc.data() is never undefined for query doc snapshots
+                            console.log(docTasks.id, " => ", docTasks.data());
                             });
                             setTasks(TaskArr);
-                            console.log("TaskArr: " + JSON.stringify(TaskArr));
-                        })
-                    // .catch((error) => {
-                    // console.log("Error getting documents: ", error);
-                    // });
+                            console.log("TaskArr: "+JSON.stringify(TaskArr));
+                            })
+                            // .catch((error) => {
+                            // console.log("Error getting documents: ", error);
+                            // });
 
-                });
-            })
-
-
-
-
-        LogBox.ignoreLogs(['Setting a timer']);
-
-    }, []);
+                        });
+                    })
+                    
 
 
-    const pressSetting = () => {
-        // Alert.alert('Setting Button pressed',"pressed")
-        navigation.navigate("Account Settings");
-    }
+                    
+      LogBox.ignoreLogs(['Setting a timer']);
 
+},[]);
+  
 
-
-    return (
-        <ScrollView styel={{ backgroundColor: 'white', margin: 5 }}>
-            <View style={{ flex: 1, padding: "5%", marginTop: 15 }}>
+const pressSetting =()=>{
+    // Alert.alert('Setting Button pressed',"pressed")
+    navigation.navigate("Account Settings");
+}
 
 
 
-                <View>
-                    <Settings name='setting' size={25} style={{ alignSelf: 'flex-end' }}
-                        onPress={pressSetting}
-                    />
-                    <View style={styles.Direction}>
+        return (
+            <ScrollView styel={{ backgroundColor: 'white', margin: 5}}>
+                <View style={{ flex: 1, padding: "5%", marginTop: 15}}>
+                    
+                    
 
-                        {profileimage != "" ?
+                            <View>
+                                <Settings name='setting' size={25} style={{ alignSelf: 'flex-end' }}
+                               onPress={pressSetting}
+                                    /> 
+                                <View style={styles.Direction}>
 
-                            <Image source={{ uri: profileimage }} style={styles.image} />
-                            : <Icon name='user' size={45} style={styles.profileImg} />
-                        }
+                                    {profileimage!=""?
+                                      
+                                      <Image source={{uri:profileimage}} style={styles.image}/>
+                                      :<Icon name='user' size={45} style={styles.profileImg} />
+                                    }
+                                    
+                                    <View>
+                                        <Text style={styles.Username}>{name}</Text>
+                                        <Text style={styles.designation}>{role}</Text>
+                                    </View>
+                                </View>
 
-                        <View>
-                            <Text style={styles.Username}>{name}</Text>
-                            <Text style={styles.designation}>{role}</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.Direction}>
-                        <View style={styles.Text}>
-                            <Text style={styles.TextMargin}>Name</Text>
-                            <Text style={styles.TextMargin}>Email</Text>
-                            <Text style={styles.TextMargin}>Contact</Text>
-                        </View>
-                        <View style={styles.Info}>
-                            <Text style={styles.TextMargin}>{name}</Text>
-                            <Text style={styles.TextMargin}>{email}</Text>
-                            <Text style={styles.TextMargin}>{phone}</Text>
-                        </View>
-                    </View>
-                </View>
+                                <View style={styles.Direction}>
+                                    <View style={styles.Text}>
+                                        <Text style={styles.TextMargin}>Name</Text>
+                                        <Text style={styles.TextMargin}>Email</Text>
+                                        <Text style={styles.TextMargin}>Contact</Text>
+                                    </View>
+                                    <View style={styles.Info}>
+                                        <Text style={styles.TextMargin}>{name}</Text>
+                                        <Text style={styles.TextMargin}>{email}</Text>
+                                        <Text style={styles.TextMargin}>{phone}</Text>
+                                    </View>
+                                </View>
+                            </View>
+                        
 
 
+                    <Text style={styles.TaskTitle}>UPCOMING TASKS</Text>
 
-                <Text style={styles.TaskTitle}>UPCOMING TASKS</Text>
-
-                <View>
+                    <View>
 
                     {tasks.map((info) =>
-                        <TableRowTaskProfile key={info.id} data={info} navigation={navigation} />
-                    )}
+                                <TableRowTaskProfile key={info.id} data={info} navigation={navigation} />
+                            )}
 
 
+                    </View>
                 </View>
-            </View>
-        </ScrollView>
-    )
+            </ScrollView>
+        )
 
-}
+    }
 
 
 
@@ -175,17 +175,17 @@ const styles = StyleSheet.create({
         // justifyContent:"center",
         // alignItems:"center",
         paddingStart: 13,
-        paddingTop: 5
+        paddingTop:5
     },
 
-    image: {
+    image:{
         width: 60,
         height: 60,
         borderColor: 'black',
         borderWidth: 1,
-        borderRadius: 30,
-    },
-
+        borderRadius:30,
+      },
+    
     Username: {
         marginLeft: 15,
         marginTop: 10,

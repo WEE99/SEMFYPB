@@ -40,7 +40,7 @@ export default ({navigation, route}) => {
           auth.currentUser.updatePassword(Newpsw).then(function() {
             // Update successful.
             console.log("PSW Updated")
-            alert("Resset Succesful nav to ProfileSetting .js")
+            alert("Resset Succesful")
             navigation.goBack()
           })
         })

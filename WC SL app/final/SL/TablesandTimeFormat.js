@@ -157,7 +157,7 @@ export const TableRowTask =({data,navigation})=>{
         <View style={{flexDirection:"row", alignItems:"center", height:30, backgroundColor: 'rgba(255, 255, 255, 0.9)',borderRadius:10, marginTop:10,elevation:2}}>
           <View style={{flex:0.7,fontSize: 13, padding:5, fontWeight:"bold",textAlign:"center",borderRadius:10,backgroundColor:"lightgreen", height:"100%"}}>
       <TouchableOpacity  onPress={()=>{
-      alert("nav EditTask .js")
+      //alert("nav EditTask .js")
       navigation.navigate("Edit Task",data);
       }}>
           <Text style={{fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"left"}}  numberOfLines={1}>
@@ -327,7 +327,7 @@ export const TableRowTaskProfile =({data,navigation})=>{
             <View style={{flexDirection:"row", alignItems:"center", height:30, backgroundColor: 'rgba(255, 255, 255, 0.9)',borderRadius:10, marginTop:10,elevation:2}}>
               <View style={{flex:0.7,fontSize: 13, padding:5, fontWeight:"bold",textAlign:"center",borderRadius:10,backgroundColor:"lightgreen", height:"100%"}}>
           <TouchableOpacity  onPress={()=>{
-          alert("nav EditTask .js")
+          //alert("nav EditTask .js")
           navigation.navigate("Edit Task",data);
           }}>
               <Text style={{fontSize: 13, paddingVertical: 2, color: "black", fontWeight:"bold",textAlign:"left"}}  numberOfLines={1}>

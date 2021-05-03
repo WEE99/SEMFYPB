@@ -1,17 +1,18 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
-import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView, SafeAreaView,FlatList} from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView, SafeAreaView,FlatList,Linking, Platform} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { MaterialIcons } from '@expo/vector-icons'; 
-import {Entypo} from 'react-native-vector-icons';
+import { Entypo } from '@expo/vector-icons'; 
 import { Fontisto } from '@expo/vector-icons';
 import { Foundation } from '@expo/vector-icons'; 
 import { Octicons } from '@expo/vector-icons';
 import { FontAwesome5 } from '@expo/vector-icons';  
 import { Ionicons } from '@expo/vector-icons'; 
 import ModalSelector from 'react-native-modal-selector';
-import {auth, db, storage} from "../components/firebase";
+import {auth, db, storage, firebase} from "../components/firebase";
 import { orange, TableRowTask } from './TablesandTimeFormat';
+import { FontAwesome } from '@expo/vector-icons'; 
 //LeadsDetails
 
 // export default function App() {
@@ -93,7 +94,7 @@ export default ({navigation, route}) => {
                             console.log("Document written with ID: ", docRef.id);
                         })
                         .catch((error) => {
-                            console.error("Error adding document: ", error);
+                            console.error("Error adding document22: ", error);
                         });
                   })
                   .catch((error) => {
@@ -183,6 +184,22 @@ export default ({navigation, route}) => {
     });
   };
 
+  const pressCall= ()=>{
+    // alert("Call")
+   
+      let phoneNumber = ' ';
+
+      if (Platform.OS === 'android') {
+          phoneNumber = 'tel:$'+contactNumber;
+      }
+      else {
+          phoneNumber = 'telprompt:$'+contactNumber;
+      }
+
+      Linking.openURL(phoneNumber);
+  
+  }
+
   
   return (
     <View style={styles.container}>
@@ -226,7 +243,8 @@ export default ({navigation, route}) => {
 
       <View style={styles.row}>
           <Text style={styles.details}>Contact</Text>
-          <Text style={styles.info} >{contactNumber}</Text>
+          <TouchableOpacity style={{ width:"100%",flexDirection:"row"}}onPress={pressCall}><Text><Text style={styles.info} >{contactNumber}</Text>    <Entypo name="old-phone" size={18} color="green" /></Text></TouchableOpacity>
+          {/* <TouchableOpacity style={{width:"100%"}}onPress={pressCall}><Text style={styles.info} >100000000000000000000000000000000000000000</Text></TouchableOpacity> */}
       </View>
 
       <View style={styles.row}>
