@@ -1,28 +1,41 @@
 import React, { Component } from 'react';
 import { Text, View, StyleSheet, FlatList, TouchableOpacity, ScrollView } from 'react-native';
-
+import {auth, db, storage} from "../components/firebase";
 
 export default class ListofCompany extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
+
+    state = {
       LeadList: [
-        { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Won' }
-        , { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Lost' }
       ],
     }
-  }
-
-  //to be further implemented by onPress function to go to company's detail page
-  getLeadsData = (item) => {
-    //var RollNo = item.RollNo;
-    //var StudentName = item.StudentName;
-    //var Course = item.Course;
-
-    //alert(RollNo + "\n" + StudentName + "\n" + Course);
-  }
+  
+    componentDidMount(){
+      this.displayLeads();
+    }
 
 
+    displayLeads(){
+      var user=auth.currentUser
+      console.log(user)
+      db.collection("users").where("UID", "==",user.uid)
+      .onSnapshot((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+              db.collection("leads").where("companyID", "==", doc.id)
+              .onSnapshot((querySnapshot) => {
+                let leadsArr= [];
+                  querySnapshot.forEach((docLeads) => {
+                      let leads = docLeads.data();
+                      leads.id = docLeads.id;
+                      leadsArr.push(leads);
+                      console.log(docLeads.id, " => ", docLeads.data());
+                  });
+                  this.setState({ LeadList: leadsArr });
+                  console.log("LeadsArr:"+ JSON.stringify(leadsArr));
+              })
+              console.log(doc.id, " => ", doc.data());
+          });
+        })
+    }
   render() {
     return (
       <View style={{ flex: 1, padding: "10%" }}>
@@ -49,9 +62,9 @@ export default class ListofCompany extends Component {
           <FlatList
             data={this.state.LeadList}
             renderItem={({ item }) =>
-              <View style={styles.cardView} onPress={() => this.getLeadsData(item)}>
-                <Text style={styles.firstCol}>{item.Leads}   ({item.Company})</Text>
-                <Text style={styles.SecCol}>{item.Status}</Text>
+              <View style={styles.cardView}>
+                <Text style={styles.firstCol}>{item.name}   ({item.company})</Text>
+                <Text style={styles.SecCol}>{item.result}</Text>
               </View>
             }
           />

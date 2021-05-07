@@ -5,105 +5,65 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput, SafeAreaView, Scro
 import TodoItem from '../components/TodoItem.js';
 import AddTodo from '../components/AddTodo.js';
 import { Divider } from 'react-native-elements';
+import { auth, db, storage } from "../components/firebase";
+export default class App extends Component {
+  
 
-export default function App({navigation}) {
-  //export default class Touchables extends Component {
-  //const App = () => {
-
-  //_onPressWonButton() {
-  //alert('WON')
-  //leadstatus="WON"
-  //}
-
-  //_onPressLoseButton() {
-  //alert('LOSE')
-  //leadstatus="LOSE"
-  //}
-
-  //state={
-  //leadstatus:"",
-  //}
-
-  //const [leadstatus, setleadstatus] = useState(0);
-  //onst onPress = () => setleadstatus();
-
-  const [todos, setTodos] = useState([
-    { text: "buy coffee", key: '1' },
-    { text: "create an app", key: '2' },
-    { text: "play on the switch", key: '3' }
-  ]);
-
-  const submitHandler = (text) => {
-    setTodos((prevTodos) => {
-      return [
-        { text: text, key: Math.random().toString() },
-        ...prevTodos
-      ];
-    })
-  }
-
-  const pressHandler = (key) => {
-    setTodos((prevTodos) => {
-      return prevTodos.filter(todo => todo.key != key);
-    });
-  }
-
-  //render(){
-  return (
-    <View style={styles.container}>
-
-      <SafeAreaView style={styles.container}>
+  render() {
+    return (
+      <View style={styles.container}>
         <ScrollView style={styles.scrollView}>
 
           <Text style={styles.title}>LEAD'S DETAIL</Text>
 
           <View style={styles.row}>
             <Text style={styles.details}>Name</Text>
-            <Text style={styles.info}>John Doe</Text>
+            <Text style={styles.info}>{this.props.route.params.paramName}</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.details}>Email</Text>
-            <Text style={styles.info}>abc@gmail.com</Text>
+            <Text style={styles.info}>{this.props.route.params.paramEmail}</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.details}>Contact</Text>
-            <Text style={styles.info}>+6 012 345 6789</Text>
+            <Text style={styles.info}>{this.props.route.params.paramContact}</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.details}>Company</Text>
-            <Text style={styles.info}>ABC Company</Text>
+            <Text style={styles.info}>{this.props.route.params.paramCompany}</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.details}>Interest</Text>
-            <Text style={styles.info}>Website Design</Text>
+            <Text style={styles.info}>{this.props.route.params.paramInterest}</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.details}>Comment</Text>
-            <Text style={styles.info}></Text>
+            <Text style={styles.info}>{this.props.route.params.paramComment}</Text>
           </View>
-
-          {/*<Text>Count: {leadstatus}</Text>*/}
-
+        </ScrollView>
+        {/*<Text>Count: {leadstatus}</Text>*/}
+        <ScrollView>
           <View style={{ borderTopColor: 'black', borderTopWidth: 1, }}>
             <Text style={styles.title2}>SALESPERSON'S DETAIL</Text>
-            <Text style={styles.buttoncontent}>No salesperson assigned</Text>
-            <TouchableOpacity style={styles.WonButton} onPress={() => navigation.navigate('Assign Salesperson')}>
+            <Text style={styles.buttoncontent}>{this.props.route.params.paramSLName}</Text>
+            <Text style={styles.buttoncontent2}>{this.props.route.params.paramSLName2}</Text>
+            <TouchableOpacity style={styles.WonButton} onPress={() => this.props.navigation.navigate('Assign Salesperson')}>
               <Text style={{ color: 'white' }}>ASSIGN SALESPERSON</Text>
             </TouchableOpacity>
 
           </View>
         </ScrollView>
-      </SafeAreaView>
 
-      <StatusBar style="auto" />
-    </View>
-  );
-}//}
+        <StatusBar style="auto" />
+      </View>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -148,9 +108,20 @@ const styles = StyleSheet.create({
   },
 
   buttoncontent: {
-    color: "grey",
+    borderWidth: 1,
+    color: "black",
+    textAlign: "center",
+    fontSize: 20,
     marginTop: 20,
-    marginBottom: 20,
+  },
+
+  buttoncontent2: {
+    borderWidth: 1,
+    color: "black",
+    textAlign: "center",
+    fontSize: 20,
+    marginTop: 20,
+    marginBottom: 10,
   },
 
   details: {
@@ -161,7 +132,7 @@ const styles = StyleSheet.create({
 
   info: {
     fontWeight: "bold",
-    width: '50%',
+    width: '75%',
     //borderWidth:1,
   },
 

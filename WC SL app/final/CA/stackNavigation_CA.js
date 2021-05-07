@@ -20,7 +20,7 @@ import Remarks from './Remarks_CA.js';
 import LeadDetail from './LeadsDetailWithSale_CA.js';
 import ListUnassignedLeads from './ListofLeadsWithoutSale_CA.js';
 import LeadsWithoutSalesperson from './LeadsDetailWithoutSale_CA.js';
-
+import LeadsDetailWithSalesperson from './LeadsDetailWithSale_CA.js'
 //Salesperson Related Pages for Company Admin
 import Reassign from './ReassignSale_CA.js';
 import AssignSalesperson from './AssignSalesperson_CA.js';
@@ -101,6 +101,7 @@ function HomeStackNav() {
       <HomeStack.Screen name="Reassign" component={Reassign} />
       <HomeStack.Screen name="List Unassigned Leads" component={ListUnassignedLeads} />
       <HomeStack.Screen name="Leads Without Salesperson" component={LeadsWithoutSalesperson} />
+      <HomeStack.Screen name="Leads With Salesperson" component={LeadsDetailWithSalesperson} />
       <HomeStack.Screen name="Assign Salesperson" component={AssignSalesperson} />
     </HomeStack.Navigator>
   )

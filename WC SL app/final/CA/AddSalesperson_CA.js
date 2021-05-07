@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 //import { ScrollView } from 'react-native-gesture-handler';
-import {firebase} from "../components/firebase"
+import {firebase} from "../components/firebase";
 export default class App extends Component {
 
     constructor() {
@@ -36,45 +36,26 @@ export default class App extends Component {
         .add({
             name: this.state.Name,
             password: this.state.password,
-            designation: this.state.designation,
+            role: this.state.role,
             email: this.state.email,
             contact: this.state.contact
         })
-        .then((docRef) =>{
-            console.log("Document written with ID:", docRef.id);
+        .then(function(x){
+            var id;
+            id = x.id;
+            var update = db.collection("users").doc(id)
+            return update.update({
+                docId : id
+            })
+            .then(()=>{
+                alert('Salesperson Added');
+            })
         })
         .catch((error)=>{
             console.log("Error adding document:", error);
+            alert("Error! Could not add Salesperson");
         });
     }
-
-    // _Insert_Data_Into_MySQL() {
-    //     const url = 'http://localhost:80/BAckend/salespersonRegister.php';
-    //     fetch( url,
-    //         {
-    //             method: 'POST',
-    //             headers:
-    //             {
-    //                 'Origin': '*',
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify(
-    //                 {
-    //                     username: this.state.SALES_username,
-    //                     Designation: this.state.SALES_designation,
-    //                     sales_name: this.state.SALES_name,
-    //                     sales_email: this.state.SALES_email,
-    //                     sales_contact: this.state.SALES_contact
-    //                 })
-
-    //         }).then((response) => response.json()).then((responseJsonFromServer) => {
-    //             alert(responseJsonFromServer);
-
-    //         }).catch((error) => {
-    //             console.log(error);
-    //         });
-    // }
 
     render() {
         return (
@@ -92,6 +73,7 @@ export default class App extends Component {
                         //secureTextEntry={true} 
                         style={styles.input}
                         onChangeText={(val) => this.updateInputVal(val, 'password')}
+                        secureTextEntry={true}
                     />
 
                     <Text style={styles.instruction}>Contact</Text>
@@ -112,7 +94,7 @@ export default class App extends Component {
                     <TextInput
                         //secureTextEntry={true} 
                         style={styles.input}
-                        onChangeText={(val) => this.updateInputVal(val, 'designation')}
+                        onChangeText={(val) => this.updateInputVal(val, 'role')}
                     />
 
 

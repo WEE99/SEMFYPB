@@ -1,111 +1,125 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView } from 'react-native';
-import { FlatList } from 'react-native-gesture-handler';
-import { auth, db, storage } from "../components/firebase";
+import React, { useEffect, useState, Component} from 'react';
+import { Card } from 'react-native-paper';
+import { StyleSheet, Text, View, SafeAreaView, ScrollView, 
+  FlatList, TouchableOpacity,LogBox } from 'react-native';
+import {auth, db, storage} from "../components/firebase";
+import {orange, TableRowDashboard, TableRowTask, TableHistoryTask} from "../SL/TablesandTimeFormat";
+  
+export default ({navigation, route}) => {
 
-export default class TaskHistory_CA extends Component {
-  state = {
-    History: []
+  var data = db.collection("users");
+  
+  const [username, setUsername]=useState("");
+  const [TaskHistory,setTaskHistory]=useState([]);
+
+  const formatAMPM = (date) => {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'pm' : 'am';
+    hours = hours % 12;
+    hours = hours ? hours : 12; // the hour '0' should be '12'
+    minutes = minutes < 10 ? '0'+minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
   }
+  const monthArr = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  
+  useEffect(() => {
+    var user=auth.currentUser
+    console.log(user)
+    
+    db.collection("users").where("UID", "==",user.uid)
+    .get()
+    .then((querySnapshot) => {
 
-  componentDidMount(){
-    let history = [];
-    var historyData = db.collection("tasks")
-    historyData.onSnapshot((querySnapShot) => {
-      querySnapShot.forEach((doc) => {
-        history.push(doc.data());
-      });
-      this.setState({ History : history});
-    });
-  }
+        querySnapshot.forEach((doc) => {
+    db.collection("tasks").where("status", "==", "Completed").where("companyID", "==",doc.id)
+    .onSnapshot((querySnapshot) => {
+      let TaskHistoryArr= [];
+        querySnapshot.forEach((docTasks) => {
+            let tasks = docTasks.data();
+            tasks.id = docTasks.id;
+            tasks.time = formatAMPM(tasks.date.toDate());
+  
+            var m = tasks.date.toDate().getMonth()
+            tasks.date = monthArr[m] + " "+ tasks.date.toDate().getDate() + ", " + tasks.date.toDate().getFullYear();
 
-  render() {
+  
+            TaskHistoryArr.push(tasks);
+            // doc.data() is never undefined for query doc snapshots
+            console.log(docTasks.id, " => ", docTasks.data());
+        });
+        setTaskHistory(TaskHistoryArr);
+        console.log(TaskHistoryArr);
+    })
+  });
+})
+.catch((error) => {
+    console.log("Error getting documents: ", error);
+});
+
+LogBox.ignoreLogs(['Setting a timer']);
+  },[]);
+
     return (
-      <View style={styles.container}>
-        <FlatList
-          data={this.state.History}
-          renderItem={({ item }) => (
-            <View>
-              <SafeAreaView style={styles.safeArea}>
-                <ScrollView style={styles.scrollView}>
+      <ScrollView style={{backgroundColor:'white'}}>
+        <View style={styles.container}>
+          <Text style={styles.title}>TASK HISTORY</Text>
+           <SafeAreaView>
 
-                  <View style={styles.historyView}>
-                    <Text style={styles.historyContent}> {item.title} </Text>
-                    <Text style={styles.historyContent}> | </Text>
-                    <Text style={styles.historyContent}> {new Date(item.date.toDate()).toDateString() }</Text>
-                    <Text style={styles.historyContent}> - </Text>
-                    <Text style={styles.historyContent}>{item.name}</Text>
-                  </View>
-{/* 
-                  <View style={styles.historyView}>
-                    <Text style={styles.historyContent}> Other </Text>
-                    <Text style={styles.historyContent}> | </Text>
-                    <Text style={styles.historyContent}> 05/09/2020</Text>
-                    <Text style={styles.historyContent}> - </Text>
-                    <Text style={styles.historyContent}>Wee Chien </Text>
-                  </View>
+           <View>
+                {TaskHistory.map((info) =>
+                      <TableHistoryTask key={info.id} data={info}/>
+                  )}
+          </View>
+         
+          </SafeAreaView>
 
-                  <View style={styles.historyView}>
-                    <Text style={styles.historyContent}> Other </Text>
-                    <Text style={styles.historyContent}> | </Text>
-                    <Text style={styles.historyContent}> 05/09/2020</Text>
-                    <Text style={styles.historyContent}> - </Text>
-                    <Text style={styles.historyContent}> Aliah </Text>
-                  </View>
-
-
-                  <View style={styles.historyView}>
-                    <Text style={styles.historyContent}> Other </Text>
-                    <Text style={styles.historyContent}> | </Text>
-                    <Text style={styles.historyContent}> 05/09/2020</Text>
-                    <Text style={styles.historyContent}> - </Text>
-                    <Text style={styles.historyContent}> Cheyenne </Text>
-                  </View> */}
-
-                </ScrollView>
-              </SafeAreaView>
-              <StatusBar style="auto" />
-            </View>
-
-          )}
-        />
-      </View>
+          <StatusBar style="auto" />
+        </View>
+      </ScrollView>
     );
   }
-}
+//}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 16,
+    paddingTop: 30,
     backgroundColor: '#fff',
-    //alignItems: 'center',
-    //justifyContent: 'center',
-    padding: "10%",
   },
 
-  safeArea:{
-      backgroundColor: '#fff',
-      paddingRight: "3%",
-      paddingLeft: "3%",
-      paddingBottom: "5%"
+  title: {
+    fontWeight: "bold",
+    fontSize: 18,
+    paddingTop: 20,
+    paddingLeft: 5,
+    marginBottom: 5
   },
-
-  historyView: {
-    backgroundColor: "lightgrey",
-    marginTop: 10,
-    padding: 5,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
-    borderBottomLeftRadius: 5,
-    borderBottomRightRadius: 5,
+  TaskTitle: {
+    fontFamily: 'Roboto',
+    fontSize: 16,
+    marginTop: 20,
+    marginStart: 15,
+    fontWeight: 'bold'
+  },
+  Date: {
+    marginStart: 5,
+  },
+  card: {
+    margin: 5,
+    borderRadius: 10,
+  },
+  TaskCompleted: {
     flexDirection: 'row',
-  },
-
-  historyContent: {
-    flexDirection: "row",
-
-    //fontWeight:"bold",
-
-  },
+    backgroundColor: 'lightgreen',
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 5,
+    paddingBottom: 10,
+    flex: 1,
+    borderRadius: 10,
+  }
 });
