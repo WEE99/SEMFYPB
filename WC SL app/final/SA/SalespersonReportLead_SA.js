@@ -1,72 +1,136 @@
-import React from 'react';
-import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/AntDesign';
+import { auth, db, storage } from "../components/firebase";
 
-const SalespersonAccountSuperAdmin = () => {
-
+export default class ListofCompany extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      LeadList: [
-        { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Won' },
-        { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Lost' },
-      ],
+      LeadList: [],
+      salesInfo: [],
+      salesId: ''
     };
-  return (
-    <View
-      style={{
-        flex: 1,
-        padding: '10%',
-        marginTop: 20,
-      }}>
-      <View style={styles.Icon}>
-        <Image style={styles.profileImg} source={require('../img/sample.jpg')} />
-        <View>
-          <Text style={styles.Username}>John David</Text>
-          <Text style={styles.designation}>Salesperson</Text>
+  }
+
+  componentDidMount() {
+    let salesData = [];
+    let leadData = [];
+
+    this.setState({ salesId: this.props.route.params.salesId })
+    let salesID = this.props.route.params.salesId;
+    salesID = salesID.toString();
+
+    db.collection("users").where("UID", "==", salesID)
+      .onSnapshot((querySnapShot) => {
+        querySnapShot.forEach((doc) => {
+          db.collection("leads").where("userId", "==", doc.id)
+            .onSnapshot((querySnapShot) => {
+              leadData = [];
+              querySnapShot.forEach((document) => {
+                leadData.push(document.data());
+              })
+              this.setState({ LeadList: leadData });
+            })
+        })
+      })
+
+    var employeeData = db.collection("users").where("UID", "==", salesID)
+    employeeData.onSnapshot((querySnapShot) => {
+      salesData = [];
+      querySnapShot.forEach((doc) => {
+        salesData.push(doc.data());
+      });
+      this.setState({ salesInfo: salesData });
+    });
+  }
+
+  render() {
+    return (
+      <ScrollView
+        style={{
+          flex: 1,
+          padding: '10%',
+          backgroundColor: 'white'
+        }}>
+        <FlatList
+          data={this.state.salesInfo}
+          renderItem={({ item }) => (
+            <View style={styles.Icon}>
+              <Image style={styles.profileImg} source={item.photoURL} />
+              <View>
+                <Text style={styles.Username}>{item.nickname}</Text>
+                <Text style={styles.designation}>{item.role}</Text>
+              </View>
+            </View>
+          )}
+        />
+
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Salesperson Detail', {
+              salesId: this.state.salesId
+            })}
+            style={styles.nav}>
+            <Text style={styles.navTitle}>Detail</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Salesperson Report', {
+              salesId: this.state.salesId
+            })}
+            style={styles.nav}>
+            <Text style={styles.navTitle}>Report</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Salesperson Leads', {
+              salesId: this.state.salesId
+            })}
+            style={styles.cardActive}>
+            <Text style={styles.activeTitle}>Leads</Text>
+          </TouchableOpacity>
         </View>
-      </View>
 
-      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', marginTop: 10 }}>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Detail')}
-          style={styles.nav}>
-          <Text style={styles.navTitle}>Detail</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Report')}
-          style={styles.nav}>
-          <Text style={styles.navTitle}>Report</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Salesperson Leads')}
-          style={styles.cardActive}>
-          <Text style={styles.activeTitle}>Leads</Text>
-        </TouchableOpacity>
-      </View>
-      
-     <View style={styles.header}>
-            <Text style={styles.firstCol}>Leads</Text>
-            <Text style={styles.SecCol}>Remarks</Text>
+
+
+        {this.state.LeadList.length == 0 ?
+          <View>
+            <Text style={{ alignSelf: 'center', fontStyle: 'italic', padding: '3%', color: 'grey' }}>No leads yet!</Text>
           </View>
-          <FlatList
-            data={this.state.LeadList}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Lead Detail')}>
-                <View style={styles.cardView}>
-                  <Text style={styles.firstCol} numberOfLine={5}>
-                    {item.Leads} ({item.Company}) 
+          :
+          <View style={{ marginTop: 10 }}>
+            <Text style={{ color: "grey", fontSize: 10, fontStyle: 'italic', paddingLeft: 5 }}>*Tap the table cells for more actions</Text>
+            <View style={styles.header}>
+              <View style={styles.firstCol}>
+                <Text style={{ fontSize: 12 }}>Leads</Text>
+              </View>
+              <Text style={styles.SecCol}>Remarks</Text>
+            </View>
+
+            <View>
+              <FlatList
+                data={this.state.LeadList}
+                renderItem={({ item }) => (
+                  <TouchableOpacity
+                    onPress={() => this.props.navigation.navigate('Lead Detail',
+                      {
+                        leadID: item.name
+                      })}>
+                    <View style={styles.cardView}>
+                      <Text style={styles.firstCol} numberOfLine={5}>
+                        {item.name} ({item.company})
                   </Text>
-                  <Text style={styles.SecCol}>{item.Status}</Text>
-                </View>
-              </TouchableOpacity>
-            )}
-          />
-
-    </View>
-  );
+                      <Text style={styles.SecCol}>{item.result}</Text>
+                    </View>
+                  </TouchableOpacity>
+                )}
+              />
+            </View>
+          </View>
+        }
+      </ScrollView>
+    );
+  }
 };
-
-export default SalespersonAccountSuperAdmin;
 
 const styles = StyleSheet.create({
   profileImg: {
@@ -90,7 +154,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     marginTop: 10,
   },
-   nav: {
+  nav: {
     margin: 5,
     backgroundColor: 'lightgrey',
     padding: 5,
@@ -115,8 +179,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
   },
-   header: {
-    width: '96.5%',
+  header: {
     marginLeft: 5,
     marginRight: 5,
     flexDirection: 'row',
@@ -129,6 +192,7 @@ const styles = StyleSheet.create({
   },
   SecCol: {
     fontSize: 12,
+    width: '35%',
     borderLeftColor: 'black',
     borderLeftWidth: 1,
     padding: 5,
@@ -137,12 +201,14 @@ const styles = StyleSheet.create({
   },
   firstCol: {
     fontSize: 12,
-    width: '70%',
+    width: '65%',
     padding: 5,
+    justifyContent: 'space-between',
     textAlign: 'left',
     paddingLeft: 15,
+    flexDirection: 'row'
   },
-    CompanyName: {
+  CompanyName: {
     fontFamily: 'Roboto',
     fontWeight: 'bold',
     fontSize: 18,

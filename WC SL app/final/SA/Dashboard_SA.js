@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import {
   FlatList,
-  TouchableNativeFeedback,
+  TouchableNativeFeedback, Button
 } from 'react-native-gesture-handler';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -39,6 +39,8 @@ export default class ExampleTwo extends Component {
             </Card>
           )}
         />
+
+
       </ScrollView>
     );
   }
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: '10%',
     backgroundColor: '#fff',
-    marginTop: 20,
+    paddingTop: 10,
   },
   cardView: {
     backgroundColor: 'lightgrey',

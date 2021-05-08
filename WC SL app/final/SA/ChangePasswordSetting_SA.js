@@ -1,87 +1,139 @@
 import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
-import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import { StackNavigator, } from 'react-navigation';
+import {auth, db, storage,firebase} from "../components/firebase";
+import React, {useEffect, useState, Component} from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 
-//export default function App() {
-export default class Touchables extends Component {
-  state = {
-    oldpsw: '',
-    newpsw: '',
-    retypepsw: '',
+export default ({navigation, route}) => {
+
+  const [Oldpsw, setOldpsw]=useState("");
+  const [Newpsw, setNewpsw]=useState("");
+  const [Retypepsw, setRetypepsw]=useState("");
+  const [email, setemail]=useState("");
+
+  useEffect(() => {
+    let user = auth.currentUser;
+      if(user)
+      {
+        setemail(user.email)
+        console.log("This user is: "+user.email)
+      }
+      
+          
+    },[]);
+
+  const pressCancel =()=>{
+    // alert("Cancel")
+    navigation.goBack();
+  }
+
+  const pressSave =()=>{
+    // alert("Save")
+    if(Newpsw==Retypepsw && Newpsw!="" && Oldpsw!="" && Newpsw!="" && Newpsw.length>=6)
+    {
+      const emailCred  = firebase.auth.EmailAuthProvider.credential(
+        email, Oldpsw);
+        auth.currentUser.reauthenticateWithCredential(emailCred)
+        .then(() => {
+          // User successfully reauthenticated.
+          auth.currentUser.updatePassword(Newpsw).then(function() {
+            // Update successful.
+            console.log("PSW Updated")
+            alert("Resset Succesful")
+            navigation.goBack()
+          })
+        })
+        .catch(error => {
+          console.log("This error occured: "+error)
+        });
+    
+    }
+    else
+    {
+      if(Newpsw.length<6){alert('Pasword need 6 letters')}
+      else
+      { 
+        alert('Password not Match or Empty Field Detected')
+      }
+    }
   };
+  
 
-  render() {
+
+
     return (
       <View style={styles.container}>
+
         <View style={styles.SetpswC}>
-          <Text style={styles.intructionpsw}>Old Password</Text>
+        <Text style={styles.intructionpsw}>Old Password</Text>
           <TextInput
             secureTextEntry={true}
             style={styles.inputpsw}
-            onChangeText={(text) => this.setState({ oldpsw: text })}
+            onChangeText={(val) => setOldpsw(val)}
           />
           <Text style={styles.intructionpsw}>New Password</Text>
           <TextInput
             secureTextEntry={true}
             style={styles.inputpsw}
-            onChangeText={(text) => this.setState({ newpsw: text })}
+            onChangeText={(val) => setNewpsw(val)}
           />
-          <Text style={styles.intructionpsw}>Retype Password</Text>
+          <Text style={styles.intructionpsw}>Retype  Password</Text>
           <TextInput
-            secureTextEntry={true}
+            secureTextEntry={true} 
             style={styles.inputpsw}
-            onChangeText={(text) => this.setState({ retepsw: text })}
+            onChangeText={(val) => setRetypepsw(val)}
           />
         </View>
 
         <View style={styles.ButtonView}>
           <TouchableOpacity
             style={styles.Button}
-            onPress={() => this.props.navigation.goBack()}>
+            onPress={pressCancel}
+          >
             <Text style={styles.ButtonContent}>Cancel</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.Button}
-            onPress={() => this.props.navigation.goBack()}>
+            onPress={pressSave}
+          >
             <Text style={styles.ButtonContent}>Save</Text>
           </TouchableOpacity>
+
+
         </View>
         <StatusBar style="auto" />
       </View>
     );
   }
-}
+//}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     //alignItems: 'Left',
-    padding: '10%',
+    padding: "10%"
   },
 
   SetpswC: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
 
   intructionpsw: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginTop: 10,
   },
 
   inputpsw: {
     marginTop: 10,
     //borderWidth:2,
-    backgroundColor: 'lightgrey',
+    backgroundColor: "lightgrey",
     padding: 10,
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
 
   ButtonView: {
@@ -94,13 +146,17 @@ const styles = StyleSheet.create({
   Button: {
     backgroundColor: 'black',
     padding: 10,
-    width: '30%',
-    borderRadius: 5,
+    width: 100,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
 
   ButtonContent: {
     textAlign: 'center',
-    color: 'white',
+    color: "white",
     fontWeight: 'bold',
   },
+
 });

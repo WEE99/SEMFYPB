@@ -1,65 +1,110 @@
-import React, { Component } from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { StyleSheet, Text, View, FlatList, Image } from 'react-native';
-import { Card } from 'react-native-paper';
+import React, { useEffect, useState, Component, useCallback } from 'react';
+import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
 import Settings from 'react-native-vector-icons/AntDesign';
+import { auth, db, storage } from "../components/firebase";
 
-export default class SalesPersonAccount extends Component {
-  constructor(props) {
-    super(props);
+export default class Account_CA extends Component {
+  state = {
+    AccountData: [],
+    photo: '',
+    username: '',
+    role: '',
+    address: '',
+    companyname: '',
+    contactNo: '',
+    email: '',
+    isLoading: true,
   }
+
+  componentDidMount() {
+    var user = auth.currentUser
+
+
+    let a, b, c, d, e, f, g = "";
+    var dashboardData = db.collection("users").where("UID", "==", user.uid)
+    dashboardData.onSnapshot((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        a = doc.data().photoURL;
+        b = doc.data().nickname;
+        c = doc.data().role;
+        d = doc.data().address;
+        e = doc.data().companyName;
+        f = doc.data().email;
+        g = doc.data().phoneNumber;
+      });
+      this.setState({ photo: a });
+      this.setState({ username: b });
+      this.setState({ role: c });
+      this.setState({ address: d });
+      this.setState({ companyname: e });
+      this.setState({ contactNo: g });
+      this.setState({ email: f });
+      this.setState({ isLoading: false })
+    });
+  }
+
+
   render() {
+    if (this.state.isLoading) {
+      return (
+        <View style={{ flex: 1, padding: '10%' }}>
+          <ActivityIndicator />
+          <Text style={{alignSelf:'center', margin: 10}}>Fetching data...</Text>
+        </View>
+      )
+    }
     return (
-      <View style={{ flex: 1, padding: '10%', marginTop: 20 }}>
-        <Settings
-          name="setting"
-          size={25}
-          style={{ alignSelf: 'flex-end' }}
-          onPress={() => this.props.navigation.navigate('Account Settings')}
-        />
-        <View style={styles.Direction}>
-          <Image style={styles.profileImg} source={require('../img/sample.jpg')} />
+      <View style={{ flex: 1,padding: '10%', backgroundColor: 'white' }}>
+        <Settings name='setting' size={25} style={{ alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate('Account Settings')} />
+
+        <View>
+          <View style={styles.Icon}>
+            <Image style={styles.profileImg} source={this.state.photo} />
+            <View>
+              <Text style={styles.Username} numberOfLines={2}>{this.state.username}</Text>
+              <Text style={styles.designation}>{this.state.role}</Text>
+            </View>
+          </View>
+
           <View>
-            <Text style={styles.Username}>John David</Text>
-            <Text style={styles.designation}>Super Admin</Text>
+            <View style={styles.Direction}>
+              <Text style={styles.Text}>Company</Text>
+              <Text style={styles.Info} numberOfLines={2}>{this.state.companyname}</Text>
+            </View>
+
+            <View style={styles.Direction}>
+              <Text style={styles.Text}>Address</Text>
+              <Text style={styles.Info} numberOfLines={5}>{this.state.address}</Text>
+            </View>
+
+            <View style={styles.Direction}>
+              <Text style={styles.Text}>Email</Text>
+              <Text style={styles.Info} numberOfLines={2}>{this.state.email}</Text>
+            </View>
+            <View style={styles.Direction}>
+              <Text style={styles.Text}>Contact</Text>
+              <Text style={styles.Info}>{this.state.contactNo}</Text>
+            </View>
           </View>
         </View>
-
-      <View>
-        <View style={styles.Direction}>
-          <Text style={[styles.Text, {marginEnd: 22}]}>Name</Text>
-          <Text style={styles.Info} numberOfLine={3}>John David Beckham</Text>
-        </View>
-
-        <View style={styles.Direction}>
-          <Text style={[styles.Text, { marginEnd: 25 }]}>Email</Text>
-          <Text style={styles.Info} numberOfLine={3}>
-            abc@gmail.com
-          </Text>
-        </View>
-        <View style={styles.Direction}>
-          <Text style={[styles.Text, { marginEnd: 8 }]}>Contact</Text>
-          <Text style={styles.Info}>+6 012 345 6789</Text>
-        </View>
       </View>
-        
-      </View>
-    );
+
+    )
   }
-}
+};
+
 
 const styles = StyleSheet.create({
-  Direction: {
-    flexDirection: 'row',
-    marginTop: 10,
-  },
   profileImg: {
     borderRadius: 50,
-    marginStart: 10,
-    marginTop: 2.5,
+    marginStart: 5,
     height: 70,
     width: 70,
+    overflow: 'hidden',
     borderColor: 'black',
+    borderWidth: 1,
+    paddingStart: 11,
+    paddingTop: 5
   },
   Username: {
     marginLeft: 15,
@@ -70,18 +115,29 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     fontSize: 12,
   },
+  Icon: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  Direction: {
+    flexDirection: 'row',
+    marginTop: 10,
+  },
+  Text: {
+    width: '15%',
+    marginTop: 2.5,
+    marginLeft: 15,
+    fontSize: 14,
+    marginBottom: 5
+  },
   Info: {
+    width: '50%',
     marginTop: 2.5,
     marginStart: 35,
     fontSize: 14,
   },
-  Text: {
-    marginTop: 2.5,
-    marginLeft: 15,
-    fontSize: 14,
-  },
-  TextMargin: {
-    marginTop: 5,
-    marginBottom: 5,
-  },
+  Address: {
+    flexDirection: 'row',
+    marginTop: 10,
+  }
 });

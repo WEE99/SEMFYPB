@@ -3,40 +3,121 @@ import {
   Text,
   View,
   StyleSheet,
-  FlatList,
   TouchableOpacity,
   ScrollView,
+  FlatList,
+  ActivityIndicator
 } from 'react-native';
-import { Card } from 'react-native-paper';
+import { auth, db, storage } from "../components/firebase";
 
 export default class ListofCompany extends Component {
   constructor(props) {
     super(props);
+    this.state =
+    {
+      ca: 0,
+      sl: 0,
+      leads: 0,
+      won: 0,
+      lose: 0,
+      companyId: "",
+      isLoading: true,
+    }
+  }
+
+  componentDidMount() {
+    this.setState({ companyId: this.props.route.params.compId })
+    let ID = this.props.route.params.compId;
+    ID = ID.toString();
+
+    let compData = [];
+    var Data = db.collection("users").where("companyID", "==", ID).where("role", "==", "Company Admin")
+    Data.onSnapshot((querySnapShot) => {
+      compData = [];
+      querySnapShot.forEach((doc) => {
+        var data = doc.data();
+        compData.push(data);
+      });
+      this.setState({ CompanyData: compData });
+    });
+
+    this.totalNumberofCompanyAdmin();
+    this.totalNumberofSalesperson();
+    this.totalNumberofWonLeads();
+    this.totalNumberofLeads();
+    this.totalNumberofLostLeads();
+    this.setState({ isLoading: false })
+  }
+
+  totalNumberofCompanyAdmin() {
+    var employeeData = db.collection("users").where("companyID", "==", this.props.route.params.compId).where("role", "==", "Company Admin");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ ca: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofSalesperson() {
+    var employeeData = db.collection("users").where("role", "==", "Salesperson").where("companyID", "==", this.props.route.params.compId);
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ sl: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofWonLeads() {
+    var employeeData = db.collection("leads").where("result", "==", "Won").where("companyID", "==", this.props.route.params.compId);
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ won: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofLeads() {
+    var employeeData = db.collection("leads").where("companyID", "==", this.props.route.params.compId);
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ leads: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofLostLeads() {
+    var employeeData = db.collection("leads").where("result", "==", "Lose").where("companyID", "==", this.props.route.params.compId);
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ lose: querySnapShot.docs.length });
+    });
   }
 
   render() {
     return (
-      <View style={{ flex: 1, padding: '10%', marginTop: 20 }}>
-        <ScrollView>
-          <Text style={styles.CompanyName}>ABC Company</Text>
+      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+        <View style={{ marginTop: 10 }}>
+          <FlatList
+            data={this.state.CompanyData}
+            renderItem={({ item }) => (
+              <Text style={styles.CompanyName}>{item.companyName}</Text>
+            )}
+          />
 
-         <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Details')}
+              onPress={() => this.props.navigation.navigate('Company Details', {
+                compId: this.state.companyId
+              })}
               style={styles.nav}>
               <Text style={styles.navTitle} numberOfLine={2}>
                 Company Detail
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Report')}
+              onPress={() => this.props.navigation.navigate('Company Report', {
+                compId: this.state.companyId
+              })}
               style={styles.cardActive}>
               <Text style={styles.activeTitle} numberOfLine={2}>
                 Company Report
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Leads')}
+              onPress={() => this.props.navigation.navigate('Company Leads', {
+                compId: this.state.companyId
+              })}
               style={styles.nav}>
               <Text style={styles.navTitle} numberOfLine={2}>
                 Company Leads
@@ -44,37 +125,43 @@ export default class ListofCompany extends Component {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.pieChartArea} />
-          <View style={{ marginLeft: 5 , height:600, width: '90%'}}>
+          {/* <View style={styles.pieChartArea} /> */}
+          <View style={{ marginLeft: 5, height: 600, width: '90%' }}>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Company Admin</Text>
-              <Text style={styles.Admin}>80</Text>
+
+              {this.state.isLoading ?
+                <ActivityIndicator />
+                :
+                <Text style={styles.Admin}>{this.state.ca}</Text>
+              }
+
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Salesperson </Text>
-              <Text style={styles.Salesperson}>20</Text>
+              <Text style={styles.Salesperson}>{this.state.sl}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Leads</Text>
-              <Text style={styles.Leads}>20</Text>
+              <Text style={styles.Leads}>{this.state.leads}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Won Leads</Text>
-              <Text style={styles.Won}>80</Text>
+              <Text style={styles.Won}>{this.state.won}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>Total Number of Lost Leads</Text>
-              <Text style={styles.Lost}>20</Text>
+              <Text style={styles.Lost}>{this.state.lose}</Text>
             </View>
           </View>
-        </ScrollView>
-      </View>
+        </View>
+      </ScrollView>
     );
   }
 }
 
 const styles = StyleSheet.create({
-    nav: {
+  nav: {
     margin: 5,
     backgroundColor: 'lightgrey',
     padding: 5,
@@ -177,7 +264,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto',
     fontWeight: 'bold',
     fontSize: 18,
-    marginLeft: 5,
+    marginLeft: 15,
     marginTop: 10,
   },
 });

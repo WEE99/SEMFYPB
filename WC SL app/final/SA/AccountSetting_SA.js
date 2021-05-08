@@ -1,22 +1,44 @@
 import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity, Alert, BackHandler } from 'react-native';
 import {auth, db, storage} from "../components/firebase";
 
-//export default function App() {
-export default class Touchables extends Component {
-  constructor(props) {
-    super(props);
-  };
 
-  render() {
+export default ({navigation, route}) => {
+  
+
+const pressProfile =()=>{
+  // Alert.alert('navigation.navigate("Profile Settings")',"pressed")
+    navigation.navigate("Profile Settings");  
+}
+
+const pressChangepsw =()=>{
+  // Alert.alert('navigation.navigate("ChangePassword")',"pressed")
+  navigation.navigate("ChangePassword");  
+}
+
+const pressNotify =()=>{
+  Alert.alert('navigation.navigate("Notification Settings")',"pressed")
+  navigation.navigate("Notification Settings"); 
+}
+
+const pressLogout =()=>{
+  auth.signOut().then(() => {
+    // Sign-out successful.
+    Alert.alert('Logout',"You had been Logged Out")
+  }).catch((error) => {
+    // An error happened.
+  });
+}
+
+  
     return (
       <View style={styles.container}>
         <View>
           <TouchableOpacity
             style={styles.AccButton}
-            onPress={()=> this.props.navigation.navigate('Profile Settings')}
+            onPress={pressProfile}
           >
             <Text style={styles.buttoncontent}>PROFILE SETTING</Text>
           </TouchableOpacity>
@@ -24,7 +46,7 @@ export default class Touchables extends Component {
         <View>
           <TouchableOpacity
             style={styles.AccButton}
-            onPress={()=> this.props.navigation.navigate('Notification Settings')}
+            onPress={pressNotify}
           >
             <Text style={styles.buttoncontent}>NOTIFICATION</Text>
           </TouchableOpacity>
@@ -32,20 +54,15 @@ export default class Touchables extends Component {
         <View>
           <TouchableOpacity
             style={styles.AccButton}
-            onPress={()=> this.props.navigation.navigate('Change Password Settings')}
+            onPress={pressChangepsw}
           >
             <Text style={styles.buttoncontent}>CHANGE PASSWORD</Text>
           </TouchableOpacity>
         </View>
-        
         <View>
           <TouchableOpacity
             style={styles.AccButton}
-            onPress={()=> { auth.signOut().then(() => {
-              Alert.alert('Logout',"pressed")
-            }).catch((error) => {
-        
-            });}}
+            onPress={pressLogout}
           >
             <Text style={styles.buttoncontent}>LOGOUT</Text>
           </TouchableOpacity>
@@ -53,12 +70,11 @@ export default class Touchables extends Component {
       </View>
     );
   }
-}
+
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#ffff',
     alignItems: 'center',
     justifyContent: 'center',
     padding: "10%",
@@ -69,12 +85,15 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     padding: 10,
     width: 300,
-    borderRadius: 5,
+    borderTopLeftRadius: 5,
+    borderTopRightRadius: 5,
+    borderBottomLeftRadius: 5,
+    borderBottomRightRadius: 5,
   },
 
   buttoncontent: {
     color: "white",
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: 'bold',
     justifyContent: "center",
     textAlign: "center",

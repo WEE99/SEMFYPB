@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Card } from 'react-native-paper';
+import { auth, db, storage } from "../components/firebase";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class ListofCompany extends Component {
@@ -15,36 +15,76 @@ export default class ListofCompany extends Component {
     super(props);
 
     this.state = {
-      LeadList: [
-        { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Won' },
-        { Leads: 'Facebook', Company: 'Facebook Co', Status: 'Lost' },
-      ],
+      LeadList: [],
+      companyId: "",
     };
+  }
+
+  componentDidMount() {
+    this.setState({ companyId: this.props.route.params.compId })
+    let ID = this.props.route.params.compId;
+    ID = ID.toString();
+
+    let compData = [];
+    var Data = db.collection("users").where("companyID", "==", ID).where("role", "==", "Company Admin")
+    Data.onSnapshot((querySnapShot) => {
+      compData = [];
+      querySnapShot.forEach((doc) => {
+        var data = doc.data();
+        compData.push(data);
+      });
+      this.setState({ CompanyData: compData });
+    });
+
+    this.listofLeads();
+  }
+
+  listofLeads() {
+    let listLeads = [];
+    var employeeData = db.collection("leads").where("companyID", "==", this.props.route.params.compId)
+    employeeData.onSnapshot((querySnapShot) => {
+      listLeads = [];
+      querySnapShot.forEach((doc) => {
+        listLeads.push(doc.data());
+      });
+      this.setState({ LeadList: listLeads });
+    });
   }
 
   render() {
     return (
-      <ScrollView>
-        <View style={{ flex: 1, padding: '10%', marginTop: 20 }}>
-          <Text style={styles.CompanyName}>ABC Company</Text>
+      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+        <View style={{ marginTop: 10 }}>
+          <FlatList
+            data={this.state.CompanyData}
+            renderItem={({ item }) => (
+              <Text style={styles.CompanyName}>{item.companyName}</Text>
+            )}
+          />
 
           <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Details')}
+              onPress={() => this.props.navigation.navigate('Company Details', {
+                compId: this.state.companyId
+              })}
               style={styles.nav}>
               <Text style={styles.navTitle} numberOfLine={2}>
                 Company Detail
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Report')}
+              onPress={() => this.props.navigation.navigate('Company Report', {
+                compId: this.state.companyId
+              })}
               style={styles.nav}>
               <Text style={styles.navTitle} numberOfLine={2}>
                 Company Report
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Company Leads')}
+              onPress={() => this.props.navigation.navigate('Company Leads', {
+                compId: this.state.companyId
+              })}
               style={styles.cardActive}>
               <Text style={styles.activeTitle} numberOfLine={2}>
                 Company Leads
@@ -52,24 +92,38 @@ export default class ListofCompany extends Component {
             </TouchableOpacity>
           </View>
 
-          <View style={styles.header}>
-            <Text style={styles.firstCol}>Leads</Text>
-            <Text style={styles.SecCol}>Remarks</Text>
-          </View>
-          <FlatList
-            data={this.state.LeadList}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Lead Detail')}>
-                <View style={styles.cardView}>
-                  <Text style={styles.firstCol} numberOfLine={5}>
-                    {item.Leads} ({item.Company}) 
-                  </Text>
-                  <Text style={styles.SecCol}>{item.Status}</Text>
+          {this.state.LeadList.length == 0 ?
+            <Text style={{ alignSelf: 'center', fontStyle: 'italic', padding: '3%', color: 'grey' }}>No leads yet!</Text>
+            :
+            <View style={{marginTop: 10}}>
+              <Text style={{ color: "grey", fontSize: 10, fontStyle: 'italic', paddingLeft: 5 }}>*Tap the table cells for more actions</Text>
+              <View>
+                <View style={styles.header}>
+                  <View style={styles.firstCol}>
+                    <Text style={{ fontSize: 12 }}>Leads</Text>
+                  </View>
+                  <Text style={styles.SecCol}>Remarks</Text>
                 </View>
-              </TouchableOpacity>
-            )}
-          />
+                <FlatList
+                  data={this.state.LeadList}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      onPress={() => this.props.navigation.navigate('Lead Detail',
+                        {
+                          leadID: item.name
+                        })}>
+                      <View style={styles.cardView}>
+                        <Text style={styles.firstCol} numberOfLine={5}>
+                          {item.name} ({item.company})
+                  </Text>
+                        <Text style={styles.SecCol}>{item.result}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  )}
+                />
+              </View>
+            </View>
+          }
         </View>
       </ScrollView>
     );
@@ -119,7 +173,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   header: {
-    width: '96.5%',
     marginLeft: 5,
     marginRight: 5,
     flexDirection: 'row',
@@ -132,6 +185,7 @@ const styles = StyleSheet.create({
   },
   SecCol: {
     fontSize: 12,
+    width: '35%',
     borderLeftColor: 'black',
     borderLeftWidth: 1,
     padding: 5,
@@ -140,9 +194,11 @@ const styles = StyleSheet.create({
   },
   firstCol: {
     fontSize: 12,
-    width: '70%',
+    width: '65%',
     padding: 5,
     textAlign: 'left',
     paddingLeft: 15,
+    justifyContent: 'space-between',
+    flexDirection: 'row'
   },
 });

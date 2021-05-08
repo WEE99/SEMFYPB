@@ -1,31 +1,114 @@
 import React, { Component } from 'react';
 import {
-  Text,
-  View,
-  StyleSheet,
-  FlatList,
-  ScrollView,
-  TouchableOpacity,Image
+  Text, View, StyleSheet, FlatList, ActivityIndicator, TextInput, ScrollView, TouchableOpacity, Image
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icon2 from 'react-native-vector-icons/MaterialIcons';
+import { auth, db, storage } from "../components/firebase";
+import { CSVLink } from "react-csv";
 
 export default class ListofEmployee extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      EmployeeList: [
-        { Image: '', SalespersonName: 'John David', CompanyName: 'Facebook' },
-        { Image: '', SalespersonName: 'John David', CompanyName: 'Facebook' },
-      ],
+      EmployeeList: [],
+      isLoading: true,
+      text: '',
+      fileName: ''
     };
   }
 
+  componentDidMount() {
+    this.listofSalesperson();
+  }
+
+  listofSalesperson() {
+    let listEmployee = [];
+    var employeeData = db.collection("users").where("role", "==", "Salesperson")
+    employeeData.onSnapshot((querySnapShot) => {
+      listEmployee = [];
+      querySnapShot.forEach((doc) => {
+        listEmployee.push(doc.data());
+      });
+      this.setState({ EmployeeList: listEmployee });
+      this.setState({ isLoading: false })
+    });
+  }
+
+  searchData(text) {
+    if (text == "") {
+      this.listofSalesperson();
+      this.state.text = ''
+      return;
+    }
+    const newData = this.state.EmployeeList.filter(item => {
+      const itemData = item.username.toUpperCase();
+      const textData = text.toUpperCase();
+      return itemData.indexOf(textData) > -1
+    });
+
+
+    this.setState({
+      EmployeeList: newData,
+      text: text
+    })
+    this.state.EmployeeList = newData;
+  }
+
   render() {
+    if (this.state.isLoading) {
+      return (
+        <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+            horizontal={true}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Overall Report')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Overall Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('List of Company')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Company Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('List of Salesperson')
+              }
+              style={styles.cardActive}>
+              <Text style={styles.activeTitle} numberOfLine={3}>
+                Salesperson Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('List of Leads')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Leads Report
+            </Text>
+            </TouchableOpacity>
+          </ScrollView>
+
+          <ActivityIndicator style={{ alignSelf: 'center', margin: 10, paddingTop: 10 }} />
+          <Text style={{ alignSelf: 'center', margin: 10, paddingTop: 10 }}>Fetching data...</Text>
+
+        </ScrollView>
+      )
+    }
     return (
-      <View style={{ flex: 1, padding: '10%', marginTop: 20 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+          horizontal={true}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Overall Report')}
             style={styles.nav}>
@@ -56,22 +139,48 @@ export default class ListofEmployee extends Component {
               Leads Report
             </Text>
           </TouchableOpacity>
-        </View>
-        
+        </ScrollView>
+
         <ScrollView>
+          <View style={{ flexDirection: 'row' }}>
+
+            <View style={styles.MainContainer}>
+              <View style={styles.textInputBox}>
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={(text) => this.searchData(text)}
+                  value={this.state.text}
+                  underlineColorAndroid='transparent'
+                  placeholder="Search Salesperson" />
+                <Icon2 name="search" size={20} style={{ marginTop: 3, paddingRight: 5, color: 'lightgrey' }} />
+              </View>
+            </View>
+
+            <CSVLink data={this.state.EmployeeList} filename={"EmployeesData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
+              <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink>
+            <Icon name="infocirlceo" size={15} style={{ marginTop: 12, paddingLeft: 5, marginRight: 5 }}
+              onPress={() =>
+                alert("Tap the download icon to download the report")
+              } />
+
+          </View>
+
           <FlatList
             data={this.state.EmployeeList}
             renderItem={({ item }) => (
               <Card
                 style={styles.card}
                 onPress={() =>
-                  this.props.navigation.navigate('Salesperson Detail')
+                  this.props.navigation.navigate('Salesperson Detail', {
+                    salesId: item.UID
+                  })
+
                 }>
                 <View style={styles.cardView}>
-                  <Image style={styles.profileImg} sourzce={require('../img/sample.jpg')} />
+                  <Image style={styles.profileImg} source={item.photoURL} />
                   <View style={styles.texts}>
-                    <Text style={styles.Name} numberOfLine={3}>{item.SalespersonName}</Text>
-                    <Text style={styles.CompanyName} numberOfLine={3}>({item.CompanyName})</Text>
+                    <Text style={styles.Name} numberOfLine={3}>{item.username}</Text>
+                    <Text style={styles.CompanyName} numberOfLine={3}>({item.companyName})</Text>
                   </View>
                   <View style={{ justifyContent: 'flex-end' }}>
                     <Icon name="right" size={15} style={styles.icon} />
@@ -81,7 +190,7 @@ export default class ListofEmployee extends Component {
             )}
           />
         </ScrollView>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -94,6 +203,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 5,
     width: '23%',
+    justifyContent: 'space-around'
   },
   navTitle: {
     fontSize: 12,
@@ -106,6 +216,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 5,
     width: '23%',
+    justifyContent: 'space-around'
   },
   activeTitle: {
     color: 'white',
@@ -149,7 +260,24 @@ const styles = StyleSheet.create({
   Designation: {
     fontSize: 12
   },
-  icon:{
-    marginBottom: 15  
+  icon: {
+    marginTop: 5
+  },
+  MainContainer: {
+    justifyContent: 'center',
+    flex: 1,
+    margin: 5,
+  },
+  textInput: {
+    textAlign: 'center',
+    padding: 5,
+    flex: 1,
+    fontSize: 12
+  },
+  textInputBox: {
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: 'lightgrey',
+    flexDirection: 'row'
   }
 });

@@ -3,21 +3,180 @@ import {
   Text,
   View,
   StyleSheet,
-  FlatList,
+  ActivityIndicator,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Card } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/AntDesign'
+import { auth, db, storage } from "../components/firebase";
+import { CSVLink } from "react-csv";
 
 export default class ListofCompany extends Component {
   constructor(props) {
     super(props);
+    this.state =
+    {
+      user: 0,
+      ca: 0,
+      sl: 0,
+      leads: 0,
+      won: 0,
+      lose: 0,
+      isLoading: true,
+      LeadList: [],
+      EmployeeList: [],
+      CompanyList: [],
+      fileName: ''
+    }
+  }
+
+  componentDidMount() {
+    this.totalNumberUser();
+    this.totalNumberofCompanyAdmin();
+    this.totalNumberofSalesperson();
+    this.totalNumberofWonLeads();
+    this.totalNumberofLeads();
+    this.totalNumberofLostLeads();
+    this.setState({ isLoading: false })
+
+    this.listofLeads();
+    this.listofCompany();
+    this.listofSalesperson();
+  }
+
+  listofCompany() {
+    let companyName = [];
+    var employeeData = db.collection("company")
+    employeeData.onSnapshot((querySnapShot) => {
+      companyName = [];
+      querySnapShot.forEach((doc) => {
+        var data = doc.data();
+        companyName.push(data);
+      });
+      this.setState({ CompanyList: companyName });
+    });
+
+  }
+
+  listofSalesperson() {
+    let listEmployee = [];
+    var employeeData = db.collection("users").where("role", "==", "Salesperson")
+    employeeData.onSnapshot((querySnapShot) => {
+      listEmployee = [];
+      querySnapShot.forEach((doc) => {
+        listEmployee.push(doc.data());
+      });
+      this.setState({ EmployeeList: listEmployee });
+    });
+  }
+
+  listofLeads() {
+    let listLeads = [];
+    var employeeData = db.collection("leads")
+    employeeData.onSnapshot((querySnapShot) => {
+      listLeads = [];
+      querySnapShot.forEach((doc) => {
+        listLeads.push(doc.data());
+      });
+      this.setState({ LeadList: listLeads });
+    });
+  }
+
+  totalNumberUser() {
+    var employeeData = db.collection("users");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ user: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofCompanyAdmin() {
+    var employeeData = db.collection("users").where("role", "==", "Company Admin");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ ca: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofSalesperson() {
+    var employeeData = db.collection("users").where("role", "==", "Salesperson");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ sl: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofWonLeads() {
+    var employeeData = db.collection("leads").where("result", "==", "Won");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ won: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofLeads() {
+    var employeeData = db.collection("leads");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ leads: querySnapShot.docs.length });
+    });
+  }
+
+  totalNumberofLostLeads() {
+    var employeeData = db.collection("leads").where("result", "==", "Lose");
+    employeeData.onSnapshot((querySnapShot) => {
+      this.setState({ lose: querySnapShot.docs.length });
+    });
   }
 
   render() {
+    if (this.state.isLoading) {
+      return (
+        <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+          <ScrollView
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+            horizontal={true}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Overall Report')}
+              style={styles.cardActive, { justifyContent: 'center' }}>
+              <Text style={styles.activeTitle, { textAlign: 'center' }} numberOfLine={3}>
+                Overall Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('List of Company')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Company Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                this.props.navigation.navigate('List of Salesperson')
+              }
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Salesperson Report
+            </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('List of Leads')}
+              style={styles.nav}>
+              <Text style={styles.navTitle} numberOfLine={3}>
+                Leads Report
+            </Text>
+            </TouchableOpacity>
+          </ScrollView>
+
+          <ActivityIndicator />
+          <Text style={{ alignSelf: 'center', paddingTop: 10 }}>Fetching data...</Text>
+
+        </ScrollView>
+      )
+    }
+
     return (
-      <View style={{ flex: 1, padding: '10%', marginTop: 20 }}>
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
+          horizontal={true}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate('Overall Report')}
             style={styles.cardActive}>
@@ -48,48 +207,57 @@ export default class ListofCompany extends Component {
               Leads Report
             </Text>
           </TouchableOpacity>
+        </ScrollView>
+
+        <View style={{flexDirection: 'row', alignSelf: 'flex-end', marginTop: 10}}>
+          <CSVLink data={this.state.CompanyList.concat(this.state.EmployeeList, this.state.LeadList)} filename={"OverallReport.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
+            <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink>
+          <Icon name="infocirlceo" size={15} style={{ marginTop: 1, paddingLeft: 5, marginRight: 5 }}
+            onPress={() =>
+              alert("Tap the download icon to download the report")
+            } />
         </View>
 
         <ScrollView>
-          <View style={styles.pieChartArea} />
+          {/* <View style={styles.pieChartArea} /> */}
           <View style={{ marginLeft: 5, height: 600, width: '90%' }}>
             <View style={styles.Direction}>
               <Text style={styles.Text}>Total Number of User</Text>
-              <Text style={styles.User}>100</Text>
+              <Text style={styles.User}>{this.state.user}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>
                 Total Number of Company Admin
               </Text>
-              <Text style={styles.Admin}>80</Text>
+              <Text style={styles.Admin}>{this.state.ca}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>
                 Total Number of Salesperson{' '}
               </Text>
-              <Text style={styles.Salesperson}>20</Text>
+              <Text style={styles.Salesperson}>{this.state.sl}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>
                 Total Number of Leads
               </Text>
-              <Text style={styles.Leads}>20</Text>
+              <Text style={styles.Leads}>{this.state.leads}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>
                 Total Number of Won Leads
               </Text>
-              <Text style={styles.Won}>80</Text>
+              <Text style={styles.Won}>{this.state.won}</Text>
             </View>
             <View style={styles.Direction}>
               <Text style={styles.Text} numberOfLine={2}>
                 Total Number of Lost Leads
               </Text>
-              <Text style={styles.Lost}>20</Text>
+              <Text style={styles.Lost}>{this.state.lose}</Text>
             </View>
           </View>
         </ScrollView>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -102,6 +270,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 5,
     width: '23%',
+    justifyContent: 'space-around'
   },
   navTitle: {
     fontSize: 12,
@@ -114,6 +283,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 5,
     width: '23%',
+    justifyContent: 'space-around'
   },
   activeTitle: {
     color: 'white',
