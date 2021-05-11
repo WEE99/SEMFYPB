@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Component, useCallback } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "../components/firebase";
 import { FlatList } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-vector-icons/FontAwesome5';
 export default class Account_CA extends Component {

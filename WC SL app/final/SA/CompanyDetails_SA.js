@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "../components/firebase";
 
 export default class ListofCompany extends Component {
   constructor(props) {

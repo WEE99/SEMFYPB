@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Component, useCallback } from 'react';
-import { StyleSheet, Text, View, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, Image, ActivityIndicator, ScrollView } from 'react-native';
 import Settings from 'react-native-vector-icons/AntDesign';
-import { auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "../components/firebase";
 
 export default class Account_CA extends Component {
   state = {
@@ -17,11 +17,8 @@ export default class Account_CA extends Component {
   }
 
   componentDidMount() {
-    var user = auth.currentUser
-
-
     let a, b, c, d, e, f, g = "";
-    var dashboardData = db.collection("users").where("UID", "==", user.uid)
+    var dashboardData = db.collection("users").where("UID", "==", "molZQJeaw7SZPoGJsqlJuVpsZAR2").where("role", "==", "Super Admin")
     dashboardData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         a = doc.data().photoURL;
@@ -54,7 +51,7 @@ export default class Account_CA extends Component {
       )
     }
     return (
-      <View style={{ flex: 1,padding: '10%', backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1,padding: '10%', backgroundColor: 'white' }}>
         <Settings name='setting' size={25} style={{ alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate('Account Settings')} />
 
         <View>
@@ -87,7 +84,7 @@ export default class Account_CA extends Component {
             </View>
           </View>
         </View>
-      </View>
+      </ScrollView>
 
     )
   }

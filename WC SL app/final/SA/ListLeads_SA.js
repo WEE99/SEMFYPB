@@ -6,9 +6,9 @@ import {
   ScrollView,
   TouchableOpacity, ActivityIndicator, TextInput, Button
 } from 'react-native';
-import { auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "../components/firebase";
 import { FlatList } from 'react-native-gesture-handler';
-import { CSVLink } from "react-csv";
+// import { CSVLink } from "react-csv";
 import Icon from 'react-native-vector-icons/AntDesign'
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 
@@ -158,11 +158,11 @@ export default class ExampleTwo extends Component {
               </View>
             </View>
 
-            <CSVLink data={this.state.LeadList} filename={"LeadData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
-              <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink>
+            {/* <CSVLink data={this.state.LeadList} filename={"LeadData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
+              <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink> */}
             <Icon name="infocirlceo" size={15} style={{ marginTop: 12, paddingLeft: 5, marginRight: 5 }}
               onPress={() =>
-                alert("Tap the download icon to download the report")
+                alert("Tap the lead's name in the table for more details")
               } />
           </View>
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
-import { auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "../components/firebase";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class LeadsAccountInSuperAdmin extends Component {

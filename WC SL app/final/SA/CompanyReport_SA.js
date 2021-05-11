@@ -8,7 +8,7 @@ import {
   FlatList,
   ActivityIndicator
 } from 'react-native';
-import { auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "../components/firebase";
 
 export default class ListofCompany extends Component {
   constructor(props) {

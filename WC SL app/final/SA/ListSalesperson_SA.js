@@ -5,8 +5,8 @@ import {
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
-import { auth, db, storage } from "../components/firebase";
-import { CSVLink } from "react-csv";
+import {auth, db, storage } from "../components/firebase";
+// import { CSVLink } from "react-csv";
 
 export default class ListofEmployee extends Component {
   constructor(props) {
@@ -156,11 +156,11 @@ export default class ListofEmployee extends Component {
               </View>
             </View>
 
-            <CSVLink data={this.state.EmployeeList} filename={"EmployeesData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
-              <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink>
+            {/* <CSVLink data={this.state.EmployeeList} filename={"EmployeesData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
+              <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink> */}
             <Icon name="infocirlceo" size={15} style={{ marginTop: 12, paddingLeft: 5, marginRight: 5 }}
               onPress={() =>
-                alert("Tap the download icon to download the report")
+                alert("Tap the salesperson's name for more details")
               } />
 
           </View>

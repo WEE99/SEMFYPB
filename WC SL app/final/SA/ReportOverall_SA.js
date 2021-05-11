@@ -8,8 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign'
-import { auth, db, storage } from "../components/firebase";
-import { CSVLink } from "react-csv";
+import {auth, db, storage } from "../components/firebase";
 
 export default class ListofCompany extends Component {
   constructor(props) {
@@ -83,7 +82,7 @@ export default class ListofCompany extends Component {
   }
 
   totalNumberUser() {
-    var employeeData = db.collection("users");
+    var employeeData = db.collection("users").where("role","!=", "Super Admin");
     employeeData.onSnapshot((querySnapShot) => {
       this.setState({ user: querySnapShot.docs.length });
     });
