@@ -17,7 +17,7 @@ const  pressRessetPassword= ()=>
     alert("Email empty")
   }
   auth.sendPasswordResetEmail(forgotEmail).then(function() {
-    alert ("Email is sent to" + forgotEmail)
+    alert ("Email is sent to " + forgotEmail)
     navigation.navigate("Login")
 
   }).catch(function(error) {
