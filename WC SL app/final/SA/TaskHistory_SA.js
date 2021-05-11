@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, FlatList } from 'react-native';
-import { auth, db, storage } from '../CA/firebase';
+import { auth, db, storage } from '../components/firebase';
 
 export default class App extends Component {
   constructor(props) {

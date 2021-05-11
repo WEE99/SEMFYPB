@@ -41,7 +41,7 @@ export default class App extends Component {
             .then(result => {
                 db.collection('users').doc(result.user.id).set({
                     UID: result.user.uid,
-                    username: this.state.name,
+                    username: this.state.Name,
                     email: this.state.email,
                     designation: this.state.designation,
                     phoneNumber: this.state.contact,
