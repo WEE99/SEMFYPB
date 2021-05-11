@@ -17,8 +17,10 @@ export default class Account_CA extends Component {
   }
 
   componentDidMount() {
+    var user = auth.currentUser
+
     let a, b, c, d, e, f, g = "";
-    var dashboardData = db.collection("users").where("UID", "==", "molZQJeaw7SZPoGJsqlJuVpsZAR2").where("role", "==", "Super Admin")
+    var dashboardData = db.collection("users").where("UID", "==", user.uid)
     dashboardData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         a = doc.data().photoURL;

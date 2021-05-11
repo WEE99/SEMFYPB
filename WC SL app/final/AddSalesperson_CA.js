@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 //import { ScrollView } from 'react-native-gesture-handler';
-import { auth, firebase } from "../components/firebase";
+import {firebase} from "../components/firebase";
 export default class App extends Component {
 
     constructor() {
@@ -13,75 +13,40 @@ export default class App extends Component {
             designation: '',
             email: '',
             contact: '',
-            compID: '',
-            compName: ''
         }
     }
 
-    updateInputVal = (val, prop) => {
+    updateInputVal = (val, prop) =>{
         const state = this.state;
         state[prop] = val;
         this.setState(state);
     }
 
-    registerUser = () => {
-        let cID, cName = ''
-        var user = auth.currentUser
-        var userData = db.collection("users").where("UID", "==", user.uid)
-        userData.onSnapshot((querySnapShot) => {
-            querySnapShot.forEach((doc) => {
-                cID = doc.data().companyID
-                cName = doc.data().c
-            });
-            this.setState({ compID: cID });
-            this.setState({ compName: cName });
-        });
-
-        auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
-            .then(result => {
-                db.collection('users').doc(result.user.id).set({
-                    UID: result.user.uid,
-                    username: this.state.name,
-                    email: this.state.email,
-                    designation: this.state.designation,
-                    phoneNumber: this.state.contact,
-                    address: '',
-                    admin: false,
-                    companyID: this.state.compID,
-                    companyName: this.state.compName,
-                    photoURL: ''
-                })
+    registerUser = () =>{
+        var db = firebase.firestore();
+        db.collection("users")
+        .add({
+            name: this.state.Name,
+            password: this.state.password,
+            role: this.state.role,
+            email: this.state.email,
+            contact: this.state.contact
+        })
+        .then(function(x){
+            var id;
+            id = x.id;
+            var update = db.collection("users").doc(id)
+            return update.update({
+                docId : id
             })
-            .catch((error => {
-                alert(error)
-            }))
-
-        this.props.navigation.goBack()
-
-        // var db = firebase.firestore();
-        // db.collection("users")
-        //     .add({
-        //         name: this.state.Name,
-        //         password: this.state.password,
-        //         role: this.state.role,
-        //         email: this.state.email,
-        //         contact: this.state.contact
-        //     })
-        //     .then(function (x) {
-        //         var id;
-        //         id = x.id;
-        //         var update = db.collection("users").doc(id)
-        //         return update.update({
-        //             docId: id
-        //         })
-        //             .then(() => {
-        //                 alert('Salesperson Added');
-        //             })
-        //     })
-        //     .catch((error) => {
-        //         console.log("Error adding document:", error);
-        //         alert("Error! Could not add Salesperson");
-        //     });
+            .then(()=>{
+                alert('Salesperson Added');
+            })
+        })
+        .catch((error)=>{
+            console.log("Error adding document:", error);
+            alert("Error! Could not add Salesperson");
+        });
     }
 
     render() {
