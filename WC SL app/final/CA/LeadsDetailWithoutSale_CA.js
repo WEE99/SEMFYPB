@@ -46,16 +46,12 @@ export default class App extends Component {
             <Text style={styles.info}>{this.props.route.params.paramComment}</Text>
           </View>
         </ScrollView>
-        {/*<Text>Count: {leadstatus}</Text>*/}
         <ScrollView>
-          <View style={{ borderTopColor: 'black', borderTopWidth: 1, }}>
-            <Text style={styles.title2}>SALESPERSON'S DETAIL</Text>
-            <Text style={styles.buttoncontent}>{this.props.route.params.paramSLName}</Text>
-            <Text style={styles.buttoncontent2}>{this.props.route.params.paramSLName2}</Text>
+        <Divider style={{ backgroundColor: 'black', marginBottom:20 }} />
+          <View style={{ marginBottom:130}}>
             <TouchableOpacity style={styles.WonButton} onPress={() => this.props.navigation.navigate('Assign Salesperson')}>
               <Text style={{ color: 'white' }}>ASSIGN SALESPERSON</Text>
             </TouchableOpacity>
-
           </View>
         </ScrollView>
 

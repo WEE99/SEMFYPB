@@ -16,11 +16,10 @@ export default class ListofCompany extends Component {
 
     displayLeads(){
       var user=auth.currentUser
-      console.log(user)
       db.collection("users").where("UID", "==",user.uid)
       .onSnapshot((querySnapshot) => {
           querySnapshot.forEach((doc) => {
-              db.collection("leads").where("companyID", "==", doc.id)
+              db.collection("leads").where("companyID", "==", doc.id).where("userId", "==", this.props.route.params.paramsUserId2)
               .onSnapshot((querySnapshot) => {
                 let leadsArr= [];
                   querySnapshot.forEach((docLeads) => {
@@ -30,9 +29,7 @@ export default class ListofCompany extends Component {
                       console.log(docLeads.id, " => ", docLeads.data());
                   });
                   this.setState({ LeadList: leadsArr });
-                  console.log("LeadsArr:"+ JSON.stringify(leadsArr));
               })
-              console.log(doc.id, " => ", doc.data());
           });
         })
     }

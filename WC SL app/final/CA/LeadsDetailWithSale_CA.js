@@ -3,126 +3,107 @@ import React, { Component, useState } from 'react';
 //import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, ScrollView, FlatList } from 'react-native';
 import TodoItem from '../components/TodoItem.js';
+import { auth, db, storage } from '../components/firebase';
+// export default function App({navigation}) {
 
-export default function App({navigation}) {
+  export default class Touchables extends Component {
 
-  //export default class Touchables extends Component {
-  //const App = () => {
 
-  //_onPressWonButton() {
-  //alert('WON')
-  //leadstatus="WON"
-  //}
-
-  //_onPressLoseButton() {
-  //alert('LOSE')
-  //leadstatus="LOSE"
-  //}
-
-  //state={
-  //leadstatus:"",
-  //}
-
-  //const [leadstatus, setleadstatus] = useState(0);
-  //onst onPress = () => setleadstatus();
-
-  const [todos, setTodos] = useState([
-    { text: "buy coffee", key: '1' },
-    { text: "create an app", key: '2' },
-    { text: "play on the switch", key: '3' }
-  ]);
-
-  const submitHandler = (text) => {
-    setTodos((prevTodos) => {
-      return [
-        { text: text, key: Math.random().toString() },
-        ...prevTodos
-      ];
-    })
+  state={
+  leadstatus:"",
+  LeadList:[]
   }
 
-  const pressHandler = (key) => {
-    setTodos((prevTodos) => {
-      return prevTodos.filter(todo => todo.key != key);
-    });
-  }
+  // componentDidMount(){
+  //   var user=auth.currentUser
+  //   db.collection("users").where("UID", "==",user.uid)
+  //   .onSnapshot((querySnapshot) => {
+  //       querySnapshot.forEach((doc) => {
+  //           db.collection("leads").where("companyID", "==", doc.id).where("name", "==", this.props.route.params.paramName ).where("userId", "==", this.props.route.params.paramUserID)
+  //           .onSnapshot((querySnapshot) => {
+  //             let leadsArr= [];
+  //               querySnapshot.forEach((docLeads) => {
+  //                   let leads = docLeads.data();
+  //                   leads.id = docLeads.id;
+  //                   leadsArr.push(leads);
+  //               });
+  //               this.setState({ LeadList: leadsArr });
+  //               console.log("WASSSSSUP:", leadsArr)
+  //           })
 
-  //render(){
+  //       });
+  //     })
+  // }
+
+  render(){
   return (
     <View style={styles.container}>
 
-      <SafeAreaView style={styles.container}>
+
         <ScrollView style={styles.scrollView}>
 
           <Text style={styles.title}>LEAD'S DETAIL</Text>
 
           <View style={styles.row}>
             <Text style={styles.details}>Name</Text>
-            <Text style={styles.info}>John Doe</Text>
+            <Text style={styles.info}>{this.props.route.params.paramName}</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.details}>Email</Text>
-            <Text style={styles.info}>abc@gmail.com</Text>
+            <Text style={styles.info}>{this.props.route.params.paramEmail}</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.details}>Contact</Text>
-            <Text style={styles.info}>+6 012 345 6789</Text>
+            <Text style={styles.info}>{this.props.route.params.paramContact}</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.details}>Company</Text>
-            <Text style={styles.info}>ABC Company</Text>
+            <Text style={styles.info}>{this.props.route.params.paramCompany}</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.details}>Interest</Text>
-            <Text style={styles.info}>Website Design</Text>
+            <Text style={styles.info}>{this.props.route.params.paramInterest}</Text>
           </View>
 
           <View style={styles.row}>
             <Text style={styles.details}>Comment</Text>
-            <Text style={styles.info}></Text>
+            <Text style={styles.info}>{this.props.route.params.paramComment}</Text>
           </View>
 
           {/*<Text>Count: {leadstatus}</Text>*/}
 
           <View style={{ borderTopColor: 'black', borderTopWidth: 1, }}>
             <Text style={styles.title2}>SALESPERSON'S DETAIL</Text>
-            <View style={styles.row}>
-              <Text style={styles.details}>Name</Text>
-              <TouchableOpacity style={styles.info}>
-                <Text style={styles.info}>John David</Text>
-              </TouchableOpacity>
-            </View>
-            <TouchableOpacity style={styles.WonButton} onPress={() => navigation.navigate('Reassign')}>
+ 
+          <View style={styles.row}>
+
+            <Text style={styles.details}>Salesperson Name</Text>
+            <Text style={styles.info}>{this.props.route.params.paramSalesperson}</Text>
+          </View>
+          <View style={styles.row}>
+
+            <Text style={styles.details}>Salesperson Name 2</Text>
+            <Text style={styles.info2}>{this.props.route.params.paramSalesperson2}</Text>
+          </View>
+
+            <TouchableOpacity style={styles.WonButton} onPress={() => this.props.navigation.navigate('Assign Salesperson')}>
               <Text style={{ color: 'white' }}>RE-ASSIGN SALESPERSON</Text>
             </TouchableOpacity>
 
           </View>
 
-          <Text style={styles.title2}>TASKS</Text>
-
-          <View style={styles.list}>
-            <FlatList
-              data={todos}
-              renderItem={({ item }) => (
-                /*<Text>{item.text}</Text>*/
-                <TodoItem item={item} pressHandler={pressHandler} />
-              )}
-            />
-
-
-          </View>
-
         </ScrollView>
-      </SafeAreaView>
+
 
       <StatusBar style="auto" />
     </View>
   );
-}//}
+}
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -180,8 +161,12 @@ const styles = StyleSheet.create({
 
   info: {
     fontWeight: "bold",
-    width: '50%',
+    width: '75%',
     //borderWidth:1,
+  },
+  info2:{
+    fontWeight: "bold",
+    width: '20%',
   },
 
   border: {

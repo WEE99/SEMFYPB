@@ -83,43 +83,7 @@ export default class ListofCompany extends Component {
                         <Text style={styles.navTitle}>Leads Report</Text>
                     </TouchableOpacity>
                 </View>
-                {/* <View
-            style={{
-              paddingVertical: 15,
-              flexDirection: 'row',
-              width: 350,
-              justifyContent: 'space-between',
-            }}
-          >
-            <Pie
-              radius={80}
-              innerRadius={60}
-              sections={[
-                {
-                  percentage: 10,
-                  color: '#C70039',
-                },
-                {
-                  percentage: 20,
-                  color: '#44CD40',
-                },
-                {
-                  percentage: 30,
-                  color: '#404FCD',
-                },
-                {
-                  percentage: 40,
-                  color: '#EBD22F',
-                },
-              ]}
-              dividerSize={4}
-              strokeCap={'round'}
-            />
-            </View> */}
 
-                <View style={styles.pieChartArea}>
-                {/* <PieChart style={{ height: 200 }} data={pieData}/> */}
-                </View>
                 <View style={{ marginLeft: 20 }}>
                     <View style={styles.Direction}>
                         <Text style={styles.TextSalesperson}>Total Number of Salesperson</Text>
@@ -169,19 +133,14 @@ const styles = StyleSheet.create({
         padding: 5,
         width: '20%',
         textAlign: 'center',
-        borderRadius: 5
+        borderRadius: 5,
+
     },
     activeTitle: {
         color: 'white',
         fontSize: 12
     },
-    pieChartArea: {
-        height: '30%',
-        borderColor: 1,
-        borderWidth: 1,
-        width: '60%',
-        alignSelf: 'center'
-    },
+
     Direction: {
         flexDirection: 'row',
         marginTop: 10,
@@ -207,38 +166,30 @@ const styles = StyleSheet.create({
     TextSalesperson: {
         marginTop: 2.5,
         marginLeft: 15,
-        fontSize: 14,
+        fontSize: 16,
         marginBottom: 5,
-        fontSize: 12,
-        color: 'grey',
         marginRight: 25
     },
     TextLeads: {
         marginTop: 2.5,
         marginLeft: 15,
-        fontSize: 14,
+        fontSize: 16,
         marginBottom: 5,
-        fontSize: 12,
-        color: 'grey',
-        marginRight: 59
+        marginRight: 25
     },
     WonLeadNo: {
-        marginRight: 32,
         marginTop: 2.5,
         marginLeft: 15,
-        fontSize: 14,
+        fontSize: 16,
         marginBottom: 5,
-        fontSize: 12,
-        color: 'grey'
+        marginRight: 25
     },
     LostLeadNo: {
-        marginRight: 34,
         marginTop: 2.5,
-        marginLeft: 17,
-        fontSize: 14,
+        marginLeft: 15,
+        fontSize: 16,
         marginBottom: 5,
-        fontSize: 12,
-        color: 'grey'
+        marginRight: 25
     },
     User: {
         marginTop: 2.5,
@@ -251,20 +202,8 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         padding: 5,
     },
-    Admin: {
-        marginTop: 2.5,
-        marginStart: 35,
-        fontSize: 24,
-        fontWeight: 'bold',
-        backgroundColor: '#ffdead',
-        width: '15%',
-        textAlign: 'center',
-        borderRadius: 5,
-        padding: 5,
-    },
     Salesperson: {
         marginTop: 2.5,
-        marginStart: 35,
         fontSize: 24,
         fontWeight: 'bold',
         backgroundColor: '#f4a460',
@@ -275,7 +214,7 @@ const styles = StyleSheet.create({
     },
     Leads: {
         marginTop: 2.5,
-        marginStart: 35,
+        marginStart: 45,
         fontSize: 24,
         fontWeight: 'bold',
         backgroundColor: '#a0522d',
@@ -286,7 +225,7 @@ const styles = StyleSheet.create({
     },
     Won: {
         marginTop: 2.5,
-        marginStart: 35,
+        marginStart: 10,
         fontSize: 24,
         fontWeight: 'bold',
         backgroundColor: '#32cd32',
@@ -297,8 +236,8 @@ const styles = StyleSheet.create({
     },
     Lost: {
         marginTop: 2.5,
-        marginStart: 35,
         fontSize: 24,
+        marginStart: 10,
         fontWeight: 'bold',
         backgroundColor: '#ff0000',
         width: '15%',

@@ -44,7 +44,7 @@ export default class ListofEmployee extends Component {
                         data={this.state.EmployeeList}
                         renderItem={({ item }) =>
 
-                            <Card style={styles.card} onPress={()=> this.props.navigation.navigate('Salespersons Profile',  {paramName: item.name, paramEmail:item.email, paramContact: item.phoneNumber, paramId: item.companyID})}>
+                            <Card style={styles.card} onPress={()=> this.props.navigation.navigate('Salespersons Profile',  {paramName: item.name, paramEmail:item.email, paramContact: item.phoneNumber, paramId: item.companyID, paramUserID: item.userId})}>
                                 <View style={styles.cardView}>
                                     <Icon
                                         name='user'

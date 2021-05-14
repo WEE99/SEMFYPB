@@ -4,7 +4,7 @@ import { Card } from 'react-native-paper';
 import { StyleSheet, Text, View, SafeAreaView, ScrollView, 
   FlatList, TouchableOpacity,LogBox } from 'react-native';
 import {auth, db, storage} from "../components/firebase";
-import {orange, TableRowDashboard, TableRowTask, TableHistoryTask} from "../SL/TablesandTimeFormat";
+import {HistoryTask} from "./history";
   
 export default ({navigation, route}) => {
 
@@ -70,7 +70,7 @@ LogBox.ignoreLogs(['Setting a timer']);
 
            <View>
                 {TaskHistory.map((info) =>
-                      <TableHistoryTask key={info.id} data={info}/>
+                      <HistoryTask key={info.id} data={info}/>
                   )}
           </View>
          

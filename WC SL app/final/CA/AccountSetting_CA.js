@@ -46,14 +46,6 @@ const pressLogout =()=>{
         <View>
           <TouchableOpacity
             style={styles.AccButton}
-            onPress={pressNotify}
-          >
-            <Text style={styles.buttoncontent}>NOTIFICATION</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity
-            style={styles.AccButton}
             onPress={pressChangepsw}
           >
             <Text style={styles.buttoncontent}>CHANGE PASSWORD</Text>

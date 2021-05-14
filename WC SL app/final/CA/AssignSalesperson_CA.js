@@ -55,7 +55,7 @@ export default class Touchables extends Component {
       })
   }
 
-  assignSalesperson = (salesID1)=> {
+  assignSalesperson = (salesID1, textInputValueSalesperson)=> {
       var user=auth.currentUser
       db.collection("users").where("UID", "==",user.uid)
       .onSnapshot((querySnapshot) => {
@@ -65,7 +65,7 @@ export default class Touchables extends Component {
             .then(function(querySnapshot){
               querySnapshot.forEach((function(doc) {
                 doc.ref.update({userId: salesID1.toString()});
-                
+                doc.ref.update({salesperson: textInputValueSalesperson.toString()});
               }))
               
             })
@@ -76,6 +76,49 @@ export default class Touchables extends Component {
           });
         })
   }
+
+  assignSalesperson2 = (salesID2, textInputValueSalesperson2)=> {
+    var user=auth.currentUser
+    db.collection("users").where("UID", "==",user.uid)
+    .onSnapshot((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          db.collection("leads").where("companyID", "==", doc.id)
+          .get()
+          .then(function(querySnapshot){
+            querySnapshot.forEach((function(doc) {
+              doc.ref.update({userId2: salesID2.toString()});
+              doc.ref.update({salesperson2: textInputValueSalesperson2.toString()});
+              }))
+          })
+          .catch((error) => {
+            console.log("Error adding document:", error);
+            alert("Error! Could not assign Salesperson 2");
+          });
+        });
+      })
+}
+
+assignDepartment = (textInputValueDepartment)=> {
+  var user=auth.currentUser
+  db.collection("users").where("UID", "==",user.uid)
+  .onSnapshot((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        db.collection("leads").where("companyID", "==", doc.id)
+        .get()
+        .then(function(querySnapshot){
+          querySnapshot.forEach((function(doc) {
+            doc.ref.update({interest: textInputValueDepartment.toString()});           
+          }))
+        })
+        .catch((error) => {
+          console.log("Error adding document:", error);
+          alert("Error! Could not assign Salesperson");
+        });
+      });
+    })
+}
+
+
 
   render() {
     let index = 0;
@@ -169,7 +212,7 @@ export default class Touchables extends Component {
           <View>
             <TouchableOpacity
               style={styles.ConfirmButton}
-              onPress={() => this.props.navigation.navigate('Dashboard', this.assignSalesperson(this.state.salesID1), {/*{paramSLName: this.state.textInputValueSalesperson, paramSLName2: this.state.textInputValueSalesperson2}*/})}
+              onPress={() => this.props.navigation.navigate('Dashboard', this.assignSalesperson(this.state.salesID1, this.state.textInputValueSalesperson), this.assignSalesperson2(this.state.salesID2, this.state.textInputValueSalesperson2), this.assignDepartment(this.state.textInputValueDepartment))}
             //disabled={!this.state.isFormValid}
             >
               <Text style={styles.Confirm}>CONFIRM</Text>

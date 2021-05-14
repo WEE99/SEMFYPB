@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, Button ,TouchableOpacity, ImageBackground,Image, ScrollView,LogBox} from 'react-native';
-import {orange, TableRowDashboard} from "../SL/TablesandTimeFormat";
+import {orange, TableRowDashboard} from "./history";
 import { Card } from 'react-native-paper';
 import {auth, db, storage} from "../components/firebase";
 import Icon2 from 'react-native-vector-icons/AntDesign';
@@ -85,7 +85,7 @@ export default ({navigation, route}) => {
          
     
     <ScrollView style={{backgroundColor: 'rgba(255, 255, 255, 0.2)', borderRadius:10, margin:"5%"}}>
-    <Text style={styles.title}>NOTIFICATION</Text>
+    <Text style={styles.title}>Unassigned Leads</Text>
         <Card style={{ backgroundColor: 'lightgrey', margin: 5, padding: 5 }} onPress={() => navigation.navigate('List Unassigned Leads')}>
           <View style={{ backgroundColor: 'lightgrey', flexDirection: 'row' }}>
             <Icon2 name="exclamationcircleo" size={15} color="red" style={styles.icon} />
@@ -97,7 +97,7 @@ export default ({navigation, route}) => {
         </Card>
     <Text style={styles.title}>Leads</Text>
     <View style={{marginHorizontal:15}}>
-    <Text style={{color:"grey", fontSize:10, fontStyle: 'italic'}}>*Tap the table cells for more actions</Text>
+    <Text style={{color:"grey", fontSize:10, fontStyle: 'italic'}}>*Tap the name of leads for more details</Text>
    </View>
         <View style={{paddingBottom:40, paddingTop:10}}>
             <View style={{ backgroundColor:"#fff",  marginHorizontal:15, borderWidth:1, borderColor:"black", elevation: 2, borderTopWidth:1}}>
@@ -118,7 +118,7 @@ export default ({navigation, route}) => {
   
      
                 {leads.map((info) =>
-                    <TableRowDashboard key={info.id} data={info} navigation={navigation} handlePressLead={pressLead} handlePressQuote={pressQuote} handlePressLost={pressLost} handlePressWon={pressWon}/>
+                    <TableRowDashboard key={info.id} data={info} navigation={navigation} handlePressLead={pressLead} handlePressQuote={pressQuote} handlePressLost={pressLost} handlePressWon={pressWon} />
                 )}
                  
     

@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
-import { render } from 'react-dom';
 import { Text, View, StyleSheet, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 import { ScrollView, State } from 'react-native-gesture-handler';
+import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { TabRouter } from 'react-navigation';
 import {auth, db, storage} from "../components/firebase";
@@ -12,7 +12,7 @@ export default class SalespersonReportProfile extends Component{
   {
     Count: 0,
     won: 0,
-    lose:0
+    lose:0,
   };
 
   componentDidMount() {
@@ -23,7 +23,7 @@ export default class SalespersonReportProfile extends Component{
 
   getTotalNumberofLeadsAssigned(){
     
-    var employeeData = db.collection("leads").where("companyID", "==", this.props.route.params.paramId);
+    var employeeData = db.collection("leads").where("companyID", "==", this.props.route.params.paramId).where("userId", "==", this.props.route.params.paramUserID);
     employeeData.onSnapshot((querySnapShot) => {
       this.setState({Count:querySnapShot.docs.length});
     });
@@ -31,37 +31,37 @@ export default class SalespersonReportProfile extends Component{
 
   TotalNumberofWonLeads(){
   
-    var employeeData = db.collection("leads").where("companyID", "==", this.props.route.params.paramId).where("result", "==", "Won");
+    var employeeData = db.collection("leads").where("companyID", "==", this.props.route.params.paramId).where("result", "==", "Won").where("userId", "==", this.props.route.params.paramUserID);
     employeeData.onSnapshot((querySnapShot) => {
         this.setState({won:querySnapShot.docs.length});
       });
   }
 
   TotalNumberofLostLeads(){
-    var employeeData = db.collection("leads").where("companyID", "==", this.props.route.params.paramId).where("result", "==", "Lose");
+    var employeeData = db.collection("leads").where("companyID", "==", this.props.route.params.paramId).where("result", "==", "Lose").where("userId", "==", this.props.route.params.paramUserID);
     employeeData.onSnapshot((querySnapShot) => {
         this.setState({lose:querySnapShot.docs.length});
       });
   }
 
+
   render(){
     return (
       <View style={{ flex: 1, padding: "10%" }}>
 
-        <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
-          <TouchableOpacity
-            onPress={()=> this.props.navigation.navigate('Salespersons Profile')}
-            style={styles.active}>
-            <Text style={styles.navTitle, styles.activeTitle}>Profile</Text>
-          </TouchableOpacity>
+              <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
+                 <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Salespersons Profile')}
+                  style={styles.active}>
+                  <Text style={styles.navTitle, styles.activeTitle}>Profile</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => this.props.navigation.navigate('Salespersons Leads',{paramsUserId2:this.props.route.params.paramUserID})}
+                  style={styles.nav}>
+                  <Text style={styles.navTitle}>Leads Assigned</Text>
+                </TouchableOpacity>
+              </View>
 
-          <TouchableOpacity
-            onPress={()=> this.props.navigation.navigate('Salespersons Leads')}
-            style={styles.nav}>
-            <Text style={styles.navTitle}>Leads Assigned</Text>
-          </TouchableOpacity>
-
-        </View>
 
         <View style={styles.Icon}>
           <Icon
