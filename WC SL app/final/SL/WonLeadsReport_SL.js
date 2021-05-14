@@ -58,27 +58,15 @@ export default ({navigation, route}) => {
 <View style={{paddingBottom:40, paddingTop:10}}>
         <View style={{ backgroundColor:"#fff",  marginHorizontal:15, borderWidth:1, borderColor:"black", elevation: 2, borderTopWidth:1}}>
 
-            {/* <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"black", backgroundColor:"lightgrey", paddingHorizontal:1,height:40}}>
+            <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"black", backgroundColor:"lightgrey", paddingHorizontal:1,height:40}}>
                 <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",borderRightWidth:1,paddingTop:10}}>
                     Leads
                 </Text>
                 <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",borderRightWidth:1,paddingTop:10}}>
-                    Quote Send
+                    Quotation Send
                 </Text>
                 <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",paddingTop:10}}>
-                    Quote Agreed
-                </Text>
-            </View> */}
-
-            <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"black", backgroundColor:"lightgrey", paddingHorizontal:10,height:40}}>
-                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"black", fontWeight:"bold",borderRightWidth:1,paddingTop:10}}>
-                    Leads
-                </Text>
-                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2,paddingHorizontal:10, color:"black", fontWeight:"bold",borderRightWidth:1,paddingTop:10}}>
-                    Quote Send
-                </Text>
-                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2,paddingHorizontal:10, color:"black", fontWeight:"bold",paddingTop:10}}>
-                    Quote Agreed
+                    Agreed
                 </Text>
             </View>
 

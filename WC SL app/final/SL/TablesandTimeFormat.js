@@ -303,40 +303,20 @@ export const TableRowWon =({data})=>{
       return (
 
 
-            <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"black", backgroundColor:"#fff", paddingHorizontal:10,height:40}}>
-                <View style={{flex:0.31,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"left",borderRightWidth:1, borderColor:"black",height:"100%"}}>
-                <Text style={{fontSize: 13, color:"grey", fontWeight:"bold",textAlign:"left"}}numberOfLines={1}>
+            <View style={{flexDirection:"row",borderBottomWidth:1, borderColor:"black", backgroundColor:"#fff", paddingHorizontal:1,height:40}}>
+                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"grey", fontWeight:"bold",borderRightWidth:1,paddingTop:10 }}numberOfLines={1}>
                 {data.name} ({data.company})
                 </Text>
-                </View>
-
-                <View style={{flex:0.31,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center",borderRightWidth:1,paddingHorizontal:10, borderColor:"black",height:"100%"}}>
-                <Text style={{fontSize: 13, paddingVertical: 2, color:"grey", fontWeight:"bold",textAlign:"center"}}>
+                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"grey", fontWeight:"bold",borderRightWidth:1,paddingTop:10,textAlign:"center"}}>
                 RM {data.quote}
                 </Text>
-                </View>
-
-                <View style={{flex:0.31,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center", borderColor:"black",height:"100%"}}>
-                  {data.quoteAgreed!=""?
-                  <Text style={{fontSize: 13, color: "grey", fontWeight:"bold",textAlign:"center"}}>
-                        RM {data.quoteAgreed}
-                  </Text>:
-                  <Text style={{fontSize: 13, color: "grey", fontWeight:"bold",alignItems:"center"}}>
-                  -
-                  </Text>}
-                  </View>   
-
-                {/* {data.quoteAgreed!=""?
-                <View style={{flex:0.33,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center", borderColor:"black",height:"100%"}}>
-                <Text style={{fontSize: 13, paddingVertical: 2, color:"grey", fontWeight:"bold",textAlign:"center"}}>
+                {data.quoteAgreed!=""?
+                <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"grey", fontWeight:"bold",paddingTop:10,textAlign:"center"}}>
                 RM {data.quoteAgreed}
-                </Text>
-                </View>:
-                 <View style={{flex:0.33,fontSize: 13, paddingVertical:2, fontWeight:"bold",textAlign:"center", borderColor:"black",height:"100%"}}>
-                 <Text style={{fontSize: 13, paddingVertical: 2, color:"grey", fontWeight:"bold",textAlign:"center"}}>
+                </Text>:
+                 <Text style={{flex:0.33,fontSize: 13, paddingVertical: 2, color:"grey", fontWeight:"bold",paddingTop:10,textAlign:"center"}}>
                  -
-                 </Text>
-                 </View>} */}
+                 </Text>}
             </View>
             )};
 
