@@ -2,10 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 //import TimePicker from 'react-time-picker';
-import TimePicker from "react-native-24h-timepicker";
+// import TimePicker from "react-native-24h-timepicker";
 import Icon from 'react-native-vector-icons/Entypo';
-import { Switch } from 'react-native-switch';
-import {auth, db, storage } from "../components/firebase";
+// import { Switch } from 'react-native-switch';
+import {auth, db, storage } from "./firebase";
 
 //export default function App() {
 export default class App extends React.Component {
@@ -45,7 +45,7 @@ export default class App extends React.Component {
           <View style={styles.textV}>
             <Text style={styles.text}>Mute Appointment Reminder</Text>
           </View>
-          <Switch
+          {/* <Switch
             toggleSwitch1={this.toggleSwitch1}
             switch1Value={this.state.switch1Value}
             // onValueChange={props.toggleSwitch1}
@@ -64,15 +64,15 @@ export default class App extends React.Component {
             style={Timestyles.button}
           >
             <Icon name="clock" size={30} color="black" />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
-        <TimePicker
+        {/* <TimePicker
           ref={ref => {
             this.TimePicker = ref;
           }}
           onCancel={() => this.onCancel()}
           onConfirm={(hour, minute) => this.onConfirm(hour, minute)}
-        />
+        /> */}
 
 
         <View style={styles.row2}>

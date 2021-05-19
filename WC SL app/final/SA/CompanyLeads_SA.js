@@ -6,8 +6,9 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator
 } from 'react-native';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class ListofCompany extends Component {
@@ -17,6 +18,7 @@ export default class ListofCompany extends Component {
     this.state = {
       LeadList: [],
       companyId: "",
+      isLoading: true
     };
   }
 
@@ -26,7 +28,7 @@ export default class ListofCompany extends Component {
     ID = ID.toString();
 
     let compData = [];
-    var Data = db.collection("users").where("companyID", "==", ID).where("role", "==", "Company Admin")
+    var Data = db.collection("company").where("companyID", "==", ID)
     Data.onSnapshot((querySnapShot) => {
       compData = [];
       querySnapShot.forEach((doc) => {
@@ -48,19 +50,14 @@ export default class ListofCompany extends Component {
         listLeads.push(doc.data());
       });
       this.setState({ LeadList: listLeads });
+      this.setState({ isLoading: false })
     });
   }
 
   render() {
     return (
-      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, padding: '5%', margin: 5,backgroundColor: 'white' }}>
         <View style={{ marginTop: 10 }}>
-          <FlatList
-            data={this.state.CompanyData}
-            renderItem={({ item }) => (
-              <Text style={styles.CompanyName}>{item.companyName}</Text>
-            )}
-          />
 
           <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <TouchableOpacity
@@ -92,17 +89,24 @@ export default class ListofCompany extends Component {
             </TouchableOpacity>
           </View>
 
+          <FlatList
+            data={this.state.CompanyData}
+            renderItem={({ item }) => (
+              <Text style={styles.CompanyName}>{item.companyName}</Text>
+            )}
+          />
+
           {this.state.LeadList.length == 0 ?
             <Text style={{ alignSelf: 'center', fontStyle: 'italic', padding: '3%', color: 'grey' }}>No leads yet!</Text>
             :
-            <View style={{marginTop: 10}}>
+            <View style={{marginTop: 10,}}>
               <Text style={{ color: "grey", fontSize: 10, fontStyle: 'italic', paddingLeft: 5 }}>*Tap the table cells for more actions</Text>
-              <View>
+              <View style={{padding: 5}}>
                 <View style={styles.header}>
                   <View style={styles.firstCol}>
                     <Text style={{ fontSize: 12 }}>Leads</Text>
                   </View>
-                  <Text style={styles.SecCol}>Remarks</Text>
+                  <Text style={styles.SecCol}>Status</Text>
                 </View>
                 <FlatList
                   data={this.state.LeadList}

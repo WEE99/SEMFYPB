@@ -6,7 +6,7 @@ import {
   ScrollView,
   TouchableOpacity, ActivityIndicator, TextInput, Button
 } from 'react-native';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 import { FlatList } from 'react-native-gesture-handler';
 // import { CSVLink } from "react-csv";
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -63,7 +63,7 @@ export default class ExampleTwo extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+        <ScrollView style={{ flex: 1, padding: '5%',margin: 5, backgroundColor: 'white' }}>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -107,7 +107,7 @@ export default class ExampleTwo extends Component {
       )
     }
     return (
-      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, padding: '5%',margin: 5, backgroundColor: 'white' }}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -154,20 +154,16 @@ export default class ExampleTwo extends Component {
                   value={this.state.text}
                   underlineColorAndroid='transparent'
                   placeholder="Search Lead" />
-                <Icon2 name="search" size={20} style={{ marginTop: 3, paddingRight: 5, color: 'lightgrey' }} />
+                <Icon2 name="search" size={20} style={{ alignSelf: 'center', paddingRight: 5, color: 'lightgrey' }} />
               </View>
             </View>
 
             {/* <CSVLink data={this.state.LeadList} filename={"LeadData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
               <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink> */}
-            <Icon name="infocirlceo" size={15} style={{ marginTop: 12, paddingLeft: 5, marginRight: 5 }}
+            <Icon name="infocirlceo" size={15} style={{ alignSelf: 'center', paddingLeft: 5 }}
               onPress={() =>
                 alert("Tap the lead's name in the table for more details")
               } />
-          </View>
-
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <Text style={{ flex: 1, color: "grey", fontSize: 10, fontStyle: 'italic', paddingBottom: 10, paddingLeft: 5 }}>*Tap the table cells for more actions</Text>
           </View>
 
           <View style={styles.header}>
@@ -250,6 +246,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   header: {
+    marginTop: 5,
     marginLeft: 5,
     marginRight: 5,
     flexDirection: 'row',

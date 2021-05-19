@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 
 export default class a extends Component {
   constructor(props) {
@@ -32,16 +32,21 @@ export default class a extends Component {
     return (
       <View
         style={{
-          flex: 1, padding: '10%', backgroundColor: 'white'
+          flex: 1, padding: '5%',margin:5, backgroundColor: 'white'
         }}>
         <FlatList
           data={this.state.salesInfo}
           renderItem={({ item }) => (
             <View>
               <View style={styles.Icon}>
-                <Image style={styles.profileImg} source={item.photoURL} />
+                {item.photoURL != ''? 
+                <Image style={styles.profileImg} source={{uri:item.photoURL}} />
+                :
+                <Icon name='user' size={15} style={styles.profileImg}/>
+               }
+                
                 <View>
-                  <Text style={styles.Username}>{item.nickname}</Text>
+                  <Text style={styles.Username}>{item.name}</Text>
                   <Text style={styles.designation}>{item.role}</Text>
                 </View>
               </View>
@@ -71,27 +76,27 @@ export default class a extends Component {
               </View>
 
 
-              <View>
+              <View style={{marginTop: 10}}>
                 <View style={styles.Direction}>
                   <Text style={styles.Text}>Company</Text>
                   <Text style={styles.Info}>{item.companyName}</Text>
                 </View>
 
                 <View style={styles.Address}>
-                  <Text style={[styles.Text, { marginEnd: 10 }]}>Address</Text>
+                  <Text style={[styles.Text]}>Address</Text>
                   <Text style={styles.Info} numberOfLines={5}>
                     {item.address}
                   </Text>
                 </View>
 
                 <View style={styles.Direction}>
-                  <Text style={[styles.Text, { marginEnd: 25 }]}>Email</Text>
+                  <Text style={[styles.Text]}>Email</Text>
                   <Text style={styles.Info} numberOfLine={3}>
                     {item.email}
                   </Text>
                 </View>
                 <View style={styles.Direction}>
-                  <Text style={[styles.Text, { marginEnd: 8 }]}>Contact</Text>
+                  <Text style={[styles.Text]}>Contact</Text>
                   <Text style={styles.Info}>{item.phoneNumber}</Text>
                 </View>
               </View>
@@ -128,7 +133,7 @@ const styles = StyleSheet.create({
   },
   Direction: {
     flexDirection: 'row',
-    marginTop: 10,
+    // marginTop: 10,
     alignItems: 'baseline',
   },
   Text: {
@@ -136,9 +141,10 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     fontSize: 14,
     marginBottom: 5,
+    width: '20%'
   },
   Info: {
-    width: 200,
+    width: '50%',
     marginTop: 2.5,
     marginStart: 35,
     fontSize: 14,
@@ -173,3 +179,4 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+

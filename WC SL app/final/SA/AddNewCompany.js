@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Alert, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 //import { ScrollView } from 'react-native-gesture-handler';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 
 export default class App extends Component {
 
@@ -169,15 +169,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        padding: '10%'
+        padding: '5%',
+        margin: 5
     },
-
+  
     instruction: {
         fontWeight: "bold",
         marginBottom: 10,
         marginTop: 10,
     },
-
+  
     input: {
         backgroundColor: "lightgrey",
         padding: 10,
@@ -187,12 +188,12 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 5,
         marginBottom: 20,
     },
-
+  
     row: {
         flexDirection: "row",
         justifyContent: 'space-around',
     },
-
+  
     Button: {
         backgroundColor: "black",
         padding: 10,
@@ -202,11 +203,11 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 5,
         borderBottomRightRadius: 5,
     },
-
+  
     ButtonContent: {
         textAlign: 'center',
         color: "white",
         fontWeight: 'bold',
     },
-
-});
+  
+  });

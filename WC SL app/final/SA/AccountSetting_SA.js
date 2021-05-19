@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, BackHandler } from 'react-native';
-import {auth, db, storage} from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 
 
 export default ({navigation, route}) => {
@@ -43,14 +43,14 @@ const pressLogout =()=>{
             <Text style={styles.buttoncontent}>PROFILE SETTING</Text>
           </TouchableOpacity>
         </View>
-        <View>
+        {/* <View>
           <TouchableOpacity
             style={styles.AccButton}
             onPress={pressNotify}
           >
             <Text style={styles.buttoncontent}>NOTIFICATION</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
         <View>
           <TouchableOpacity
             style={styles.AccButton}

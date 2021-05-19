@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign'
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 
 export default class ListofCompany extends Component {
   constructor(props) {
@@ -126,7 +126,7 @@ export default class ListofCompany extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+        <ScrollView style={{ flex: 1, padding: '5%',margin: 5, backgroundColor: 'white' }}>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -171,7 +171,7 @@ export default class ListofCompany extends Component {
     }
 
     return (
-      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, padding: '5%',margin: 5,backgroundColor: 'white' }}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -207,15 +207,6 @@ export default class ListofCompany extends Component {
             </Text>
           </TouchableOpacity>
         </ScrollView>
-
-        <View style={{flexDirection: 'row', alignSelf: 'flex-end', marginTop: 10}}>
-          <CSVLink data={this.state.CompanyList.concat(this.state.EmployeeList, this.state.LeadList)} filename={"OverallReport.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
-            <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink>
-          <Icon name="infocirlceo" size={15} style={{ marginTop: 1, paddingLeft: 5, marginRight: 5 }}
-            onPress={() =>
-              alert("Tap the download icon to download the report")
-            } />
-        </View>
 
         <ScrollView>
           {/* <View style={styles.pieChartArea} /> */}

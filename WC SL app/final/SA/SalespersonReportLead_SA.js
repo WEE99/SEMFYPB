@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 
 export default class ListofCompany extends Component {
   constructor(props) {
@@ -50,16 +50,21 @@ export default class ListofCompany extends Component {
       <ScrollView
         style={{
           flex: 1,
-          padding: '10%',
+          padding: '5%',
+          margin: 5,
           backgroundColor: 'white'
         }}>
         <FlatList
           data={this.state.salesInfo}
           renderItem={({ item }) => (
             <View style={styles.Icon}>
-              <Image style={styles.profileImg} source={item.photoURL} />
+              {item.photoURL != ''? 
+                <Image style={styles.profileImg} source={{uri:item.photoURL}} />
+                :
+                <Icon name='user' size={15} style={styles.profileImg}/>
+               }
               <View>
-                <Text style={styles.Username}>{item.nickname}</Text>
+                <Text style={styles.Username}>{item.name}</Text>
                 <Text style={styles.designation}>{item.role}</Text>
               </View>
             </View>
@@ -103,7 +108,7 @@ export default class ListofCompany extends Component {
               <View style={styles.firstCol}>
                 <Text style={{ fontSize: 12 }}>Leads</Text>
               </View>
-              <Text style={styles.SecCol}>Remarks</Text>
+              <Text style={styles.SecCol}>Status</Text>
             </View>
 
             <View>

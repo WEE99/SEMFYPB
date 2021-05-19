@@ -5,7 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 //Bottom Tab Navigation
 import DashBoard from './Dashboard_SA.js';
-import History from "./TaskHistory_SA.js";
+// import History from "./TaskHistory_SA.js";
 import Report from "./ReportOverall_SA.js";
 
 //Process Request page
@@ -26,6 +26,8 @@ import AccountSale from './AccountSale_SA.js';
 import AccountCA from './AccountCA_SA.js';
 import AddAccount from './AddNewAccount.js';
 import AddCompany from './AddNewCompany.js';
+
+// import Search from './Search.js';
 
 //Account related pages for Super Admin
 import Account from './Account_SA.js';
@@ -59,8 +61,8 @@ const MyTabs = () => {
                         <MaterialCommunityIcons name="home" color={color} size={26} />
                     ),
                 }}
-            />
-            <Tab.Screen
+            /> */}
+            {/* <Tab.Screen
                 name="History"
                 component={HistoryStackNav}
                 options={{
@@ -107,7 +109,7 @@ function HomeStackNav() {
 function HistoryStackNav() {
     return (
         <HistoryStack.Navigator>
-            <HistoryStack.Screen name="History" component={History} />
+            <HistoryStack.Screen name="Search" component={Search} />
         </HistoryStack.Navigator>
     )
 }
@@ -115,10 +117,10 @@ function HistoryStackNav() {
 function ReportStackNav() {
     return (
         <ReportStack.Navigator navigationOptions="">
-            <ReportStack.Screen name="Overall Report" component={Report} options={{ headerShown: false }} />
-            <ReportStack.Screen name="List of Company" component={ListCompany} options={{ headerShown: false }}/>
-            <ReportStack.Screen name="List of Salesperson" component={ListSalesperson} options={{ headerShown: false }}/>
-            <ReportStack.Screen name="List of Leads" component={ListLeads} options={{ headerShown: false }}/>
+            <ReportStack.Screen name="Overall Report" component={Report} options={{title: 'Report' }} />
+            <ReportStack.Screen name="List of Company" component={ListCompany} options={{ title: 'Report' }}/>
+            <ReportStack.Screen name="List of Salesperson" component={ListSalesperson} options={{ title: 'Report' }}/>
+            <ReportStack.Screen name="List of Leads" component={ListLeads} options={{ title: 'Report' }}/>
             <ReportStack.Screen name="Company Details" component={CompanyDetails} options={{title: 'Company Report'}}/>
             <ReportStack.Screen name="Company Report" component={CompanyReport} options={{title: 'Company Report'}}/>
             <ReportStack.Screen name="Company Leads" component={CompanyLeads} options={{title: 'Company Report'}}/>
@@ -127,7 +129,7 @@ function ReportStackNav() {
             <ReportStack.Screen name="Salesperson Leads" component={SalespersonLeads} />
             <ReportStack.Screen name="Lead Detail" component={AccountLead} />
             <ReportStack.Screen name="Salesperson Account Detail" component={AccountSale} />
-            <ReportStack.Screen name="Company Admin Account Detail" component={AccountCA} />
+            <ReportStack.Screen name="Company Admin Account Detail" component={AccountCA} options={{title: 'Profile'}}/>
             <ReportStack.Screen name="Add Account" component={AddAccount}/>
             <ReportStack.Screen name="Add Company" component={AddCompany}/>
         </ReportStack.Navigator>

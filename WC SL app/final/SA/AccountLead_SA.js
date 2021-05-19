@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
-import {auth, db, storage } from "../components/firebase";
+import { auth, db, storage } from "./firebase";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class LeadsAccountInSuperAdmin extends Component {
@@ -27,13 +27,15 @@ export default class LeadsAccountInSuperAdmin extends Component {
           accountData.push(doc.data());
           sales = doc.data().userId;
 
-          db.collection("users").doc(sales).get()
-            .then((doc) => {
-              this.setState({
-                salesName: doc.data().username,
-                salesCompany: doc.data().companyName,
+          if (sales != '') {
+            db.collection("users").doc(sales).get()
+              .then((doc) => {
+                this.setState({
+                  salesName: doc.data().username,
+                  salesCompany: doc.data().companyName,
+                })
               })
-            })
+          }
         })
         this.setState({ AccountData: accountData });
       })
@@ -42,7 +44,7 @@ export default class LeadsAccountInSuperAdmin extends Component {
 
   render() {
     return (
-      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: '#fff', }}>
+      <ScrollView style={{ flex: 1, padding: '5%', margin: 5, backgroundColor: '#fff', }}>
         <FlatList
           data={this.state.AccountData}
           renderItem={({ item }) => (
@@ -91,7 +93,7 @@ export default class LeadsAccountInSuperAdmin extends Component {
                     {item.quoteAgreed != '' ?
 
                       <View style={styles.Direction}>
-                        <Text style={styles.Text}>Quote Sent</Text>
+                        <Text style={styles.Text}>Quote Agreed</Text>
                         <Text numberOfLines={5} style={styles.Info}>RM {item.quoteAgreed}</Text>
                       </View>
 
@@ -106,15 +108,23 @@ export default class LeadsAccountInSuperAdmin extends Component {
 
               <Text style={styles.Name}>Assigned Salesperson</Text>
               <View>
-                <View style={styles.Direction}>
-                  <Text style={styles.Text}>Name</Text>
-                  <Text style={styles.Info}>{this.state.salesName}</Text>
-                </View>
+                {this.state.salesName != '' ?
+                  <View>
+                    <View style={styles.Direction}>
+                      <Text style={styles.Text}>Name</Text>
+                      <Text style={styles.Info}>{this.state.salesName}</Text>
+                    </View>
 
-                <View style={styles.Direction}>
-                  <Text style={styles.Text}>Company</Text>
-                  <Text style={styles.Info}>{this.state.salesCompany}</Text>
-                </View>
+                    <View style={styles.Direction}>
+                      <Text style={styles.Text}>Company</Text>
+                      <Text style={styles.Info}>{this.state.salesCompany}</Text>
+                    </View>
+                  </View> 
+                  :
+                  <Text style={{ alignSelf: 'center', fontStyle: 'italic', padding: '3%', color: 'grey' }}>No assigned salesperson yet!</Text>
+                }
+
+
               </View>
             </View>
           )}
@@ -138,7 +148,7 @@ const styles = StyleSheet.create({
     alignItems: 'baseline',
   },
   Text: {
-    width: '20%',
+    width: '30%',
     marginTop: 2.5,
     marginLeft: 15,
     fontSize: 14,

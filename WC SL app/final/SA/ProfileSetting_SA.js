@@ -3,7 +3,7 @@ import React, { useEffect, useState, Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 // import ImagePicker from '../imagePicker.js';
 import * as ImagePicker from 'expo-image-picker';
-import { auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 
 export default ({ navigation, route }) => {
 

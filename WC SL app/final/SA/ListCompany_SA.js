@@ -8,7 +8,7 @@ import {
   ScrollView, ActivityIndicator, TextInput
 } from 'react-native';
 import { Card } from 'react-native-paper';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
 // import { CSVLink } from "react-csv";
@@ -69,7 +69,7 @@ export default class ListofCompany extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+        <ScrollView style={{ flex: 1, padding: '5%', margin:5, backgroundColor: 'white' }}>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -105,7 +105,7 @@ export default class ListofCompany extends Component {
       )
     }
     return (
-      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, padding: '5%',margin:5, backgroundColor: 'white' }}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -145,19 +145,19 @@ export default class ListofCompany extends Component {
                   value={this.state.text}
                   underlineColorAndroid='transparent'
                   placeholder="Search Company" />
-                <Icon2 name="search" size={20} style={{ marginTop: 3, paddingRight: 5, color: 'lightgrey' }} />
+                <Icon2 name="search" size={20} style={{ alignSelf: 'center', paddingRight: 5, color: 'lightgrey' }} />
               </View>
             </View>
 
-            <TouchableOpacity style={{ flexDirection: 'row', marginTop: 10 }} onPress={() =>
+            <TouchableOpacity style={{ flexDirection: 'row'}} onPress={() =>
               this.props.navigation.navigate('Add Company')
             }>
-              <Icon2 name="business" size={20} style={{ marginTop: -1.5 }} />
-              <Icon2 name="add" size={15} style={{ marginLeft: -5, marginTop: 3 }} />
+              <Icon2 name="business" size={20} style={{ alignSelf: 'center'}} />
+              <Icon2 name="add" size={15} style={{ alignSelf: 'center',marginLeft: -5}} />
             </TouchableOpacity>
             {/* <CSVLink data={this.state.CompanyList} filename={"CompaniesData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
               <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink> */}
-            <Icon name="infocirlceo" size={15} style={{ marginTop: 12, paddingLeft: 5, marginRight: 5 }}
+            <Icon name="infocirlceo" size={15} style={{ alignSelf: 'center',margin: 3 }}
               onPress={() =>
                 alert("Tap the business icon to register a new company")
               } />

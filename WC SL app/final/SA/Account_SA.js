@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Component, useCallback } from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator, ScrollView } from 'react-native';
 import Settings from 'react-native-vector-icons/AntDesign';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 
 export default class Account_CA extends Component {
   state = {
@@ -17,10 +17,10 @@ export default class Account_CA extends Component {
   }
 
   componentDidMount() {
-    var user = auth.currentUser
+    var user=auth.currentUser
 
     let a, b, c, d, e, f, g = "";
-    var dashboardData = db.collection("users").where("UID", "==", user.uid)
+    var dashboardData = db.collection("users").where("UID", "==","molZQJeaw7SZPoGJsqlJuVpsZAR2")
     dashboardData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         a = doc.data().photoURL;
@@ -53,12 +53,12 @@ export default class Account_CA extends Component {
       )
     }
     return (
-      <ScrollView style={{ flex: 1,padding: '10%', backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, padding: '5%', backgroundColor: 'white' , margin: 5}}>
         <Settings name='setting' size={25} style={{ alignSelf: 'flex-end' }} onPress={() => this.props.navigation.navigate('Account Settings')} />
 
         <View>
           <View style={styles.Icon}>
-            <Image style={styles.profileImg} source={this.state.photo} />
+            <Image style={styles.profileImg} source={{uri:this.state.photo}} />
             <View>
               <Text style={styles.Username} numberOfLines={2}>{this.state.username}</Text>
               <Text style={styles.designation}>{this.state.role}</Text>
@@ -117,22 +117,23 @@ const styles = StyleSheet.create({
   Icon: {
     flexDirection: 'row',
     marginTop: 10,
+    marginBottom: 5
   },
   Direction: {
     flexDirection: 'row',
-    marginTop: 10,
+    marginTop: 5,
   },
   Text: {
-    width: '15%',
+    width: '20%',
     marginTop: 2.5,
     marginLeft: 15,
     fontSize: 14,
     marginBottom: 5
   },
   Info: {
-    width: '50%',
+    width: '70%',
     marginTop: 2.5,
-    marginStart: 35,
+    marginStart: 15,
     fontSize: 14,
   },
   Address: {

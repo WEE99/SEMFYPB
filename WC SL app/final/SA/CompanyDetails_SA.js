@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
+import { Tooltip } from 'react-native-elements';
 
 export default class ListofCompany extends Component {
   constructor(props) {
@@ -119,8 +120,8 @@ export default class ListofCompany extends Component {
 
   render() {
     return (
-      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
-        <View style={{ marginTop: 10 }}>
+      <ScrollView style={{ flex: 1, padding: '5%', margin: 5, backgroundColor: 'white' }}>
+        <View style={{ paddingTop: 10, marginBottom: 5, height: '95%' }}>
           <FlatList
             data={this.state.CompanyData}
             renderItem={({ item }) => (
@@ -163,6 +164,7 @@ export default class ListofCompany extends Component {
                 data={this.state.CompanyData}
                 renderItem={({ item }) => (
                   <View>
+                    <Text style={styles.CompanyName}>{item.companyName}</Text>
                     <View style={styles.Direction}>
                       <Text style={styles.Text}>Address</Text>
                       <Text style={styles.Info} numberOfLine={5}>
@@ -239,7 +241,7 @@ export default class ListofCompany extends Component {
                       <View style={styles.cardView2}>
                         <Image
                           style={styles.profileImg}
-                          source={item.photoURL}
+                          source={{ uri: item.photoURL }}
                         />
                         <View style={styles.texts}>
                           <Text style={styles.AdminName}>{item.name}</Text>
@@ -253,7 +255,7 @@ export default class ListofCompany extends Component {
                   )}
                 />
               }
-              
+
               <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                 <Text style={styles.CompanyName}>Employee</Text>
                 <View style={{ justifyContent: 'flex-end', marginTop: 5, flexDirection: 'row', alignSelf: 'flex-end', marginEnd: 7 }}>
@@ -261,10 +263,11 @@ export default class ListofCompany extends Component {
                     onPress={() =>
                       this.addSalespersonAccount()
                     } />
-                  <Icon name="infocirlceo" size={15} style={{ marginTop: 3, paddingLeft: 5 }}
-                    onPress={() =>
-                      alert("Increase the salesperson account by 1." + "\n" + "Company admin of the respective company will have to register the account on their own")
-                    } />
+
+                  <Tooltip popover={<Text style={{padding: 5}}>Tap on the add icon to increase the salesperson's account limit</Text>}>
+                    <Icon name="infocirlceo" size={15} style={{ marginTop: 3, paddingLeft: 5 }} />
+                  </Tooltip>
+
                 </View>
               </View>
 
@@ -286,7 +289,7 @@ export default class ListofCompany extends Component {
                       <View style={styles.cardView2}>
                         <Image
                           style={styles.profileImg}
-                          source={item.photoURL}
+                          source={{ uri: item.photoURL }}
                         />
                         <View style={styles.texts}>
                           <Text style={styles.AdminName}>{item.name}</Text>

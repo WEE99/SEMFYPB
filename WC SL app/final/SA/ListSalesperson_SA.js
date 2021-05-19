@@ -5,7 +5,7 @@ import {
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 // import { CSVLink } from "react-csv";
 
 export default class ListofEmployee extends Component {
@@ -60,7 +60,7 @@ export default class ListofEmployee extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+        <ScrollView style={{ flex: 1, padding: '5%', margin: 5, backgroundColor: 'white' }}>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -104,7 +104,7 @@ export default class ListofEmployee extends Component {
       )
     }
     return (
-      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, padding: '5%', margin: 5, backgroundColor: 'white' }}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -141,55 +141,59 @@ export default class ListofEmployee extends Component {
           </TouchableOpacity>
         </ScrollView>
 
-        <ScrollView>
-          <View style={{ flexDirection: 'row' }}>
+        <View  style={{height: '93%', marginTop: 5, marginBottom: 15, flex: 1}}>
+            <View style={{ flexDirection: 'row' }}>
 
-            <View style={styles.MainContainer}>
-              <View style={styles.textInputBox}>
-                <TextInput
-                  style={styles.textInput}
-                  onChangeText={(text) => this.searchData(text)}
-                  value={this.state.text}
-                  underlineColorAndroid='transparent'
-                  placeholder="Search Salesperson" />
-                <Icon2 name="search" size={20} style={{ marginTop: 3, paddingRight: 5, color: 'lightgrey' }} />
+              <View style={styles.MainContainer}>
+                <View style={styles.textInputBox}>
+                  <TextInput
+                    style={styles.textInput}
+                    onChangeText={(text) => this.searchData(text)}
+                    value={this.state.text}
+                    underlineColorAndroid='transparent'
+                    placeholder="Search Salesperson" />
+                  <Icon2 name="search" size={20} style={{ alignSelf: 'center', paddingRight: 5, color: 'lightgrey' }} />
+                </View>
               </View>
+
+              {/* <CSVLink data={this.state.EmployeeList} filename={"EmployeesData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
+              <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink> */}
+              <Icon name="infocirlceo" size={15} style={{ alignSelf: 'center', paddingLeft: 5 }}
+                onPress={() =>
+                  alert("Tap the salesperson's name for more details")
+                } />
+
             </View>
 
-            {/* <CSVLink data={this.state.EmployeeList} filename={"EmployeesData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
-              <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink> */}
-            <Icon name="infocirlceo" size={15} style={{ marginTop: 12, paddingLeft: 5, marginRight: 5 }}
-              onPress={() =>
-                alert("Tap the salesperson's name for more details")
-              } />
+            <FlatList
+              data={this.state.EmployeeList}
+              renderItem={({ item }) => (
+                <Card
+                  style={styles.card}
+                  onPress={() =>
+                    this.props.navigation.navigate('Salesperson Detail', {
+                      salesId: item.UID
+                    })
 
-          </View>
+                  }>
+                  <View style={styles.cardView}>
+                    {item.photoURL != '' ?
+                      <Image style={styles.profileImg} source={{ uri: item.photoURL }} />
+                      :
+                      <Icon name="user" size={15} style={styles.profileImg} />}
 
-          <FlatList
-            data={this.state.EmployeeList}
-            renderItem={({ item }) => (
-              <Card
-                style={styles.card}
-                onPress={() =>
-                  this.props.navigation.navigate('Salesperson Detail', {
-                    salesId: item.UID
-                  })
-
-                }>
-                <View style={styles.cardView}>
-                  <Image style={styles.profileImg} source={item.photoURL} />
-                  <View style={styles.texts}>
-                    <Text style={styles.Name} numberOfLine={3}>{item.username}</Text>
-                    <Text style={styles.CompanyName} numberOfLine={3}>({item.companyName})</Text>
+                    <View style={styles.texts}>
+                      <Text style={styles.Name} numberOfLine={3}>{item.name}</Text>
+                      <Text style={styles.CompanyName} numberOfLine={3}>({item.companyName})</Text>
+                    </View>
+                    <View style={{ justifyContent: 'flex-end' }}>
+                      <Icon name="right" size={15} style={styles.icon} />
+                    </View>
                   </View>
-                  <View style={{ justifyContent: 'flex-end' }}>
-                    <Icon name="right" size={15} style={styles.icon} />
-                  </View>
-                </View>
-              </Card>
-            )}
-          />
-        </ScrollView>
+                </Card>
+              )}
+            />
+        </View>
       </ScrollView>
     );
   }

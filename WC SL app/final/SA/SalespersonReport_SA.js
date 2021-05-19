@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 
 export default class Report extends Component {
   constructor(props) {
@@ -75,7 +75,8 @@ export default class Report extends Component {
       <ScrollView
         style={{
           flex: 1,
-          padding: '10%',
+          padding: '5%',
+          margin: 5,
           backgroundColor: 'white'
         }}>
 
@@ -83,9 +84,13 @@ export default class Report extends Component {
           data={this.state.salesInfo}
           renderItem={({ item }) => (
             <View style={styles.Icon}>
-              <Image style={styles.profileImg} source={item.photoURL} />
+              {item.photoURL != ''? 
+                <Image style={styles.profileImg} source={{uri:item.photoURL}} />
+                :
+                <Icon name='user' size={15} style={styles.profileImg}/>
+               }
               <View>
-                <Text style={styles.Username}>{item.nickname}</Text>
+                <Text style={styles.Username}>{item.name}</Text>
                 <Text style={styles.designation}>{item.role}</Text>
               </View>
             </View>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Component, useCallback } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 import { FlatList } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-vector-icons/FontAwesome5';
 export default class Account_CA extends Component {
@@ -27,7 +27,7 @@ export default class Account_CA extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+      <View style={{ flex: 1, padding: '5%',margin: 5, backgroundColor: 'white', marginTop: 15 }}>
 
         <FlatList
           data={this.state.AccountData}
@@ -35,7 +35,7 @@ export default class Account_CA extends Component {
             <View>
               <View style={styles.Icon}>
                 {item.photoURL != null ?
-                  <Image style={styles.profileImg} source={item.photoURL} /> 
+                  <Image style={styles.profileImg} source={{uri:item.photoURL}} /> 
                   :
                   <Icon name="user" size={10} style={styles.profileImg}/>
                   }

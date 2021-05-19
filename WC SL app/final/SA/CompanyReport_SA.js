@@ -8,7 +8,7 @@ import {
   FlatList,
   ActivityIndicator
 } from 'react-native';
-import {auth, db, storage } from "../components/firebase";
+import {auth, db, storage } from "./firebase";
 
 export default class ListofCompany extends Component {
   constructor(props) {
@@ -31,7 +31,7 @@ export default class ListofCompany extends Component {
     ID = ID.toString();
 
     let compData = [];
-    var Data = db.collection("users").where("companyID", "==", ID).where("role", "==", "Company Admin")
+    var Data = db.collection("company").where("companyID", "==", ID)
     Data.onSnapshot((querySnapShot) => {
       compData = [];
       querySnapShot.forEach((doc) => {
@@ -86,15 +86,8 @@ export default class ListofCompany extends Component {
 
   render() {
     return (
-      <ScrollView style={{ flex: 1, padding: '10%', backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, padding: '5%',margin: 5, backgroundColor: 'white' }}>
         <View style={{ marginTop: 10 }}>
-          <FlatList
-            data={this.state.CompanyData}
-            renderItem={({ item }) => (
-              <Text style={styles.CompanyName}>{item.companyName}</Text>
-            )}
-          />
-
           <View style={{ flexDirection: 'row', justifyContent: 'flex-start' }}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Company Details', {
@@ -124,6 +117,13 @@ export default class ListofCompany extends Component {
               </Text>
             </TouchableOpacity>
           </View>
+
+          <FlatList
+            data={this.state.CompanyData}
+            renderItem={({ item }) => (
+              <Text style={styles.CompanyName}>{item.companyName}</Text>
+            )}
+          />
 
           {/* <View style={styles.pieChartArea} /> */}
           <View style={{ marginLeft: 5, height: 600, width: '90%' }}>
