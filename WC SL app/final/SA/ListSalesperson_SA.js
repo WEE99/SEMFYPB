@@ -5,8 +5,8 @@ import {
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
-import {auth, db, storage } from "./firebase";
-// import { CSVLink } from "react-csv";
+import { auth, db, storage } from "../components/firebase";
+import { Tooltip } from 'react-native-elements';
 
 export default class ListofEmployee extends Component {
   constructor(props) {
@@ -141,58 +141,60 @@ export default class ListofEmployee extends Component {
           </TouchableOpacity>
         </ScrollView>
 
-        <View  style={{height: '93%', marginTop: 5, marginBottom: 15, flex: 1}}>
-            <View style={{ flexDirection: 'row' }}>
+        <View style={{ height: '93%', marginTop: 5, marginBottom: 15, flex: 1 }}>
+          <View style={{ flexDirection: 'row' }}>
 
-              <View style={styles.MainContainer}>
-                <View style={styles.textInputBox}>
-                  <TextInput
-                    style={styles.textInput}
-                    onChangeText={(text) => this.searchData(text)}
-                    value={this.state.text}
-                    underlineColorAndroid='transparent'
-                    placeholder="Search Salesperson" />
-                  <Icon2 name="search" size={20} style={{ alignSelf: 'center', paddingRight: 5, color: 'lightgrey' }} />
-                </View>
+            <View style={styles.MainContainer}>
+              <View style={styles.textInputBox}>
+                <TextInput
+                  style={styles.textInput}
+                  onChangeText={(text) => this.searchData(text)}
+                  value={this.state.text}
+                  underlineColorAndroid='transparent'
+                  placeholder="Search Salesperson" />
+                <Icon2 name="search" size={20} style={{ alignSelf: 'center', paddingRight: 5, color: 'lightgrey' }} />
               </View>
-
-              {/* <CSVLink data={this.state.EmployeeList} filename={"EmployeesData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
-              <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink> */}
-              <Icon name="infocirlceo" size={15} style={{ alignSelf: 'center', paddingLeft: 5 }}
-                onPress={() =>
-                  alert("Tap the salesperson's name for more details")
-                } />
-
             </View>
+            
+            <TouchableOpacity style={{ alignSelf: 'center' }}>
+              <Tooltip popover={
+                <Text style={{ padding: 5, color: 'white' }}>
+                  Tap the salesperson's name for more details
+                    </Text>} width={250} height={50}>
+                <Icon name="infocirlceo" size={15} style={{ alignSelf: 'center', margin: 3 }} />
+              </Tooltip>
+            </TouchableOpacity>
 
-            <FlatList
-              data={this.state.EmployeeList}
-              renderItem={({ item }) => (
-                <Card
-                  style={styles.card}
-                  onPress={() =>
-                    this.props.navigation.navigate('Salesperson Detail', {
-                      salesId: item.UID
-                    })
+          </View>
 
-                  }>
-                  <View style={styles.cardView}>
-                    {item.photoURL != '' ?
-                      <Image style={styles.profileImg} source={{ uri: item.photoURL }} />
-                      :
-                      <Icon name="user" size={15} style={styles.profileImg} />}
+          <FlatList
+            data={this.state.EmployeeList}
+            renderItem={({ item }) => (
+              <Card
+                style={styles.card}
+                onPress={() =>
+                  this.props.navigation.navigate('Salesperson Detail', {
+                    salesId: item.UID
+                  })
 
-                    <View style={styles.texts}>
-                      <Text style={styles.Name} numberOfLine={3}>{item.name}</Text>
-                      <Text style={styles.CompanyName} numberOfLine={3}>({item.companyName})</Text>
-                    </View>
-                    <View style={{ justifyContent: 'flex-end' }}>
-                      <Icon name="right" size={15} style={styles.icon} />
-                    </View>
+                }>
+                <View style={styles.cardView}>
+                  {item.photoURL != '' ?
+                    <Image style={styles.profileImg} source={{ uri: item.photoURL }} />
+                    :
+                    <Icon name="user" size={15} style={styles.profileImg} />}
+
+                  <View style={styles.texts}>
+                    <Text style={styles.Name} numberOfLine={3}>{item.name}</Text>
+                    <Text style={styles.CompanyName} numberOfLine={3}>({item.companyName})</Text>
                   </View>
-                </Card>
-              )}
-            />
+                  <View style={{ justifyContent: 'flex-end' }}>
+                    <Icon name="right" size={15} style={styles.icon} />
+                  </View>
+                </View>
+              </Card>
+            )}
+          />
         </View>
       </ScrollView>
     );

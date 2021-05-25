@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Component, useCallback } from 'react';
 import { StyleSheet, Text, View, Image, ActivityIndicator, ScrollView } from 'react-native';
 import Settings from 'react-native-vector-icons/AntDesign';
-import {auth, db, storage } from "./firebase";
+import {auth, db, storage } from "../components/firebase";
 
 export default class Account_CA extends Component {
   state = {
@@ -20,7 +20,7 @@ export default class Account_CA extends Component {
     var user=auth.currentUser
 
     let a, b, c, d, e, f, g = "";
-    var dashboardData = db.collection("users").where("UID", "==","molZQJeaw7SZPoGJsqlJuVpsZAR2")
+    var dashboardData = db.collection("users").where("UID", "==",user.uid)
     dashboardData.onSnapshot((querySnapShot) => {
       querySnapShot.forEach((doc) => {
         a = doc.data().photoURL;

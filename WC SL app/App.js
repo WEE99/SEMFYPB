@@ -13,11 +13,6 @@ import {NavigationContainer, DrawerActions,DefaultTheme } from '@react-navigatio
 
 const LoginStack = createStackNavigator();
 
-
-
-
-
-
 function LoginStackNav() {
   return (
 <NavigationContainer>

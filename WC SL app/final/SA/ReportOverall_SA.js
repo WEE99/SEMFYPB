@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/AntDesign'
-import {auth, db, storage } from "./firebase";
+import {auth, db, storage } from "../components/firebase";
 
 export default class ListofCompany extends Component {
   constructor(props) {

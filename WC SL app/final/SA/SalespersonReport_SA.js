@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView, FlatList } from 'react-native';
-import {auth, db, storage } from "./firebase";
+import {auth, db, storage } from "../components/firebase";
 
 export default class Report extends Component {
   constructor(props) {

@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 // import TimePicker from "react-native-24h-timepicker";
 import Icon from 'react-native-vector-icons/Entypo';
 // import { Switch } from 'react-native-switch';
-import {auth, db, storage } from "./firebase";
+import {auth, db, storage } from "../components/firebase";
 
 //export default function App() {
 export default class App extends React.Component {

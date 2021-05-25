@@ -6,11 +6,12 @@ import {
   ScrollView,
   TouchableOpacity, ActivityIndicator, TextInput, Button
 } from 'react-native';
-import {auth, db, storage } from "./firebase";
+import { auth, db, storage } from "../components/firebase";
 import { FlatList } from 'react-native-gesture-handler';
 // import { CSVLink } from "react-csv";
 import Icon from 'react-native-vector-icons/AntDesign'
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
+import { Tooltip } from 'react-native-elements';
 
 export default class ExampleTwo extends Component {
   constructor(props) {
@@ -19,7 +20,6 @@ export default class ExampleTwo extends Component {
       LeadList: [],
       isLoading: true,
       text: '',
-      fileName: 'List of Leads'
     };
   }
 
@@ -52,7 +52,6 @@ export default class ExampleTwo extends Component {
       return itemData.indexOf(textData) > -1
     });
 
-
     this.setState({
       LeadList: newData,
       text: text
@@ -63,7 +62,7 @@ export default class ExampleTwo extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <ScrollView style={{ flex: 1, padding: '5%',margin: 5, backgroundColor: 'white' }}>
+        <ScrollView style={{ flex: 1, padding: '5%', margin: 5, backgroundColor: 'white' }}>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -107,7 +106,7 @@ export default class ExampleTwo extends Component {
       )
     }
     return (
-      <ScrollView style={{ flex: 1, padding: '5%',margin: 5, backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, padding: '5%', margin: 5, backgroundColor: 'white' }}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -158,12 +157,14 @@ export default class ExampleTwo extends Component {
               </View>
             </View>
 
-            {/* <CSVLink data={this.state.LeadList} filename={"LeadData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
-              <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink> */}
-            <Icon name="infocirlceo" size={15} style={{ alignSelf: 'center', paddingLeft: 5 }}
-              onPress={() =>
-                alert("Tap the lead's name in the table for more details")
-              } />
+            <TouchableOpacity style={{ alignSelf: 'center' }}>
+              <Tooltip popover={
+                <Text style={{ padding: 5, color: 'white' }}>
+                  Tap the salesperson's name for more details
+                    </Text>} width={250} height={50}>
+                <Icon name="infocirlceo" size={15} style={{ alignSelf: 'center', margin: 3 }} />
+              </Tooltip>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.header}>

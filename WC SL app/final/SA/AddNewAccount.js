@@ -2,8 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Alert, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 //import { ScrollView } from 'react-native-gesture-handler';
-import {auth, db, storage } from "./firebase";
-
+import { auth, db, storage } from "../components/firebase";
+import firebase from "firebase/app";
 
 export default class App extends Component {
 
@@ -54,12 +54,7 @@ export default class App extends Component {
     }
 
     generatePassword() {
-        let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-        let str = '';
-        for (let i = 0; i < 10; i++) {
-            str += chars.charAt(Math.floor(Math.random() * chars.length));
-        }
-        this.setState({ password: str });
+        this.setState({ password: "Karuna12345" });
     }
 
     generateUsername() {
@@ -70,8 +65,6 @@ export default class App extends Component {
         }
         this.setState({ Username: str });
     }
-
-
 
     validation() {
         let isValid = true;
@@ -129,17 +122,18 @@ export default class App extends Component {
     }
 
     registerUser() {
-        // var config = {
-        //     apiKey: "AIzaSyDTp7kOq7aNbIPnBDLFzLzlTd_YWGLTifQ",
-        //     authDomain: "salescustom-55472.firebaseapp.com",
-        //     projectId: "",
-        //     storageBucket: "",
-        //     messagingSenderId: "",
-        //     appId: "",
-        //     measurementId: ""
-        // };
-        // var user2 = firebase.initializeApp(config,"secondary")
-        auth.createUserWithEmailAndPassword(this.state.email, this.state.password)
+        var user = auth.currentUser
+        var config = {
+            apiKey: "AIzaSyDTp7kOq7aNbIPnBDLFzLzlTd_YWGLTifQ",
+            authDomain: "salescustom-55472.firebaseapp.com",
+            projectId: "",
+            storageBucket: "",
+            messagingSenderId: "",
+            appId: "",
+            measurementId: ""
+        };
+        var user2 = firebase.initializeApp(config, "secondary")
+        user2.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
             .then(result => {
                 db.collection('users').doc(result.user.id).set({
                     UID: result.user.uid,
@@ -169,13 +163,12 @@ export default class App extends Component {
                             })
                         })
                     })
+                user2.auth().signOut();
+                user2.delete()
             })
             .catch((error => {
                 alert(error)
             }))
-            // user2.auth().signOut();
-            // user2.delete()
-
 
         this.props.navigation.goBack()
     }
@@ -184,12 +177,12 @@ export default class App extends Component {
         return (
             <ScrollView>
                 <View style={styles.container}>
-                    <View style={{ borderWidth: 1, borderColor: 'black', padding: 10, borderRadius: 5,alignSelf: 'flex-end' }}>
-                        <Text style={{ fontSize: 10}}>*Automatically generated input boxes</Text>
+                    <View style={{ borderWidth: 1, borderColor: 'black', padding: 10, borderRadius: 5, alignSelf: 'flex-end' }}>
+                        <Text style={{ fontSize: 10 }}>*Automatically generated input boxes</Text>
                         <Text style={{ fontSize: 10 }}>**The company's contact person's detail is automatically filled in the boxes.</Text>
-                        <Text style={{ fontSize: 10}}> Tap on the boxes to make changes</Text>
+                        <Text style={{ fontSize: 10 }}> Tap on the boxes to make changes</Text>
                     </View>
-  
+
                     <Text style={styles.instruction}>*Username</Text>
                     <TextInput
                         type="text"
@@ -197,7 +190,7 @@ export default class App extends Component {
                         value={this.state.Username}
                         onChangeText={(val) => this.updateInputVal(val, 'Username')}
                     />
-  
+
                     <Text style={styles.instruction}>*Name</Text>
                     <TextInput
                         type="text"
@@ -205,7 +198,7 @@ export default class App extends Component {
                         value={this.state.Name}
                         onChangeText={(val) => this.updateInputVal(val, 'Name')}
                     />
-  
+
                     <Text style={styles.instruction}>*Password</Text>
                     <TextInput
                         style={styles.input}
@@ -213,7 +206,7 @@ export default class App extends Component {
                         value={this.state.password}
                         onChangeText={(val) => this.updateInputVal(val, 'password')}
                     />
-  
+
                     <Text style={styles.instruction}>**Contact</Text>
                     <TextInput
                         type="text"
@@ -221,7 +214,7 @@ export default class App extends Component {
                         value={this.state.contact}
                         onChangeText={(val) => this.updateInputVal(val, 'contact')}
                     />
-  
+
                     <Text style={styles.instruction}>**Email</Text>
                     <TextInput
                         //secureTextEntry={true} 
@@ -229,7 +222,7 @@ export default class App extends Component {
                         value={this.state.email}
                         onChangeText={(val) => this.updateInputVal(val, 'email')}
                     />
-  
+
                     <Text style={styles.instruction}>Designation</Text>
                     <TextInput
                         //secureTextEntry={true} 
@@ -237,8 +230,8 @@ export default class App extends Component {
                         value={this.state.designation}
                         onChangeText={(val) => this.updateInputVal(val, 'role')}
                     />
-  
-  
+
+
                     <View style={styles.row}>
                         <TouchableOpacity
                             style={styles.Button}
@@ -253,7 +246,7 @@ export default class App extends Component {
                             <Text style={styles.ButtonContent}>Save</Text>
                         </TouchableOpacity>
                     </View>
-  
+
                     <StatusBar style="auto" />
                 </View>
             </ScrollView>

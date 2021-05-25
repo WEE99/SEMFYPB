@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {auth, db, storage } from "./firebase";
+import {auth, db, storage } from "../components/firebase";
 
 export default class a extends Component {
   constructor(props) {

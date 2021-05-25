@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/AntDesign';
-import {auth, db, storage } from "./firebase";
+import { auth, db, storage } from "../components/firebase";
 import { Tooltip } from 'react-native-elements';
 
 export default class ListofCompany extends Component {
@@ -189,18 +189,24 @@ export default class ListofCompany extends Component {
                     <View style={styles.Direction}>
                       <Text style={styles.Text}>Salesperson Account (Limit)</Text>
                       <Text style={styles.Info2}>{this.state.salesAccountNoLimit}</Text>
-                      <Icon name="infocirlceo" size={15} style={{ marginTop: 5, paddingLeft: 5 }}
-                        onPress={() =>
-                          alert("Number of salesperson account(s) is limited to the shown number")
-                        } />
+
+                      <Tooltip popover={
+                        <Text style={{ padding: 5, color: 'white' }}>
+                          Number of salesperson account(s) is limited to the shown number
+                    </Text>} width={250} height={50}>
+                        <Icon name="infocirlceo" size={15} style={{ marginTop: 5, paddingLeft: 5 }} />
+                      </Tooltip>
+
                     </View>
                     <View style={styles.Direction} >
                       <Text style={styles.Text}>Salesperson Account (Active)</Text>
                       <Text style={styles.Info2}>{this.state.activeSalesAccount}</Text>
-                      <Icon name="infocirlceo" size={15} style={{ marginTop: 5, paddingLeft: 5 }}
-                        onPress={() =>
-                          alert("Number of active account")
-                        } />
+                      <Tooltip popover={
+                        <Text style={{ padding: 5, color: 'white' }}>
+                          Number of active account
+                    </Text>} width={250} height={50}>
+                        <Icon name="infocirlceo" size={15} style={{ marginTop: 5, paddingLeft: 5 }} />
+                      </Tooltip>
                     </View>
 
                   </View>
@@ -216,10 +222,12 @@ export default class ListofCompany extends Component {
                         ID: this.state.companyId
                       })
                     } />
-                  <Icon name="infocirlceo" size={15} style={{ marginTop: 3, paddingLeft: 5 }}
-                    onPress={() =>
-                      alert("Create a new Company Admin account for this respective company")
-                    } />
+                  <Tooltip popover={
+                    <Text style={{ padding: 5, color: 'white' }}>
+                      Tap on the add icon to create a new company admin's account
+                    </Text>} width={230} height={50}>
+                    <Icon name="infocirlceo" size={15} style={{ marginTop: 3, paddingLeft: 5 }} />
+                  </Tooltip>
                 </View>
               </View>
               {this.state.AdminList.length == 0 ?
@@ -232,8 +240,6 @@ export default class ListofCompany extends Component {
                   renderItem={({ item }) => (
                     <Card
                       style={styles.card2}
-                      onLongPress={() =>
-                        alert("delete this data")}
                       onPress={() =>
                         this.props.navigation.navigate('Company Admin Account Detail',
                           { companyAdminID: item.UID })
@@ -264,7 +270,10 @@ export default class ListofCompany extends Component {
                       this.addSalespersonAccount()
                     } />
 
-                  <Tooltip popover={<Text style={{padding: 5}}>Tap on the add icon to increase the salesperson's account limit</Text>}>
+                  <Tooltip popover={
+                    <Text style={{ padding: 5, color: 'white' }}>
+                      Tap on the add icon to increase the salesperson's account limit
+                    </Text>} width={230} height={50}>
                     <Icon name="infocirlceo" size={15} style={{ marginTop: 3, paddingLeft: 5 }} />
                   </Tooltip>
 

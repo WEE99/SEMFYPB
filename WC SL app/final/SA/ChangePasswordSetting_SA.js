@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import { StackNavigator, } from 'react-navigation';
-import {auth, db, storage } from "./firebase";
+import {auth, db, storage } from "../components/firebase";
 import React, {useEffect, useState, Component} from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity} from 'react-native';
 

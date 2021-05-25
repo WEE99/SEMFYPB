@@ -8,7 +8,7 @@ import {
   ScrollView,
   ActivityIndicator
 } from 'react-native';
-import {auth, db, storage } from "./firebase";
+import {auth, db, storage } from "../components/firebase";
 import Icon from 'react-native-vector-icons/AntDesign';
 
 export default class ListofCompany extends Component {
@@ -97,7 +97,7 @@ export default class ListofCompany extends Component {
           />
 
           {this.state.LeadList.length == 0 ?
-            <Text style={{ alignSelf: 'center', fontStyle: 'italic', padding: '3%', color: 'grey' }}>No leads yet!</Text>
+            <Text style={{ fontStyle: 'italic', padding: '3%', color: 'grey', marginLeft: 5 }}>No leads yet!</Text>
             :
             <View style={{marginTop: 10,}}>
               <Text style={{ color: "grey", fontSize: 10, fontStyle: 'italic', paddingLeft: 5 }}>*Tap the table cells for more actions</Text>

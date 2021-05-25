@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 //import React from 'react';
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, BackHandler } from 'react-native';
-import {auth, db, storage } from "./firebase";
+import {auth, db, storage } from "../components/firebase";
 
 
 export default ({navigation, route}) => {
@@ -19,14 +19,14 @@ const pressChangepsw =()=>{
 }
 
 const pressNotify =()=>{
-  Alert.alert('navigation.navigate("Notification Settings")',"pressed")
+  // Alert.alert('navigation.navigate("Notification Settings")',"pressed")
   navigation.navigate("Notification Settings"); 
 }
 
 const pressLogout =()=>{
   auth.signOut().then(() => {
     // Sign-out successful.
-    Alert.alert('Logout',"You had been Logged Out")
+    Alert.alert('Logout',"You have been logged out")
   }).catch((error) => {
     // An error happened.
   });

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, Component, useCallback } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import {auth, db, storage } from "./firebase";
+import {auth, db, storage } from "../components/firebase";
 import { FlatList } from 'react-native-gesture-handler';
-import { Icon } from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome';
 export default class Account_CA extends Component {
   state = {
     AccountData: [],
@@ -27,7 +27,7 @@ export default class Account_CA extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, padding: '5%',margin: 5, backgroundColor: 'white', marginTop: 15 }}>
+      <View style={{ flex: 1, padding: '5%',margin: 5, backgroundColor: 'white' }}>
 
         <FlatList
           data={this.state.AccountData}
@@ -45,23 +45,23 @@ export default class Account_CA extends Component {
                 </View>
               </View>
 
-              <View>
+              <View style={{marginTop: 10}}>
                 <View style={styles.Direction}>
                   <Text style={styles.Text}>Company</Text>
                   <Text style={styles.Info}>{item.companyName}</Text>
                 </View>
 
-                <View style={styles.Address}>
-                  <Text style={[styles.Text, { marginEnd: 10 }]}>Address</Text>
+                <View style={styles.Direction}>
+                  <Text style={[styles.Text]}>Address</Text>
                   <Text style={styles.Info}>{item.address}</Text>
                 </View>
 
                 <View style={styles.Direction}>
-                  <Text style={[styles.Text, { marginEnd: 25 }]}>Email</Text>
+                  <Text style={[styles.Text]}>Email</Text>
                   <Text style={styles.Info}>{item.email}</Text>
                 </View>
                 <View style={styles.Direction}>
-                  <Text style={[styles.Text, { marginEnd: 8 }]}>Contact</Text>
+                  <Text style={[styles.Text]}>Contact</Text>
                   <Text style={styles.Info}>{item.phoneNumber}</Text>
                 </View>
               </View>
@@ -103,17 +103,18 @@ const styles = StyleSheet.create({
   },
   Direction: {
     flexDirection: 'row',
-    marginTop: 10,
+    // marginTop: 10,
     alignItems: 'baseline'
   },
   Text: {
     marginTop: 2.5,
     marginLeft: 15,
     fontSize: 14,
-    marginBottom: 5
+    marginBottom: 5,
+    width: '20%',
   },
   Info: {
-    width: 200,
+    width: '70%',
     marginTop: 2.5,
     marginStart: 35,
     fontSize: 14,

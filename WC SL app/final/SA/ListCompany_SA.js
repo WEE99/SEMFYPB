@@ -8,10 +8,10 @@ import {
   ScrollView, ActivityIndicator, TextInput
 } from 'react-native';
 import { Card } from 'react-native-paper';
-import {auth, db, storage } from "./firebase";
+import { auth, db, storage } from "../components/firebase";
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/MaterialIcons';
-// import { CSVLink } from "react-csv";
+import { Tooltip } from 'react-native-elements';
 
 export default class ListofCompany extends Component {
   constructor(props) {
@@ -69,7 +69,7 @@ export default class ListofCompany extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <ScrollView style={{ flex: 1, padding: '5%', margin:5, backgroundColor: 'white' }}>
+        <ScrollView style={{ flex: 1, padding: '5%', margin: 5, backgroundColor: 'white' }}>
           <ScrollView
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -105,7 +105,7 @@ export default class ListofCompany extends Component {
       )
     }
     return (
-      <ScrollView style={{ flex: 1, padding: '5%',margin:5, backgroundColor: 'white' }}>
+      <ScrollView style={{ flex: 1, padding: '5%', margin: 5, backgroundColor: 'white' }}>
         <ScrollView
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ justifyContent: 'flex-start', flexDirection: 'row' }}
@@ -149,18 +149,22 @@ export default class ListofCompany extends Component {
               </View>
             </View>
 
-            <TouchableOpacity style={{ flexDirection: 'row'}} onPress={() =>
+            <TouchableOpacity style={{ flexDirection: 'row' }} onPress={() =>
               this.props.navigation.navigate('Add Company')
             }>
-              <Icon2 name="business" size={20} style={{ alignSelf: 'center'}} />
-              <Icon2 name="add" size={15} style={{ alignSelf: 'center',marginLeft: -5}} />
+              <Icon2 name="business" size={20} style={{ alignSelf: 'center' }} />
+              <Icon2 name="add" size={15} style={{ alignSelf: 'center', marginLeft: -5 }} />
             </TouchableOpacity>
-            {/* <CSVLink data={this.state.CompanyList} filename={"CompaniesData.csv"} style={{ fontSize: 10, alignSelf: 'flex-end', paddingBottom: 10, paddingRight: 5 }}>
-              <Icon name="download" size={15} style={{ paddingLeft: 5 }} /></CSVLink> */}
-            <Icon name="infocirlceo" size={15} style={{ alignSelf: 'center',margin: 3 }}
-              onPress={() =>
-                alert("Tap the business icon to register a new company")
-              } />
+
+            <TouchableOpacity style={{alignSelf:'center'}}>
+              <Tooltip popover={
+                <Text style={{ padding: 5, color: 'white' }}>
+                  Tap the business icon to register a new company
+                    </Text>} width={250} height={50}>
+                <Icon name="infocirlceo" size={15} style={{ alignSelf: 'center', margin: 3}} />
+              </Tooltip>
+            </TouchableOpacity>
+
           </View>
           <FlatList
             data={this.state.CompanyList}
